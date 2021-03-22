@@ -48,6 +48,32 @@ namespace P_Thesaurus.Models.JSON
         }
 
         /// <summary>
+        /// Serialize file
+        /// </summary>
+        /// <typeparam name="T">typeof object</typeparam>
+        /// <param name="obj">object</param>
+        /// <param name="path">path</param>
+        public static bool SerializeFile<T>(T obj, string path)
+        {
+            FileStream fs = new FileStream(path, FileMode.Create);
+
+            JsonSerializer serializer = new JsonSerializer();
+
+            using (StreamWriter sw = new StreamWriter(fs))
+            {
+                using (JsonWriter jw = new JsonTextWriter(sw))
+                {
+                    serializer.Serialize(jw, obj);
+                }
+            }
+
+            fs.Close();
+            fs.Dispose();
+
+            return true;
+        }
+
+        /// <summary>
         /// Convert byte to base 64
         /// </summary>
         /// <param name="array">array</param>

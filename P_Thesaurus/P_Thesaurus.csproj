@@ -77,7 +77,6 @@
     <Compile Include="Models\FtpModel.cs" />
     <Compile Include="Models\FolderModel.cs" />
     <Compile Include="Models\WebModel.cs" />
-    <Compile Include="Models\WIN32\AsyncFolderScanning.cs" />
     <Compile Include="Models\WIN32\FileAPI.cs" />
     <Compile Include="Models\WIN32\FILE_INFO_BY_HANDLE_STRUCT.cs" />
     <Compile Include="Models\WIN32\FILE_TIME.cs" />
@@ -113,9 +112,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AppBusiness\HistoryReader\" />
-    <Folder Include="Models\JSON\" />
-    <Folder Include="AppBusiness\EnumsAndStructs\" />
     <Folder Include="Views\Objects\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
