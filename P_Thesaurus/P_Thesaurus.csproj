@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -46,6 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppBusiness\WIN32\File.cs" />
+    <Compile Include="AppBusiness\WIN32\Folder.cs" />
+    <Compile Include="AppBusiness\WIN32\FolderObject.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -53,6 +58,14 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\WIN32\AsyncFolderScanning.cs" />
+    <Compile Include="Models\WIN32\FileAPI.cs" />
+    <Compile Include="Models\WIN32\FILE_INFO_BY_HANDLE_STRUCT.cs" />
+    <Compile Include="Models\WIN32\FILE_TIME.cs" />
+    <Compile Include="Models\WIN32\LPBY_HANDLE_FILE_INFORMATION.cs" />
+    <Compile Include="Models\WIN32\SECURITY_ATTRIB.cs" />
+    <Compile Include="Models\WIN32\SYSTEM_TIME.cs" />
+    <Compile Include="Models\WIN32\WIN32_FIND_DATA.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -80,9 +93,7 @@
   <ItemGroup>
     <Folder Include="AppBusiness\EnumsAndStructs\" />
     <Folder Include="AppBusiness\HistoryReader\" />
-    <Folder Include="AppBusiness\WIN32\" />
     <Folder Include="Models\JSON\" />
-    <Folder Include="Models\WIN32\" />
     <Folder Include="Views\Objects\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
