@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/*
+ * ETML
+ * Clément Sartoni
+ * 22.03.2021
+ * Projet P_OO-Smart-Thésaurus
+ * Controller contenant les méthodes communes aux vues de navigation dans des fichiers
+ */
 
 namespace P_Thesaurus.Controllers
 {
-    abstract class FolderNavigationController
+    public abstract class FolderNavigationController
     {
     }
 }

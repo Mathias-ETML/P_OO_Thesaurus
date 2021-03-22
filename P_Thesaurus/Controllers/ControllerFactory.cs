@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿/*
+ * ETML
+ * Clément Sartoni
+ * 22.03.2021
+ * Projet P_OO-Smart-Thésaurus
+ * Factory utilisée par le MainController pour instancier les controllers dont il a besoin
+ */
 namespace P_Thesaurus.Controllers
 {
-    class ControllerFactory
+    public class ControllerFactory
     {
     }
 }

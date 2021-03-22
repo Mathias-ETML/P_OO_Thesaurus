@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/*
+ * ETML
+ * Clément Sartoni
+ * 22.03.2021
+ * Projet P_OO-Smart-Thésaurus
+ * Controller gérant les opérations de la connexion et du transfert des données FTP
+ */
 
 namespace P_Thesaurus.Controllers
 {
-    class FtpController
+    public class FtpController
     {
     }
 }

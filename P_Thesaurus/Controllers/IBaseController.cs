@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/*
+ * ETML
+ * Clément Sartoni
+ * 22.03.2021
+ * Projet P_OO-Smart-Thésaurus
+ * Interface représentant tous les controllers, contenant les méthodes qu'ils sont censés implémenter
+ */
 
 namespace P_Thesaurus.Controllers
 {
-    class IBaseController
+    public interface IBaseController
     {
     }
 }

@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/*
+ * ETML
+ * Clément Sartoni
+ * 22.03.2021
+ * Projet P_OO-Smart-Thésaurus
+ * Controller gérant le lancement de l'application et la vue de lancement.
+ */
 
 namespace P_Thesaurus.Controllers
 {
-    class LaunchController
+    public class LaunchController
     {
     }
 }
