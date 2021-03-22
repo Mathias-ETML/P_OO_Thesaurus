@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppBusiness\EnumsAndStructs\EnumsAndStructs.cs" />
     <Compile Include="AppBusiness\WIN32\File.cs" />
     <Compile Include="AppBusiness\WIN32\Folder.cs" />
     <Compile Include="AppBusiness\WIN32\FolderObject.cs" />
@@ -58,6 +59,9 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\FtpModel.cs" />
+    <Compile Include="Models\FolderModel.cs" />
+    <Compile Include="Models\WebModel.cs" />
     <Compile Include="Models\WIN32\AsyncFolderScanning.cs" />
     <Compile Include="Models\WIN32\FileAPI.cs" />
     <Compile Include="Models\WIN32\FILE_INFO_BY_HANDLE_STRUCT.cs" />
@@ -91,7 +95,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AppBusiness\EnumsAndStructs\" />
     <Folder Include="AppBusiness\HistoryReader\" />
     <Folder Include="Models\JSON\" />
     <Folder Include="Views\Objects\" />
