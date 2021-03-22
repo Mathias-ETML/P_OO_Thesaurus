@@ -66,6 +66,7 @@
     <Compile Include="Models\WIN32\FileAPI.cs" />
     <Compile Include="Models\WIN32\FILE_INFO_BY_HANDLE_STRUCT.cs" />
     <Compile Include="Models\WIN32\FILE_TIME.cs" />
+    <Compile Include="Models\WIN32\FolderScan.cs" />
     <Compile Include="Models\WIN32\LPBY_HANDLE_FILE_INFORMATION.cs" />
     <Compile Include="Models\WIN32\SECURITY_ATTRIB.cs" />
     <Compile Include="Models\WIN32\SYSTEM_TIME.cs" />
