@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Win32.SafeHandles;
 using System.Windows.Forms;
-using System.ComponentModel;
+
 using P_Thesaurus.AppBusiness.WIN32;
 using static P_Thesaurus.Models.WIN32.FileAPI;
 
@@ -15,17 +15,48 @@ namespace P_Thesaurus.Models.WIN32
     /// Translating c++ into c#.
     /// 
     /// </summary>
-    public class AsyncFolderScanning : IDisposable
+    public class FolderScanning
     {
         // https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.backgroundworker?view=net-5.0
 
+        #region event
+        /// <summary>
+        /// OnFolderScanEnd field
+        /// </summary>
+        public delegate void OnFolderScanEnd();
 
+        /// <summary>
+        /// FolderScanEnd field
+        /// </summary>
+        public OnFolderScanEnd FolderScanEnd;
 
-        private BackgroundWorker _worker;
-        private DoWorkEventArgs _events;
+        /// <summary>
+        /// OnFolderScanEndRaiseEvent function
+        /// </summary>
+        protected virtual void OnFolderScanEndRaiseEvent()
+        {
+            FolderScanEnd?.Invoke();
+        }
 
-        private bool disposedValue = false; // Pour détecter les appels redondants
+        /// <summary>
+        /// OnFolderScanStoped field
+        /// </summary>
+        public delegate void OnFolderScanStoped();
 
+        /// <summary>
+        /// OnFolderScanStoped field
+        /// </summary>
+        public OnFolderScanStoped FolderScanStoped;
+
+        /// <summary>
+        /// OnFolderScanStopedRaiseEvent function
+        /// </summary>
+        protected virtual void OnFolderScanStopedRaiseEvent()
+        {
+            FolderScanStoped?.Invoke();
+        }
+
+        #endregion event
 
         /// <summary>
         /// path field
@@ -43,10 +74,15 @@ namespace P_Thesaurus.Models.WIN32
         protected TreeNode _node;
 
         /// <summary>
+        /// stoped field
+        /// </summary>
+        protected bool _stoped;
+
+        /// <summary>
         /// custom constructor
         /// </summary>
         /// <param name="parentFolder">parent folder</param>
-        public AsyncFolderScanning(ref Folder parentFolder)
+        public FolderScanning(ref Folder parentFolder)
         {
             this._path = parentFolder.Path + "\\*";
             this._parentFolder = parentFolder;
@@ -56,7 +92,7 @@ namespace P_Thesaurus.Models.WIN32
         /// custom constructor
         /// </summary>
         /// <param name="parentFolder">parent folder</param>
-        public AsyncFolderScanning(ref Folder parentFolder, ref TreeNode node)
+        public FolderScanning(ref Folder parentFolder, ref TreeNode node)
         {
             this._path = parentFolder.Path + "\\*";
             this._parentFolder = parentFolder;
@@ -64,19 +100,10 @@ namespace P_Thesaurus.Models.WIN32
         }
 
         /// <summary>
-        /// StartAsync function
-        /// 
-        /// background worker implementaiton
+        /// Start scan 
         /// </summary>
-        /// <param name="sender">background worker</param>
-        /// <param name="e">DoWorkEventArgs</param>
-        public void StartAsync(object sender, DoWorkEventArgs e)
+        public void Start()
         {
-            BackgroundWorker worker = (BackgroundWorker)sender;
-
-            this._worker = worker;
-            this._events = e;
-
             Scan();
         }
 
@@ -95,7 +122,7 @@ namespace P_Thesaurus.Models.WIN32
             IntPtr handle = firstFile.DangerousGetHandle();
 
             // moving through the folder with the first file as ref
-            while (FindNextFile(firstFile, ref data) && !_worker.CancellationPending)
+            while (FindNextFile(firstFile, ref data) && !_stoped)
             {
                 // check if we are getting "." and ".." folders
                 if (data.IsRelativeDirectory)
@@ -108,17 +135,20 @@ namespace P_Thesaurus.Models.WIN32
                 {
                     _parentFolder.Files.Add(new File(_parentFolder, data));
 
-
-                    _node.Nodes.Add(data.cFileName);
-
-                }
-                else
-                {
-                    _parentFolder.Folders.Add(new Folder(_parentFolder, data));
-
                     if (_node != null)
                     {
                         _node.Nodes.Add(data.cFileName);
+                    }
+                }
+                else
+                {
+                    Folder folder = new Folder(_parentFolder, data);
+
+                    if (_node != null)
+                    {
+
+                        _node.Nodes.Add(folder.Node);
+
                     }
                 }
             }
@@ -131,6 +161,8 @@ namespace P_Thesaurus.Models.WIN32
                 firstFile.Dispose();
             }
 
+            
+
             ScanFinished();
         }
 
@@ -139,44 +171,22 @@ namespace P_Thesaurus.Models.WIN32
         /// </summary>
         private void ScanFinished()
         {
-            if (!_worker.CancellationPending)
+            if (_stoped)
             {
-                this._events.Cancel = true;
+                this.OnFolderScanStopedRaiseEvent();
+            }
+            else
+            {
+                this.OnFolderScanEndRaiseEvent();
             }
         }
 
-        #region IDisposable Support
-
-        protected virtual void Dispose(bool disposing)
+        /// <summary>
+        /// Stop function
+        /// </summary>
+        public void Stop()
         {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    // TODO: supprimer l'état managé (objets managés).
-                }
-
-                // TODO: libérer les ressources non managées (objets non managés) et remplacer un finaliseur ci-dessous.
-                // TODO: définir les champs de grande taille avec la valeur Null.
-
-                disposedValue = true;
-            }
+            this._stoped = true;
         }
-
-        // TODO: remplacer un finaliseur seulement si la fonction Dispose(bool disposing) ci-dessus a du code pour libérer les ressources non managées.
-        // ~AsyncFolderScanning() {
-        //   // Ne modifiez pas ce code. Placez le code de nettoyage dans Dispose(bool disposing) ci-dessus.
-        //   Dispose(false);
-        // }
-
-        // Ce code est ajouté pour implémenter correctement le modèle supprimable.
-        public void Dispose()
-        {
-            // Ne modifiez pas ce code. Placez le code de nettoyage dans Dispose(bool disposing) ci-dessus.
-            Dispose(true);
-            // TODO: supprimer les marques de commentaire pour la ligne suivante si le finaliseur est remplacé ci-dessus.
-            // GC.SuppressFinalize(this);
-        }
-        #endregion
     }
 }

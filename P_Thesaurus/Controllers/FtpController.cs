@@ -8,7 +8,7 @@
 
 namespace P_Thesaurus.Controllers
 {
-    class FtpController
+    public class FtpController
     {
     }
 }

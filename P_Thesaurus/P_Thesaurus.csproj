@@ -52,7 +52,15 @@
     <Compile Include="AppBusiness\WIN32\File.cs" />
     <Compile Include="AppBusiness\WIN32\Folder.cs" />
     <Compile Include="AppBusiness\WIN32\FolderObject.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ControllerFactory.cs" />
+    <Compile Include="Controllers\FolderController.cs" />
+    <Compile Include="Controllers\FolderNavigationController.cs" />
+    <Compile Include="Controllers\FtpController.cs" />
+    <Compile Include="Controllers\IBaseController.cs" />
+    <Compile Include="Controllers\LaunchController.cs" />
     <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="Controllers\WebController.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
