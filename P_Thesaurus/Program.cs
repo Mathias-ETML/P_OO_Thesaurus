@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using P_Thesaurus.AppBusiness.HistoryReader;
 
 namespace P_Thesaurus
 {
@@ -17,7 +18,30 @@ namespace P_Thesaurus
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FolderNavigation());
+
+            History<HistoryEntry> history = new History<HistoryEntry>("./coucou.txt");
+
+            history.AddEntry(new HistoryEntry() {
+                Content = "Bonjour",
+                DateTime = DateTime.Now
+            });
+
+            history.AddEntry(new HistoryEntry()
+            {
+                Content = "Clément",
+                DateTime = DateTime.Now
+            });
+
+            history.Write();
+
+            HistoryEntry he = history.Read()[0];
+
+            while (true)
+            {
+
+            }
+
+            //Application.Run(new FolderNavigation());
         }
     }
 }

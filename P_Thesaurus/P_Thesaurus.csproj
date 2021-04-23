@@ -52,6 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppBusiness\HistoryReader\FtpHistoryEntry.cs" />
+    <Compile Include="AppBusiness\HistoryReader\History.cs" />
+    <Compile Include="AppBusiness\HistoryReader\HistoryEntry.cs" />
     <Compile Include="AppBusiness\HistoryReader\IHistory.cs" />
     <Compile Include="Models\JSON\JsonReader.cs" />
     <Compile Include="AppBusiness\EnumsAndStructs\EnumsAndStructs.cs" />

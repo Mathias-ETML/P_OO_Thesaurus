@@ -26,7 +26,7 @@ namespace P_Thesaurus.Models.JSON
 
             if (!File.Exists(path))
             {
-                throw new ArgumentException("File is non exsitent");
+                throw new FileNotFoundException("File is non exsitent");
             }
 
             T obj;
@@ -55,6 +55,10 @@ namespace P_Thesaurus.Models.JSON
         /// <param name="path">path</param>
         public static bool SerializeFile<T>(T obj, string path)
         {
+            string[] infos = path.Split(new char['\\']);
+            string file = '\\' + infos[infos.Length - 1];
+            path = path.Replace(file, "");
+
             FileStream fs = new FileStream(path, FileMode.Create);
 
             JsonSerializer serializer = new JsonSerializer();

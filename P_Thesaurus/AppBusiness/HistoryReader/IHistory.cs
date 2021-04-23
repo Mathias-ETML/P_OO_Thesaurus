@@ -14,17 +14,27 @@ namespace P_Thesaurus.AppBusiness.HistoryReader
         /// <summary>
         /// History field
         /// </summary>
-        List<T> History { get; set; }
+        List<T> History { get; }
 
         /// <summary>
         /// Reader field
         /// </summary>
-        JsonReader<List<T>> Reader { get; set; }
+        JsonReader<List<T>> Reader { get; }
 
         /// <summary>
         /// AddEntry function
         /// </summary>
         /// <param name="entry">entry</param>
         void AddEntry(T entry);
+
+        /// <summary>
+        /// Read function
+        /// </summary>
+        List<T> Read();
+
+        /// <summary>
+        /// Write function
+        /// </summary>
+        bool Write();
     }
 }
