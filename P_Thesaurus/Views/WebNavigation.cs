@@ -5,6 +5,7 @@
  * Projet P_OO-Smart-Thésaurus
  * Form permettant d'afficher la navigation dans un site web
  */
+using P_Thesaurus.Controllers;
 
 namespace P_Thesaurus.Views
 {
@@ -13,6 +14,9 @@ namespace P_Thesaurus.Views
     /// </summary>
     public partial class WebNavigation : NavigationView
     {
+        /// <summary>
+        /// default Controller
+        /// </summary>
         public WebNavigation()
         {
             InitializeComponent();

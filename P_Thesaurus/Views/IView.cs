@@ -8,6 +8,9 @@
 
 namespace P_Thesaurus.Views
 {
+    /// <summary>
+    /// View that regroups all the common views caracteristics
+    /// </summary>
     public interface IView
     {
     }
