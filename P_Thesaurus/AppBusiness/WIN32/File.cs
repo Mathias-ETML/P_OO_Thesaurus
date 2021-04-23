@@ -1,6 +1,4 @@
-﻿
-
-using P_Thesaurus.Models.WIN32;
+﻿using P_Thesaurus.Models.WIN32;
 
 namespace P_Thesaurus.AppBusiness.WIN32
 {

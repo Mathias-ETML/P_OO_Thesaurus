@@ -4,6 +4,8 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Diagnostics.Contracts;
 using P_Thesaurus.AppBusiness.HistoryReader;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace P_Thesaurus.Models.JSON
 {
@@ -45,6 +47,28 @@ namespace P_Thesaurus.Models.JSON
                 }
             }
 
+            // check if need to crypt
+            if (obj.GetType().GetInterface(nameof(IList<ISecurityCritical>)) != null)
+            {
+                // setting up the flags for getting the private array in the list
+                BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
+
+                // getting the private array and casting it
+                ISecurityCritical[] field = typeof(T).GetField("_items", bindFlags).GetValue(obj) as ISecurityCritical[];
+
+                // decrypting
+                foreach (ISecurityCritical item in field)
+                {
+                    if (item != null)
+                    {
+                        item.Password = PasswordManager.DecryptPassword(item.Password, null, null);
+                    }
+                }
+
+                // changing type
+                typeof(T).GetField("_items", bindFlags).SetValue(obj, field);
+            }
+
             return obj;
         }
 
@@ -61,19 +85,27 @@ namespace P_Thesaurus.Models.JSON
             path = path.Replace(file, "");
 
             // check if need to crypt
-            if (obj is ISecurityCritical)
+            if (obj.GetType().GetInterface(nameof(IList<ISecurityCritical>)) != null)
             {
-                // Converting into the interface type to crypt the password
-                // this is a pretty bad hack but it work
-                ISecurityCritical buffer = (ISecurityCritical)Convert.ChangeType(obj, typeof(ISecurityCritical));
+                // setting up the flags for getting the private array in the list
+                BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
+
+                // getting the private array and casting it
+                ISecurityCritical[] field = typeof(T).GetField("_items", bindFlags).GetValue(obj) as ISecurityCritical[];
 
                 // crypting
-                buffer.Password = PasswordManager.CryptPassword(buffer.Password, null, null);
+                foreach (ISecurityCritical item in field)
+                {
+                    if (item != null)
+                    {
+                        item.Password = PasswordManager.CryptPassword(item.Password, null, null);
+                    }
+                }
 
                 // changing type
-                obj = (T)Convert.ChangeType(buffer, typeof(T));
+                typeof(T).GetField("_items", bindFlags).SetValue(obj, field);
             }
-
+           
             FileStream fs = new FileStream(path, FileMode.Create);
 
             JsonSerializer serializer = new JsonSerializer();
@@ -104,6 +136,8 @@ namespace P_Thesaurus.Models.JSON
 
         /// <summary>
         /// Password manager class
+        /// 
+        /// todo : ISecurityCritical with T
         /// </summary>
         [System.Security.SecurityCritical]
         private static class PasswordManager

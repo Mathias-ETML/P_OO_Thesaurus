@@ -10,5 +10,6 @@ namespace P_Thesaurus.Models
 {
     public class FolderModel
     {
+        
     }
 }

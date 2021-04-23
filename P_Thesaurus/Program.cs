@@ -19,22 +19,19 @@ namespace P_Thesaurus
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            History<HistoryEntry> history = new History<HistoryEntry>("./coucou.txt");
+            History<FtpHistoryEntry> history = new History<FtpHistoryEntry>("./coucou.txt");
 
-            history.AddEntry(new HistoryEntry() {
+            history.AddEntry(new FtpHistoryEntry() {
                 Content = "Bonjour",
-                DateTime = DateTime.Now
-            });
-
-            history.AddEntry(new HistoryEntry()
-            {
-                Content = "Clément",
-                DateTime = DateTime.Now
+                DateTime = DateTime.Now.Date,
+                Username = "buz",
+                Password = "12345"
             });
 
             history.Write();
 
-            HistoryEntry he = history.Read()[0];
+            FtpHistoryEntry he = history.Read()[0];
+
 
             while (true)
             {
