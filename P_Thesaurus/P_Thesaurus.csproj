@@ -8,10 +8,11 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>P_Thesaurus</RootNamespace>
     <AssemblyName>P_Thesaurus</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,6 +36,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,6 +54,8 @@
   <ItemGroup>
     <Compile Include="AppBusiness\EnumsAndStructs.cs" />
     <Compile Include="AppBusiness\Log.cs" />
+    <Compile Include="AppBusiness\HistoryReader\IHistory.cs" />
+    <Compile Include="Models\JSON\JsonReader.cs" />
     <Compile Include="AppBusiness\WIN32\File.cs" />
     <Compile Include="AppBusiness\WIN32\Folder.cs" />
     <Compile Include="AppBusiness\WIN32\FolderObject.cs" />
@@ -62,6 +68,7 @@
     <Compile Include="Controllers\LaunchController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\WebController.cs" />
+    <Compile Include="Models\JSON\JsonReaderBase.cs" />
     <Compile Include="Models\FtpModel.cs" />
     <Compile Include="Models\FolderModel.cs" />
     <Compile Include="Models\WebModel.cs" />
@@ -138,6 +145,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Views\BaseView.resx">
       <DependentUpon>BaseView.cs</DependentUpon>
@@ -145,6 +153,7 @@
     <EmbeddedResource Include="Views\FolderNavigation.resx">
       <DependentUpon>FolderNavigation.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -159,8 +168,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AppBusiness\HistoryReader\" />
-    <Folder Include="Models\JSON\" />
     <Folder Include="Views\Objects\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
