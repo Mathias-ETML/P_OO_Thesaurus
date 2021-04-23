@@ -1,4 +1,6 @@
-﻿/*
+﻿using P_Thesaurus.Controllers;
+
+/*
  * ETML
  * Clément Sartoni
  * 23.04.2021
@@ -14,6 +16,8 @@ namespace P_Thesaurus.Views
     /// </summary>
     public partial class FolderHistoryView : HistoryView
     {
+        public FolderController Controller { get; protected set; }
+
         public FolderHistoryView()
         {
             InitializeComponent();

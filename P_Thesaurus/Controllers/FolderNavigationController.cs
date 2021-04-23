@@ -7,6 +7,7 @@
  */
 
 using System;
+using P_Thesaurus.Views;
 
 namespace P_Thesaurus.Controllers
 {
@@ -16,6 +17,7 @@ namespace P_Thesaurus.Controllers
     public abstract class FolderNavigationController : BaseController
     {
         #region Variables
+        protected override BaseView View { get => base.View; set => base.View = value; }
         #endregion
 
         #region Public Methods

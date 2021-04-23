@@ -17,7 +17,7 @@ namespace P_Thesaurus.Controllers
     public abstract class BaseController : IBaseController
     {
         #region Variables
-        private BaseView _view;
+        virtual protected BaseView View { get; set; }
 
         #endregion
 

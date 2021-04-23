@@ -6,6 +6,8 @@
  * Form permettant d'afficher l'historique des connexions FTP
  */
 
+using P_Thesaurus.Controllers;
+
 namespace P_Thesaurus.Views
 {
     /// <summary>
@@ -13,6 +15,8 @@ namespace P_Thesaurus.Views
     /// </summary>
     public partial class FtpHistoryView : HistoryView
     {
+        public FtpController Controller { get; protected set; }
+
         public FtpHistoryView()
         {
             InitializeComponent();
