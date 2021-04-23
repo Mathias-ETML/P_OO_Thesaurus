@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Security.Cryptography;
 using System.Diagnostics.Contracts;
+using P_Thesaurus.AppBusiness.HistoryReader;
 
 namespace P_Thesaurus.Models.JSON
 {
@@ -58,6 +59,20 @@ namespace P_Thesaurus.Models.JSON
             string[] infos = path.Split(new char['\\']);
             string file = '\\' + infos[infos.Length - 1];
             path = path.Replace(file, "");
+
+            // check if need to crypt
+            if (obj is ISecurityCritical)
+            {
+                // Converting into the interface type to crypt the password
+                // this is a pretty bad hack but it work
+                ISecurityCritical buffer = (ISecurityCritical)Convert.ChangeType(obj, typeof(ISecurityCritical));
+
+                // crypting
+                buffer.Password = PasswordManager.CryptPassword(buffer.Password, null, null);
+
+                // changing type
+                obj = (T)Convert.ChangeType(buffer, typeof(T));
+            }
 
             FileStream fs = new FileStream(path, FileMode.Create);
 

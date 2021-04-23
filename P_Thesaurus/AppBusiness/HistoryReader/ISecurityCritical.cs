@@ -7,18 +7,13 @@ using System.Threading.Tasks;
 namespace P_Thesaurus.AppBusiness.HistoryReader
 {
     /// <summary>
-    /// FtpHistoryEntry class
+    /// ISecurityCritical interface
     /// </summary>
-    public class FtpHistoryEntry : HistoryEntry, ISecurityCritical
+    public interface ISecurityCritical
     {
-        /// <summary>
-        /// Username field
-        /// </summary>
-        public string Username { get; set; }
-
         /// <summary>
         /// Password field
         /// </summary>
-        public string Password { get; set; }
+        string Password { get; set; }
     }
 }
