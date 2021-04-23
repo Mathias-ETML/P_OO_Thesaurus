@@ -3,15 +3,15 @@
  * Clément Sartoni
  * 22.03.2021
  * Projet P_OO-Smart-Thésaurus
- * Form d'héritage représentant toutes les vues gérant la navigation dans les éléments indexés
+ * Form d'héritage représentant toutes les vues gérant l'affichage de l'historique et la séléction d'un endroit à indexer
  */
 using System.Windows.Forms;
 
 namespace P_Thesaurus.Views
 {
-    public abstract partial class NavigationView : BaseView
+    public partial class HistoryView : BaseView
     {
-        public NavigationView()
+        public HistoryView()
         {
             InitializeComponent();
         }
