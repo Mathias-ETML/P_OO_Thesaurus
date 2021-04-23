@@ -6,6 +6,7 @@
  * Controller gérant les données provenant d'un dossier
  */
 
+using P_Thesaurus.Models;
 using System;
 
 namespace P_Thesaurus.Controllers
@@ -16,6 +17,7 @@ namespace P_Thesaurus.Controllers
     public class FolderController : FolderNavigationController
     {
         #region Variables
+        private FolderModel _model;
         #endregion
 
         #region Public Methods

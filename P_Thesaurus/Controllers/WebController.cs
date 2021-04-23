@@ -5,6 +5,7 @@
  * Projet P_OO-Smart-Thésaurus
  * Controller gérant les opérations de la connexion et du transfert des données d'un site Web.
  */
+using P_Thesaurus.Models;
 using System;
 
 namespace P_Thesaurus.Controllers
@@ -15,6 +16,10 @@ namespace P_Thesaurus.Controllers
     public class WebController : BaseController
     {
         #region Variables
+        /// <summary>
+        /// The controller's model
+        /// </summary>
+        private WebModel _model;
         #endregion
 
         #region Public Methods

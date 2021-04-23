@@ -6,6 +6,7 @@
  * Controller gérant les opérations de la connexion et du transfert des données FTP
  */
 
+using P_Thesaurus.Models;
 using System;
 
 namespace P_Thesaurus.Controllers
@@ -16,6 +17,10 @@ namespace P_Thesaurus.Controllers
     public class FtpController : FolderNavigationController
     {
         #region Variables
+        /// <summary>
+        /// the controller's model
+        /// </summary>
+        private FtpModel _model;
         #endregion
 
         #region Public Methods
