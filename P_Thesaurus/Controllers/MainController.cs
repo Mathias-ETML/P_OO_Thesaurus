@@ -6,24 +6,43 @@
  * Controller principal gérant le lançement des autres.
  */
 
+using System;
+using System.Windows.Forms;
+using P_Thesaurus.Views;
+using P_Thesaurus.AppBusiness.EnumsAndStructs;
+
 namespace P_Thesaurus.Controllers
 {
     /// <summary>
     /// Main controller that control all controllers
     /// </summary>
-    public class MainController
+    public class MainController : IController
     {
         #region Variables
         /// <summary>
         /// The current used Controller
         /// </summary>
-        private IBaseController _childController;
+        private IController _childController;
 
         /// <summary>
         /// The controller's factory
         /// </summary>
         private ControllerFactory _factory;
 
+        /// <summary>
+        /// BaseView property, always null
+        /// </summary>
+        private BaseView _baseView = null;
+
+        /// <summary>
+        /// Disposed value
+        /// </summary>
+        private bool _disposedValue;
+
+        /// <summary>
+        /// View field
+        /// </summary>
+        public BaseView View { get => _baseView; set => _baseView = value; }
         #endregion
 
         #region Public Methods
@@ -32,40 +51,54 @@ namespace P_Thesaurus.Controllers
         /// </summary>
         public MainController()
         {
-            _factory = new ControllerFactory();
+            this._factory = new ControllerFactory();
+            this._childController = new LaunchController();
+        }
+
+        /// <summary>
+        /// Launch function
+        /// </summary>
+        public void Launch()
+        {
+            this._childController.Launch();
+        }
+
+        /// <summary>
+        /// OnCloseNotifying function
+        /// </summary>
+        /// <param name="controllerType">type</param>
+        public void OnCloseNotifying(ControllerType controllerType)
+        {
+            this._childController = _factory.GetController(controllerType);
         }
         #endregion
 
         #region Dispose Model
-        private bool disposedValue;
-
+        /// <summary>
+        /// Dispose funciton
+        /// </summary>
+        /// <param name="disposing">disposing</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposedValue)
             {
                 if (disposing)
                 {
-                    // TODO: supprimer l'état managé (objets managés)
+                    _childController.Dispose();
+                    _factory.Dispose();
                 }
 
-                // TODO: libérer les ressources non managées (objets non managés) et substituer le finaliseur
-                // TODO: affecter aux grands champs une valeur null
-                disposedValue = true;
+                _disposedValue = true;
             }
         }
 
-        // // TODO: substituer le finaliseur uniquement si 'Dispose(bool disposing)' a du code pour libérer les ressources non managées
-        // ~MainController()
-        // {
-        //     // Ne changez pas ce code. Placez le code de nettoyage dans la méthode 'Dispose(bool disposing)'
-        //     Dispose(disposing: false);
-        // }
-
+        /// <summary>
+        /// Dispose function
+        /// </summary>
         public void Dispose()
         {
-            // Ne changez pas ce code. Placez le code de nettoyage dans la méthode 'Dispose(bool disposing)'
-            Dispose(disposing: true);
-            System.GC.SuppressFinalize(this);
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
         #endregion
     }

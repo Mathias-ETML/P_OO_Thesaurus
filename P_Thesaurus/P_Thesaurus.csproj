@@ -55,9 +55,9 @@
     <Compile Include="AppBusiness\HistoryReader\FtpHistoryEntry.cs" />
     <Compile Include="AppBusiness\HistoryReader\History.cs" />
     <Compile Include="AppBusiness\HistoryReader\HistoryEntry.cs" />
-    <Compile Include="AppBusiness\EnumsAndStructs.cs" />
+    <Compile Include="AppBusiness\EnumsAndStructs\EnumsAndStructs.cs" />
     <Compile Include="AppBusiness\HistoryReader\ISecurityCritical.cs" />
-    <Compile Include="AppBusiness\Log.cs" />
+    <Compile Include="AppBusiness\Logs\Log.cs" />
     <Compile Include="AppBusiness\HistoryReader\IHistory.cs" />
     <Compile Include="Models\JSON\JsonReader.cs" />
     <Compile Include="AppBusiness\WIN32\File.cs" />
@@ -116,7 +116,6 @@
     <Compile Include="Views\HistoryView.Designer.cs">
       <DependentUpon>HistoryView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\IView.cs" />
     <Compile Include="Views\LaunchingView.cs">
       <SubType>Form</SubType>
     </Compile>

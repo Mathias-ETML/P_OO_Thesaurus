@@ -6,6 +6,8 @@
  * Factory utilisée par le MainController pour instancier les controllers dont il a besoin
  */
 using System;
+using P_Thesaurus.Controllers;
+using P_Thesaurus.AppBusiness.EnumsAndStructs;
 
 namespace P_Thesaurus.Controllers
 {
@@ -15,6 +17,8 @@ namespace P_Thesaurus.Controllers
     public class ControllerFactory : IDisposable
     {
         #region Variables
+        private bool _disposedValue;
+
         #endregion
 
         #region Public Methods
@@ -25,14 +29,19 @@ namespace P_Thesaurus.Controllers
         {
 
         }
+
+        public IController GetController(ControllerType type)
+        {
+            return null;
+        }
         #endregion
 
         #region Dispose Model
-        private bool disposedValue;
+
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposedValue)
             {
                 if (disposing)
                 {
@@ -41,7 +50,7 @@ namespace P_Thesaurus.Controllers
 
                 // TODO: libérer les ressources non managées (objets non managés) et substituer le finaliseur
                 // TODO: affecter aux grands champs une valeur null
-                disposedValue = true;
+                _disposedValue = true;
             }
         }
 

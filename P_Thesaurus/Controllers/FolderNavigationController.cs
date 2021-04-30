@@ -17,7 +17,8 @@ namespace P_Thesaurus.Controllers
     public abstract class FolderNavigationController : BaseController
     {
         #region Variables
-        protected override BaseView View { get => base.View; set => base.View = value; }
+        private NavigationView _view;
+        public override BaseView View { get => this._view; set => this._view = value as NavigationView; }
         #endregion
 
         #region Public Methods

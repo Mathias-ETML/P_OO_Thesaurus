@@ -17,6 +17,12 @@ namespace P_Thesaurus.Controllers
     public class LaunchController : BaseController
     {
         #region Variables
+        private bool disposedValue;
+
+        private LaunchingView _view;
+
+        public override BaseView View { get => _view; set => _view = value as LaunchingView; }
+
         #endregion
 
         #region Public Methods
@@ -25,12 +31,12 @@ namespace P_Thesaurus.Controllers
         /// </summary>
         public LaunchController()
         {
-
+            this._view = new LaunchingView();
         }
         #endregion
 
         #region Dispose Model
-        private bool disposedValue;
+
 
         protected new virtual void Dispose(bool disposing)
         {

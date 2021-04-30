@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using P_Thesaurus.AppBusiness.HistoryReader;
+using P_Thesaurus.Controllers;
 
 namespace P_Thesaurus
 {
@@ -19,6 +20,7 @@ namespace P_Thesaurus
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            /*
             History<FtpHistoryEntry> history = new History<FtpHistoryEntry>("./coucou.txt");
 
             history.AddEntry(new FtpHistoryEntry() {
@@ -31,12 +33,11 @@ namespace P_Thesaurus
             history.Write();
 
             FtpHistoryEntry he = history.Read()[0];
+            */
 
-
-            while (true)
-            {
-
-            }
+            MainController mainController = new MainController();
+            mainController.Launch();
+            mainController.Dispose();
 
             //Application.Run(new FolderNavigation());
         }
