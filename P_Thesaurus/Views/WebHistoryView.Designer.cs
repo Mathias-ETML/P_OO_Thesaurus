@@ -1,7 +1,7 @@
 ﻿
 namespace P_Thesaurus.Views
 {
-    partial class WebNavigationView
+    partial class WebHistoryView
     {
         /// <summary>
         /// Required designer variable.

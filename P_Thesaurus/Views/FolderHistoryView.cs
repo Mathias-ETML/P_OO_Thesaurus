@@ -7,6 +7,8 @@
  */
 
 
+using P_Thesaurus.Controllers;
+
 namespace P_Thesaurus.Views
 {
     /// <summary>
@@ -14,9 +16,22 @@ namespace P_Thesaurus.Views
     /// </summary>
     public partial class FolderHistoryView : HistoryView
     {
+        #region Variables
+        /// <summary>
+        /// This view's controller
+        /// </summary>
+        public FolderController Controller { get; set; }
+        #endregion
+
+        #region Public Methods
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
         public FolderHistoryView()
         {
             InitializeComponent();
+
         }
+        #endregion
     }
 }

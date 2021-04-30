@@ -11,9 +11,19 @@ namespace P_Thesaurus.Views
 {
     public partial class HistoryView : BaseView
     {
+        #region Variables
+
+        #endregion
+
+        #region Public Methods
+        /// <summary>
+        /// Default Constructor
         public HistoryView()
         {
             InitializeComponent();
         }
+        #endregion
+
+
     }
 }
