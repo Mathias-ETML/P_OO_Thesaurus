@@ -14,7 +14,7 @@ namespace P_Thesaurus
         /// <summary>
         /// Point d'entrée principal de l'application.
         /// </summary>
-        [STAThread]
+        [MTAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
@@ -38,6 +38,8 @@ namespace P_Thesaurus
             MainController mainController = new MainController();
             mainController.Launch();
             mainController.Dispose();
+
+            //MainController instance = (MainController)Activator.CreateInstance(typeof(MainController));
 
             //Application.Run(new FolderNavigation());
         }

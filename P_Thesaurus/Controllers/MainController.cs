@@ -7,7 +7,6 @@
  */
 
 using System;
-using System.Windows.Forms;
 using P_Thesaurus.Views;
 using P_Thesaurus.AppBusiness.EnumsAndStructs;
 
@@ -16,7 +15,7 @@ namespace P_Thesaurus.Controllers
     /// <summary>
     /// Main controller that control all controllers
     /// </summary>
-    public class MainController : IController
+    public class MainController
     {
         #region Variables
         /// <summary>
@@ -52,7 +51,11 @@ namespace P_Thesaurus.Controllers
         public MainController()
         {
             this._factory = new ControllerFactory();
-            this._childController = new LaunchController();
+
+            this._childController = new LaunchController()
+            {
+                MainController = this
+            };
         }
 
         /// <summary>
@@ -69,6 +72,7 @@ namespace P_Thesaurus.Controllers
         /// <param name="controllerType">type</param>
         public void OnCloseNotifying(ControllerType controllerType)
         {
+            this._childController.Dispose();
             this._childController = _factory.GetController(controllerType);
         }
         #endregion

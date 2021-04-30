@@ -6,6 +6,7 @@
  * Controller gérant le lancement de l'application et la vue de lancement.
  */
 
+using P_Thesaurus.AppBusiness.EnumsAndStructs;
 using P_Thesaurus.Views;
 using System;
 
@@ -14,7 +15,7 @@ namespace P_Thesaurus.Controllers
     /// <summary>
     /// Controller that controls the app launching and the first view
     /// </summary>
-    public class LaunchController : BaseController
+    public class LaunchController : BaseController, IController
     {
         #region Variables
         private bool disposedValue;
@@ -32,6 +33,12 @@ namespace P_Thesaurus.Controllers
         public LaunchController()
         {
             this._view = new LaunchingView();
+            this._view.FormClosing += OnViewClosing;
+        }
+
+        public void OnViewClosing(object sender, EventArgs e)
+        {
+            base.MainController.OnCloseNotifying(ControllerType.Folder);
         }
         #endregion
 

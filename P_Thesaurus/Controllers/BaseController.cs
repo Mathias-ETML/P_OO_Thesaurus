@@ -23,11 +23,13 @@ namespace P_Thesaurus.Controllers
         /// _disposedValue attribut
         /// </summary>
         private bool _disposedValue;
+        private MainController _mainController;
 
         /// <summary>
         /// View property
         /// </summary>
         public abstract BaseView View { get; set; }
+        public MainController MainController { get => _mainController; set => _mainController = value; }
         #endregion
 
         #region Public Methods

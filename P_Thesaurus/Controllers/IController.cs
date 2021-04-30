@@ -22,6 +22,8 @@ namespace P_Thesaurus.Controllers
         /// </summary>
         BaseView View { get; set; }
 
+        MainController MainController { get; set; }
+
         /// <summary>
         /// Launch function
         /// </summary>
