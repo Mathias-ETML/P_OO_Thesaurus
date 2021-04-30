@@ -5,6 +5,7 @@
  * Projet P_OO-Smart-Thésaurus
  * Form d'héritage représentant toutes les vues gérant l'affichage de l'historique et la séléction d'un endroit à indexer
  */
+using P_Thesaurus.Controllers;
 using System.Windows.Forms;
 
 namespace P_Thesaurus.Views

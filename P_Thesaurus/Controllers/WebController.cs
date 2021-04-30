@@ -6,6 +6,7 @@
  * Controller gérant les opérations de la connexion et du transfert des données d'un site Web.
  */
 using P_Thesaurus.Models;
+using P_Thesaurus.Views;
 using System;
 
 namespace P_Thesaurus.Controllers
@@ -19,7 +20,13 @@ namespace P_Thesaurus.Controllers
         /// <summary>
         /// The controller's model
         /// </summary>
+        private bool _disposedValue;
+
         private WebModel _model;
+
+        private WebNavigationView _view;
+
+        public override BaseView View { get => this._view; set => this._view = value as WebNavigationView; }
         #endregion
 
         #region Public Methods
@@ -33,11 +40,11 @@ namespace P_Thesaurus.Controllers
         #endregion
 
         #region Dispose Model
-        private bool disposedValue;
+
 
         protected new virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposedValue)
             {
                 if (disposing)
                 {
@@ -46,7 +53,7 @@ namespace P_Thesaurus.Controllers
 
                 // TODO: libérer les ressources non managées (objets non managés) et substituer le finaliseur
                 // TODO: affecter aux grands champs une valeur null
-                disposedValue = true;
+                _disposedValue = true;
             }
         }
 

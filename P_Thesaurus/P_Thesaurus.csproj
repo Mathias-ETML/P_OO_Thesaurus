@@ -55,10 +55,11 @@
     <Compile Include="AppBusiness\HistoryReader\FtpHistoryEntry.cs" />
     <Compile Include="AppBusiness\HistoryReader\History.cs" />
     <Compile Include="AppBusiness\HistoryReader\HistoryEntry.cs" />
-    <Compile Include="AppBusiness\EnumsAndStructs.cs" />
+    <Compile Include="AppBusiness\EnumsAndStructs\EnumsAndStructs.cs" />
     <Compile Include="AppBusiness\HistoryReader\ISecurityCritical.cs" />
-    <Compile Include="AppBusiness\Log.cs" />
+    <Compile Include="AppBusiness\Logs\Log.cs" />
     <Compile Include="AppBusiness\HistoryReader\IHistory.cs" />
+    <Compile Include="Controllers\IController.cs" />
     <Compile Include="Models\JSON\JsonReader.cs" />
     <Compile Include="AppBusiness\WIN32\File.cs" />
     <Compile Include="AppBusiness\WIN32\Folder.cs" />
@@ -68,7 +69,6 @@
     <Compile Include="Controllers\FolderController.cs" />
     <Compile Include="Controllers\FolderNavigationController.cs" />
     <Compile Include="Controllers\FtpController.cs" />
-    <Compile Include="Controllers\IBaseController.cs" />
     <Compile Include="Controllers\LaunchController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\WebController.cs" />
@@ -116,7 +116,6 @@
     <Compile Include="Views\HistoryView.Designer.cs">
       <DependentUpon>HistoryView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\IView.cs" />
     <Compile Include="Views\LaunchingView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -129,6 +128,10 @@
     <Compile Include="Views\NavigationView.Designer.cs">
       <DependentUpon>NavigationView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Objects\BackArrow.cs" />
+    <Compile Include="Views\Objects\Filter.cs" />
+    <Compile Include="Views\Objects\HistoryPanel.cs" />
+    <Compile Include="Views\Objects\SearchBar.cs" />
     <Compile Include="Views\WebNavigation.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -171,8 +174,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Objects\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

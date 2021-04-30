@@ -11,7 +11,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 
-namespace P_Thesaurus.AppBusiness
+namespace P_Thesaurus.AppBusiness.Logs
 {
     /// <summary>
     /// Singleton Logger. Default, log in a "Logs.txt" file next to the .exe file.

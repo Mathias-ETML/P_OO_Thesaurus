@@ -16,6 +16,8 @@ namespace P_Thesaurus.Views
     /// </summary>
     public partial class FolderNavigation : NavigationView
     {
+
+
         #region Variables
         /// <summary>
         /// the view's controller

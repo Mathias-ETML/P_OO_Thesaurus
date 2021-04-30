@@ -6,6 +6,8 @@
  * Base des controllers gérant les opérations communes à tous les controlleurs
  */
 
+using P_Thesaurus.AppBusiness.EnumsAndStructs;
+using System.Windows.Forms;
 using P_Thesaurus.Views;
 using System;
 
@@ -14,11 +16,20 @@ namespace P_Thesaurus.Controllers
     /// <summary>
     /// Base controller for all of them
     /// </summary>
-    public abstract class BaseController : IBaseController
+    public abstract class BaseController : IController
     {
         #region Variables
-        private BaseView _view;
+        /// <summary>
+        /// _disposedValue attribut
+        /// </summary>
+        private bool _disposedValue;
+        private MainController _mainController;
 
+        /// <summary>
+        /// View property
+        /// </summary>
+        public abstract BaseView View { get; set; }
+        public MainController MainController { get => _mainController; set => _mainController = value; }
         #endregion
 
         #region Public Methods
@@ -29,14 +40,23 @@ namespace P_Thesaurus.Controllers
         {
 
         }
+
+        public void Launch()
+        {
+            Application.Run(View);
+        }
+
+        public void OnCloseNotifying(ControllerType controllerType)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region Dispose Model
-        private bool disposedValue;
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposedValue)
             {
                 if (disposing)
                 {
@@ -45,7 +65,7 @@ namespace P_Thesaurus.Controllers
 
                 // TODO: libérer les ressources non managées (objets non managés) et substituer le finaliseur
                 // TODO: affecter aux grands champs une valeur null
-                disposedValue = true;
+                _disposedValue = true;
             }
         }
 
@@ -62,6 +82,8 @@ namespace P_Thesaurus.Controllers
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+
+
 
         #endregion
     }
