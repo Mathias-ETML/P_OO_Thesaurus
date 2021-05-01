@@ -23,13 +23,21 @@ namespace P_Thesaurus.Controllers
         /// _disposedValue attribut
         /// </summary>
         private bool _disposedValue;
-        private MainController _mainController;
+
+        /// <summary>
+        /// mother controller attribut
+        /// </summary>
+        private IController _motherController;
 
         /// <summary>
         /// View property
         /// </summary>
         public abstract BaseView View { get; set; }
-        public MainController MainController { get => _mainController; set => _mainController = value; }
+
+        /// <summary>
+        /// MotherController property
+        /// </summary>
+        public IController MotherController { get => _motherController; set => _motherController = value; }
         #endregion
 
         #region Public Methods
@@ -41,14 +49,23 @@ namespace P_Thesaurus.Controllers
 
         }
 
+        /// <summary>
+        /// Launch the view
+        /// </summary>
         public void Launch()
         {
             Application.Run(View);
         }
 
+        /// <summary>
+        /// Occure when the controller need to be disposed
+        /// Call his mother controller to swap to the required controller
+        /// And dispose this controller
+        /// </summary>
+        /// <param name="controllerType">controllerType</param>
         public void OnCloseNotifying(ControllerType controllerType)
         {
-            throw new NotImplementedException();
+            MotherController.OnCloseNotifying(controllerType);
         }
         #endregion
 

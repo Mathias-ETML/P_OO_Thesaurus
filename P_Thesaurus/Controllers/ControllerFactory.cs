@@ -55,11 +55,11 @@ namespace P_Thesaurus.Controllers
         }
         #endregion
 
+        #region Dispose Model
         /// <summary>
         /// Dispose function
         /// </summary>
         /// <param name="disposing">disposing</param>
-        #region Dispose Model
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposedValue)
@@ -81,7 +81,6 @@ namespace P_Thesaurus.Controllers
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
-
         #endregion
     }
 }

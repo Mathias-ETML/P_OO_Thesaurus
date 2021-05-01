@@ -7,6 +7,7 @@
  */
 
 using P_Thesaurus.Models;
+using P_Thesaurus.Views;
 using System;
 
 namespace P_Thesaurus.Controllers
@@ -17,7 +18,25 @@ namespace P_Thesaurus.Controllers
     public class FolderController : FolderNavigationController
     {
         #region Variables
+        /// <summary>
+        /// disposed value attribute
+        /// </summary>
+        private bool _disposedValue;
+
+        /// <summary>
+        /// model attribute
+        /// </summary>
         private FolderModel _model;
+
+        /// <summary>
+        /// view attribute
+        /// </summary>
+        private BaseView _view;
+
+        /// <summary>
+        /// view field
+        /// </summary>
+        public override BaseView View { get => _view; set => _view = value; }
         #endregion
 
         #region Public Methods
@@ -31,11 +50,13 @@ namespace P_Thesaurus.Controllers
         #endregion
 
         #region Dispose Model
-        private bool disposedValue;
-
+        /// <summary>
+        /// Dispose function
+        /// </summary>
+        /// <param name="disposing"></param>
         protected new virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposedValue)
             {
                 if (disposing)
                 {
@@ -44,7 +65,7 @@ namespace P_Thesaurus.Controllers
 
                 // TODO: libérer les ressources non managées (objets non managés) et substituer le finaliseur
                 // TODO: affecter aux grands champs une valeur null
-                disposedValue = true;
+                _disposedValue = true;
             }
         }
 

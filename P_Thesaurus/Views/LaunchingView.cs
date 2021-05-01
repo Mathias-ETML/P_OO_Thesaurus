@@ -15,7 +15,7 @@ namespace P_Thesaurus.Views
     /// </summary>
     public partial class LaunchingView : BaseView
     {
-        public LaunchController Controller { get; protected set;}
+        public LaunchController Controller { get; set;}
 
         public LaunchingView()
         {

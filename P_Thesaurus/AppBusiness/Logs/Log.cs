@@ -31,6 +31,7 @@ namespace P_Thesaurus.AppBusiness.Logs
         public string Path { get; set; }
 
         #endregion
+
         #region Methods
         /// <summary>
         /// default private constructor
@@ -63,6 +64,11 @@ namespace P_Thesaurus.AppBusiness.Logs
         {
             try
             {
+                if (!File.Exists(Path))
+                {
+                    File.Create(Path);
+                }
+
                 using(StreamWriter writer = File.AppendText(Path))
                 {
                     writer.WriteLine($"[{DateTime.Now.ToString("G")}][{level}][{message}]");
