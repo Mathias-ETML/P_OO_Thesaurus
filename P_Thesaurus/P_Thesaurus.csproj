@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>P_Thesaurus</RootNamespace>
     <AssemblyName>P_Thesaurus</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -159,6 +159,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\FolderNavigation.resx">
       <DependentUpon>FolderNavigation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\LaunchingView.resx">
+      <DependentUpon>LaunchingView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

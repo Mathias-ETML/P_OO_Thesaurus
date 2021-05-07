@@ -1,4 +1,4 @@
-﻿using P_Thesaurus.Controllers;
+﻿
 
 /*
  * ETML
@@ -7,12 +7,12 @@
  * Projet P_OO-Smart-Thésaurus
  * Form permettant d'afficher l'historique des connexions FTP
  */
-
-
 using P_Thesaurus.Controllers;
+
 
 namespace P_Thesaurus.Views
 {
+
     /// <summary>
     /// Form permettant d'afficher l'historique des connexions FTP
     /// </summary>

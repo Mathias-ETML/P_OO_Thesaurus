@@ -24,9 +24,9 @@ namespace P_Thesaurus.Controllers
 
         private WebModel _model;
 
-        private WebNavigationView _view;
+        private BaseView _view;
 
-        public override BaseView View { get => this._view; set => this._view = value as WebNavigationView; }
+        public override BaseView View { get => this._view; set => this._view = value; }
         #endregion
 
         #region Public Methods
