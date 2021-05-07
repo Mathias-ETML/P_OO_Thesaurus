@@ -60,21 +60,13 @@ namespace P_Thesaurus.Controllers
             {
                 if (disposing)
                 {
-                    // TODO: supprimer l'état managé (objets managés)
+                    _view.Dispose();
                 }
 
-                // TODO: libérer les ressources non managées (objets non managés) et substituer le finaliseur
-                // TODO: affecter aux grands champs une valeur null
+                base.Dispose();
                 disposedValue = true;
             }
         }
-
-        // // TODO: substituer le finaliseur uniquement si 'Dispose(bool disposing)' a du code pour libérer les ressources non managées
-        // ~ControllerFactory()
-        // {
-        //     // Ne changez pas ce code. Placez le code de nettoyage dans la méthode 'Dispose(bool disposing)'
-        //     Dispose(disposing: false);
-        // }
 
         public new void Dispose()
         {
