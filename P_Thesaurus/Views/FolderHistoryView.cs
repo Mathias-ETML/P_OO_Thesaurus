@@ -1,4 +1,5 @@
 ﻿using P_Thesaurus.Controllers;
+using System;
 
 /*
  * ETML
@@ -31,7 +32,31 @@ namespace P_Thesaurus.Views
         public FolderHistoryView()
         {
             InitializeComponent();
+        }
 
+        /// <summary>
+        /// Init function
+        /// </summary>
+        public void Init()
+        {
+            string[] drives = Controller.GetAllDrives();
+
+            foreach (string item in drives)
+            {
+                driveTreeView.Nodes.Add(item);
+            }
+
+            driveTreeView.NodeMouseDoubleClick += OnDriveSelection;
+        }
+
+        /// <summary>
+        /// OnDriveSelection function
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void OnDriveSelection(object sender, EventArgs e)
+        {
+            Controller.LaunchFolderNavigationView(null);
         }
         #endregion
     }

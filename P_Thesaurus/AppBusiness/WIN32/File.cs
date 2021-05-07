@@ -39,6 +39,11 @@ namespace P_Thesaurus.AppBusiness.WIN32
         private Folder _parentFolder;
 
         /// <summary>
+        /// FileType field
+        /// </summary> 
+        public Type FileType { get => _type; }
+
+        /// <summary>
         /// Custom constructor
         /// </summary>
         /// <param name="parentfolder">Compressed</param>

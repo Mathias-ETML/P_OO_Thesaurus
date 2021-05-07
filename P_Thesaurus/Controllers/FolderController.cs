@@ -9,6 +9,9 @@
 using P_Thesaurus.Models;
 using P_Thesaurus.Views;
 using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace P_Thesaurus.Controllers
 {
@@ -45,7 +48,41 @@ namespace P_Thesaurus.Controllers
         /// </summary>
         public FolderController()
         {
+            this._model = new FolderModel();
 
+            this._view = new FolderHistoryView()
+            {
+                Controller = this
+            };
+
+            ((FolderHistoryView)this._view).Init();
+        }
+
+        /// <summary>
+        /// GetAllDrives function
+        /// </summary>
+        /// <returns>array of drives</returns>
+        public string[] GetAllDrives()
+        {
+            return _model.GetAllDrives();
+        }
+
+        /// <summary>
+        /// LaunchFolderNavigationView function
+        /// </summary>
+        /// <param name="path">path to start with</param>
+        public void LaunchFolderNavigationView(string path)
+        {
+            this._view.Hide();
+
+            FolderNavigationView view = new FolderNavigationView()
+            {
+                Controller = this
+            };
+
+            view.Init();
+
+            view.Show(_view);
         }
         #endregion
 

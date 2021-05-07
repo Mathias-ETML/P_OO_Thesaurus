@@ -77,7 +77,6 @@
     <Compile Include="Models\FolderModel.cs" />
     <Compile Include="Models\WebModel.cs" />
     <Compile Include="Models\WIN32\FileAPI.cs" />
-    <Compile Include="Models\WIN32\FILE_INFO_BY_HANDLE_STRUCT.cs" />
     <Compile Include="Models\WIN32\FILE_TIME.cs" />
     <Compile Include="Models\WIN32\FolderScan.cs" />
     <Compile Include="Models\WIN32\LPBY_HANDLE_FILE_INFORMATION.cs" />
@@ -98,11 +97,11 @@
     <Compile Include="Views\FolderHistoryView.Designer.cs">
       <DependentUpon>FolderHistoryView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\FolderNavigation.cs">
+    <Compile Include="Views\FolderNavigationView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\FolderNavigation.Designer.cs">
-      <DependentUpon>FolderNavigation.cs</DependentUpon>
+    <Compile Include="Views\FolderNavigationView.designer.cs">
+      <DependentUpon>FolderNavigationView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\FtpHistoryView.cs">
       <SubType>Form</SubType>
@@ -132,11 +131,11 @@
     <Compile Include="Views\Objects\Filter.cs" />
     <Compile Include="Views\Objects\HistoryPanel.cs" />
     <Compile Include="Views\Objects\SearchBar.cs" />
-    <Compile Include="Views\WebNavigation.cs">
+    <Compile Include="Views\WebNavigationView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\WebNavigation.Designer.cs">
-      <DependentUpon>WebNavigation.cs</DependentUpon>
+    <Compile Include="Views\WebNavigationView.Designer.cs">
+      <DependentUpon>WebNavigationView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\WebHistoryView.cs">
       <SubType>Form</SubType>
@@ -157,8 +156,8 @@
     <EmbeddedResource Include="Views\BaseView.resx">
       <DependentUpon>BaseView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\FolderNavigation.resx">
-      <DependentUpon>FolderNavigation.cs</DependentUpon>
+    <EmbeddedResource Include="Views\FolderHistoryView.resx">
+      <DependentUpon>FolderHistoryView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

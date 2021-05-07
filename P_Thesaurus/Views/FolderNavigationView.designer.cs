@@ -1,7 +1,7 @@
 ﻿
 namespace P_Thesaurus.Views
 {
-    partial class FolderNavigation
+    partial class FolderNavigationView
     {
         /// <summary>
         /// Variable nécessaire au concepteur.

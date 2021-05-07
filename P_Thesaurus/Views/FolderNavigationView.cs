@@ -14,10 +14,8 @@ namespace P_Thesaurus.Views
     /// <summary>
     /// View that shows navigation in FTP or Windows Files
     /// </summary>
-    public partial class FolderNavigation : NavigationView
+    public partial class FolderNavigationView : NavigationView
     {
-
-
         #region Variables
         /// <summary>
         /// the view's controller
@@ -29,9 +27,17 @@ namespace P_Thesaurus.Views
         /// <summary>
         /// Default Controller
         /// </summary>
-        public FolderNavigation()
+        public FolderNavigationView()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Init function
+        /// </summary>
+        public void Init()
+        {
+
         }
         #endregion
     }

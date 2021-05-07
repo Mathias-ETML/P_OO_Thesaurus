@@ -16,8 +16,11 @@ namespace P_Thesaurus.Models.WIN32
     public struct LPBY_HANDLE_FILE_INFORMATION
     {
         internal int dwFileAttributes;
+        [NonSerialized]
         internal FILE_TIME ftCreationTime;
+        [NonSerialized]
         internal FILE_TIME ftLastAccessTime;
+        [NonSerialized]
         internal FILE_TIME ftLastWriteTime;
         internal int dwVolumeSerialNumber;
         internal int nFileSizeHigh;

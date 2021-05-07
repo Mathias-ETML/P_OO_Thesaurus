@@ -7,6 +7,8 @@
  */
 
 using P_Thesaurus.AppBusiness.HistoryReader;
+using System;
+using System.Collections.Generic;
 
 namespace P_Thesaurus.Models
 {
@@ -26,6 +28,15 @@ namespace P_Thesaurus.Models
         public FolderModel()
         {
 
+        }
+
+        /// <summary>
+        /// GetAllDrives function
+        /// </summary>
+        /// <returns>array of drives</returns>
+        public string[] GetAllDrives()
+        {
+            return Environment.GetLogicalDrives();
         }
         #endregion
     }

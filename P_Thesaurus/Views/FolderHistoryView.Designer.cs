@@ -29,12 +29,30 @@ namespace P_Thesaurus.Views
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.driveTreeView = new System.Windows.Forms.TreeView();
+            this.SuspendLayout();
+            // 
+            // driveTreeView
+            // 
+            this.driveTreeView.Location = new System.Drawing.Point(12, 171);
+            this.driveTreeView.Name = "driveTreeView";
+            this.driveTreeView.Size = new System.Drawing.Size(121, 154);
+            this.driveTreeView.TabIndex = 1;
+            // 
+            // FolderHistoryView
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(474, 337);
+            this.Controls.Add(this.driveTreeView);
+            this.Name = "FolderHistoryView";
             this.Text = "FolderHistoryView";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.TreeView driveTreeView;
     }
 }

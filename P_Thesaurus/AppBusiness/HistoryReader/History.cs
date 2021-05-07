@@ -10,7 +10,7 @@ namespace P_Thesaurus.AppBusiness.HistoryReader
     /// <summary>
     /// History class
     /// </summary>
-    public class History<T>
+    public class History<T> : IDisposable
     {
         /// <summary>
         /// reader field

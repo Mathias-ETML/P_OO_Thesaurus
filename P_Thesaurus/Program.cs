@@ -14,7 +14,7 @@ namespace P_Thesaurus
         /// <summary>
         /// Point d'entrée principal de l'application.
         /// </summary>
-        [MTAThread]
+        [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
@@ -35,7 +35,8 @@ namespace P_Thesaurus
             FtpHistoryEntry he = history.Read()[0];
             */
 
-            MainController mainController = new MainController();
+            FolderController mainController = new FolderController();
+            
             mainController.Launch();
             mainController.Dispose();
 

@@ -10,6 +10,7 @@ using P_Thesaurus.AppBusiness.EnumsAndStructs;
 using System.Windows.Forms;
 using P_Thesaurus.Views;
 using System;
+using System.Threading;
 
 namespace P_Thesaurus.Controllers
 {

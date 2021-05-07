@@ -117,6 +117,7 @@ namespace P_Thesaurus.Models.WIN32
         /// <returns>SafeFileHandle</returns>
         [DllImport(KERNEL32, SetLastError = true, CharSet = CharSet.Unicode, BestFitMapping = false)]
         [ResourceExposure(ResourceScope.None)]
+        [return: MarshalAs(UnmanagedType.AsAny)]
         public static extern global::Microsoft.Win32.SafeHandles.SafeFileHandle FindFirstFile(string fileName, ref WIN32_FIND_DATA data);
 
         /// <summary>
@@ -129,6 +130,7 @@ namespace P_Thesaurus.Models.WIN32
         /// <returns>if next file was find</returns>
         [DllImport(KERNEL32, SetLastError = true, CharSet = CharSet.Unicode, BestFitMapping = false)]
         [ResourceExposure(ResourceScope.None)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool FindNextFile(
                 SafeFileHandle hndFindFile,
                 ref WIN32_FIND_DATA lpFindFileData);
@@ -143,6 +145,7 @@ namespace P_Thesaurus.Models.WIN32
         [DllImport(KERNEL32)]
         [ResourceExposure(ResourceScope.None)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool FindClose(IntPtr handle);
 
         /// <summary>
@@ -152,6 +155,7 @@ namespace P_Thesaurus.Models.WIN32
         /// <returns>file type</returns>
         [DllImport(KERNEL32)]
         [ResourceExposure(ResourceScope.None)]
+        [return: MarshalAs(UnmanagedType.U4)]
         public static extern int GetFileType(SafeFileHandle handle);
 
         /// <summary>
@@ -173,6 +177,7 @@ namespace P_Thesaurus.Models.WIN32
         [System.Security.SecurityCritical]  // auto-generated
         [ResourceExposure(ResourceScope.Machine)]
         [ResourceConsumption(ResourceScope.Machine)]
+        [return: MarshalAs(UnmanagedType.AsAny)]
         public static SafeFileHandle SafeCreateFile(String lpFileName,
                     uint dwDesiredAccess, System.IO.FileShare dwShareMode,
                     SECURITY_ATTRIBUTES securityAttrs, System.IO.FileMode dwCreationDisposition,
@@ -213,6 +218,7 @@ namespace P_Thesaurus.Models.WIN32
         /// <returns>SafeFileHandle</returns>
         [DllImport(KERNEL32, SetLastError = true, CharSet = CharSet.Auto, BestFitMapping = false)]
         [ResourceExposure(ResourceScope.Machine)]
+        [return: MarshalAs(UnmanagedType.AsAny)]
         private static extern SafeFileHandle CreateFile(String lpFileName,
                     uint dwDesiredAccess, System.IO.FileShare dwShareMode,
                     SECURITY_ATTRIBUTES securityAttrs, System.IO.FileMode dwCreationDisposition,
@@ -227,22 +233,10 @@ namespace P_Thesaurus.Models.WIN32
         /// <param name="fileInformation">pointer file information</param>
         /// <returns>success</returns>
         [DllImport(KERNEL32, SetLastError = true, CharSet = CharSet.Auto, BestFitMapping = false)]
-        public static extern bool GetFileInformationByHandle(SafeFileHandle handle, ref LPBY_HANDLE_FILE_INFORMATION fileInformation);
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetFileInformationByHandle(SafeFileHandle handle,
+                                                             ref LPBY_HANDLE_FILE_INFORMATION fileInformation);
 
-
-        /// <summary>
-        /// GetFileInformationByHandleEx
-        /// 
-        /// 
-        /// </summary>
-        /// <param name="handle">handle</param>
-        /// <param name="infoEnum">enum</param>
-        /// <param name="infoStruct">pointer to struct</param>
-        /// <param name="infoStructSize">sizeof enum</param>
-        /// <returns>success</returns>
-        [DllImport(KERNEL32, SetLastError = true, CharSet = CharSet.Auto, BestFitMapping = false)]
-        public static extern bool GetFileInformationByHandleEx(SafeFileHandle handle, FILE_INFO_BY_HANDLE_ENUM infoEnum, ref FILE_INFO_BY_HANDLE_STRUCT infoStruct, int infoStructSize);
-        
         /// <summary>
         /// FileTimeToSystemTime
         /// 
@@ -252,7 +246,9 @@ namespace P_Thesaurus.Models.WIN32
         /// <param name="lpSystemTime">lpSystemTime struct</param>
         /// <returns>success</returns>
         [DllImport(KERNEL32, SetLastError = true, CharSet = CharSet.Auto, BestFitMapping = false)]
-        public static extern bool FileTimeToSystemTime(ref FILE_TIME lpFileTime, ref SYSTEM_TIME lpSystemTime);
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool FileTimeToSystemTime(ref FILE_TIME lpFileTime,
+                                                       ref SYSTEM_TIME lpSystemTime);
         #endregion dll
     }
 }

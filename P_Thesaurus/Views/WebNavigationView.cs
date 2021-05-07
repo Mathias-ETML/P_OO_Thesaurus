@@ -12,12 +12,12 @@ namespace P_Thesaurus.Views
     /// <summary>
     /// Form permettant d'afficher la navigation dans un site web
     /// </summary>
-    public partial class WebNavigation : NavigationView
+    public partial class WebNavigationView : NavigationView
     {
         /// <summary>
         /// default Controller
         /// </summary>
-        public WebNavigation()
+        public WebNavigationView()
         {
             InitializeComponent();
         }
