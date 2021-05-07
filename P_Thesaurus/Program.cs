@@ -35,7 +35,7 @@ namespace P_Thesaurus
             FtpHistoryEntry he = history.Read()[0];
             */
 
-            FolderController mainController = new FolderController();
+            MainController mainController = new MainController();
             
             mainController.Launch();
             mainController.Dispose();

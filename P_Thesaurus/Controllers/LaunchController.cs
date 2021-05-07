@@ -40,7 +40,10 @@ namespace P_Thesaurus.Controllers
         /// </summary>
         public LaunchController()
         {
-            this._view = new LaunchingView();
+            this._view = new LaunchingView()
+            {
+                Controller = this
+            };
         }
 
         /// <summary>

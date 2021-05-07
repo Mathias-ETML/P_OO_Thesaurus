@@ -55,7 +55,16 @@ namespace P_Thesaurus.Controllers
         /// </summary>
         public void Launch()
         {
-            Application.Run(View);
+            if (MotherController.View == null)
+            {
+                Application.Run(View);
+            }
+            else
+            {
+                MotherController.View.AddOwnedForm(this.View);
+                MotherController.View.Hide();
+                this.View.Show();
+            }
         }
 
         /// <summary>

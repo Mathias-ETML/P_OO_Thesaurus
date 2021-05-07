@@ -76,12 +76,14 @@ namespace P_Thesaurus.Controllers
         /// <param name="controllerType">type</param>
         public void OnCloseNotifying(ControllerType controllerType)
         {
-            _childController.Dispose();
-            _childController = _factory.GetController(controllerType);
+            // get the new controller
+            IController buffer = _factory.GetController(controllerType);
 
-            _childController.MotherController = this;
+            // setup monther controller
+            buffer.MotherController = this._childController;
 
-            _childController.Launch();
+            // launch controller
+            buffer.Launch();
         }
         #endregion
 
