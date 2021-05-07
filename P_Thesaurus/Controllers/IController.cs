@@ -22,7 +22,10 @@ namespace P_Thesaurus.Controllers
         /// </summary>
         BaseView View { get; set; }
 
-        MainController MainController { get; set; }
+        /// <summary>
+        /// Mother controller field
+        /// </summary>
+        IController MotherController { get; set; }
 
         /// <summary>
         /// Launch function
@@ -31,8 +34,6 @@ namespace P_Thesaurus.Controllers
 
         /// <summary>
         /// OnCloseNotifying function
-        /// 
-        /// https://stackoverflow.com/questions/752/how-to-create-a-new-object-instance-from-a-type
         /// </summary>
         /// <param name="controllerType">controller type</param>
         void OnCloseNotifying(ControllerType controllerType);

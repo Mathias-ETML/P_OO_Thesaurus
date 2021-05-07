@@ -15,15 +15,23 @@ namespace P_Thesaurus.Controllers
     /// <summary>
     /// Controller that controls the app launching and the first view
     /// </summary>
-    public class LaunchController : BaseController, IController
+    public class LaunchController : BaseController
     {
         #region Variables
+        /// <summary>
+        /// disposedValue attribute
+        /// </summary>
         private bool disposedValue;
 
-        private LaunchingView _view;
+        /// <summary>
+        /// view attribute
+        /// </summary>
+        private BaseView _view;
 
-        public override BaseView View { get => _view; set => _view = value as LaunchingView; }
-
+        /// <summary>
+        /// View field
+        /// </summary>
+        public override BaseView View { get => _view; set => _view = value; }
         #endregion
 
         #region Public Methods
@@ -35,11 +43,17 @@ namespace P_Thesaurus.Controllers
             this._view = new LaunchingView();
         }
 
+        /// <summary>
+        /// NotifyMotherController function
+        /// </summary>
+        /// <param name="type">type of controller you want to launch</param>
+        public void NotifyMotherController(ControllerType type)
+        {
+            base.OnCloseNotifying(type);
+        }
         #endregion
 
         #region Dispose Model
-
-
         protected new virtual void Dispose(bool disposing)
         {
             if (!disposedValue)

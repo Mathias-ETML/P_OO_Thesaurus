@@ -7,6 +7,7 @@
  */
 
 using P_Thesaurus.Models;
+using P_Thesaurus.Views;
 using System;
 
 namespace P_Thesaurus.Controllers
@@ -21,6 +22,16 @@ namespace P_Thesaurus.Controllers
         /// the controller's model
         /// </summary>
         private FtpModel _model;
+
+        /// <summary>
+        /// view attribute
+        /// </summary>
+        private BaseView _view;
+
+        /// <summary>
+        /// View field
+        /// </summary>
+        public override BaseView View { get => _view; set => _view = value; }
         #endregion
 
         #region Public Methods

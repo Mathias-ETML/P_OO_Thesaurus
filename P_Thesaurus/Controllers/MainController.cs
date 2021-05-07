@@ -15,7 +15,7 @@ namespace P_Thesaurus.Controllers
     /// <summary>
     /// Main controller that control all controllers
     /// </summary>
-    public class MainController
+    public class MainController : IController
     {
         #region Variables
         /// <summary>
@@ -29,19 +29,23 @@ namespace P_Thesaurus.Controllers
         private ControllerFactory _factory;
 
         /// <summary>
-        /// BaseView property, always null
-        /// </summary>
-        private BaseView _baseView = null;
-
-        /// <summary>
         /// Disposed value
         /// </summary>
         private bool _disposedValue;
 
         /// <summary>
         /// View field
+        /// 
+        /// Main controller doesn't have base view
         /// </summary>
-        public BaseView View { get => _baseView; set => _baseView = value; }
+        public BaseView View { get => null; set { return; } }
+
+        /// <summary>
+        /// Mother Controller field
+        /// 
+        /// Main controller doesn't have mother controller
+        /// </summary>
+        public IController MotherController { get => null; set { return; } }
         #endregion
 
         #region Public Methods
@@ -54,7 +58,7 @@ namespace P_Thesaurus.Controllers
 
             this._childController = new LaunchController()
             {
-                MainController = this
+                MotherController = this
             };
         }
 
@@ -72,8 +76,12 @@ namespace P_Thesaurus.Controllers
         /// <param name="controllerType">type</param>
         public void OnCloseNotifying(ControllerType controllerType)
         {
-            this._childController.Dispose();
-            this._childController = _factory.GetController(controllerType);
+            _childController.Dispose();
+            _childController = _factory.GetController(controllerType);
+
+            _childController.MotherController = this;
+
+            _childController.Launch();
         }
         #endregion
 

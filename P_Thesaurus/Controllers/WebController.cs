@@ -18,14 +18,23 @@ namespace P_Thesaurus.Controllers
     {
         #region Variables
         /// <summary>
-        /// The controller's model
+        /// disposed value attribut
         /// </summary>
         private bool _disposedValue;
 
+        /// <summary>
+        /// model attribut
+        /// </summary>
         private WebModel _model;
 
+        /// <summary>
+        /// view attribute
+        /// </summary>
         private BaseView _view;
 
+        /// <summary>
+        /// View field
+        /// </summary>
         public override BaseView View { get => this._view; set => this._view = value; }
         #endregion
 
