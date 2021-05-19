@@ -23,6 +23,11 @@ namespace P_Thesaurus.AppBusiness.HistoryReader
         private List<T> _entries;
 
         /// <summary>
+        /// Reload on write function
+        /// </summary>
+        private bool _reloadOnWrite;
+
+        /// <summary>
         /// disposed value
         /// </summary>
         private bool _disposedValue = false;
@@ -45,6 +50,19 @@ namespace P_Thesaurus.AppBusiness.HistoryReader
         {
             this._reader = new JsonReader<List<T>>(file);
             this._entries = new List<T>();
+            this._reloadOnWrite = false;
+        }
+
+        /// <summary>
+        /// Custom constructor
+        /// </summary>
+        /// <param name="file">path to the file</param>
+        /// <param name="reloadOnWrite">reload when you write in the json reader</param>
+        public History(string file, bool reloadOnWrite)
+        {
+            this._reader = new JsonReader<List<T>>(file);
+            this._entries = new List<T>();
+            this._reloadOnWrite = reloadOnWrite;
         }
 
         /// <summary>
@@ -54,6 +72,11 @@ namespace P_Thesaurus.AppBusiness.HistoryReader
         public void AddEntry(T entry)
         {
             this._entries.Add(entry);
+
+            if (_reloadOnWrite)
+            {
+                Write();
+            }
         }
 
         /// <summary>
@@ -71,7 +94,11 @@ namespace P_Thesaurus.AppBusiness.HistoryReader
         public bool Write()
         {
             bool success = _reader.Write(_entries);
-            _entries = Reader.Reload();
+
+            if (success)
+            {
+                _entries = Reader.Reload();
+            }
 
             return success;
         }

@@ -9,9 +9,12 @@
 using P_Thesaurus.Models;
 using P_Thesaurus.Views;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
+using P_Thesaurus.AppBusiness.HistoryReader;
+using P_Thesaurus.AppBusiness.WIN32;
 
 namespace P_Thesaurus.Controllers
 {
@@ -62,9 +65,18 @@ namespace P_Thesaurus.Controllers
         /// GetAllDrives function
         /// </summary>
         /// <returns>array of drives</returns>
-        public string[] GetAllDrives()
+        public List<DriveInfo> GetAllDrives()
         {
             return _model.GetAllDrives();
+        }
+
+        /// <summary>
+        /// GetHistory function
+        /// </summary>
+        /// <returns></returns>
+        public List<HistoryEntry> GetHistory()
+        {
+            return _model.GetHistory();
         }
 
         /// <summary>
@@ -75,15 +87,18 @@ namespace P_Thesaurus.Controllers
         {
             this._view.Hide();
 
-            FolderNavigationView view = new FolderNavigationView()
+            FolderNavigationView view = new FolderNavigationView(path)
             {
-                Controller = this
+                Controller = this,
             };
 
+            // call all the function from this controller
             view.Init();
 
             view.Show(_view);
         }
+
+        
         #endregion
 
         #region Dispose Model

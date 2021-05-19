@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-
 using Microsoft.Win32.SafeHandles;
 using P_Thesaurus.Models.WIN32;
 
@@ -29,7 +28,7 @@ namespace P_Thesaurus.AppBusiness.WIN32
             }
 
             // path setting
-            string path = $"{letter}" + ":\\";
+            string path = $"{letter}" + ":";
 
             SafeFileHandle safeFileHandle = FileAPI.CreateFileShortcut(path);
 
@@ -61,8 +60,6 @@ namespace P_Thesaurus.AppBusiness.WIN32
             //FileAPI.FILE_INFO_BY_HANDLE_CLASS info2 = new FileAPI.FILE_INFO_BY_HANDLE_CLASS();
 
             //FileAPI.GetFileInformationByHandleEx(safeFileHandle, FileAPI.FILE_INFO_BY_HANDLE_ENUM.FileBasicInfo, ref info2, sizeof(FileAPI.FILE_INFO_BY_HANDLE_CLASS));
-
-            string[] paths = path.Split('\\');
 
             SafeFileHandle safeFileHandle = FileAPI.CreateFileShortcut(path);
 
@@ -125,7 +122,7 @@ namespace P_Thesaurus.AppBusiness.WIN32
         /// <summary>
         /// ParentFolder Property
         /// </summary>
-        public Folder ParentFolder { get => _parentFolder; protected set => _parentFolder = value; }
+        public Folder ParentFolder { get => _parentFolder; set => _parentFolder = value; }
 
         /// <summary>
         /// Type Property

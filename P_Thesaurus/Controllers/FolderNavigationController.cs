@@ -7,6 +7,9 @@
  */
 
 using System;
+using System.Windows.Forms;
+using P_Thesaurus.AppBusiness.WIN32;
+using P_Thesaurus.Models;
 using P_Thesaurus.Views;
 
 namespace P_Thesaurus.Controllers
@@ -16,22 +19,49 @@ namespace P_Thesaurus.Controllers
     /// </summary>
     public abstract class FolderNavigationController : BaseController
     {
+        /// <summary>
+        /// model attribute
+        /// </summary>
+        private FolderModel _model;
+
+        private bool _disposedValue;
+
+
         #region Public Methods
         /// <summary>
         /// Default Constructor
         /// </summary>
         public FolderNavigationController()
         {
+            this._model = new FolderModel();
+        }
 
+        /// <summary>
+        /// Get folder function
+        /// </summary>
+        /// <param name="path">pat</param>
+        /// <returns>Folder</returns>
+        public Folder GetFolder(string path)
+        {
+            return _model.GetFolder(path);
+        }
+
+        /// <summary>
+        /// Start scan function
+        /// </summary>
+        /// <param name="folder">folder</param>
+        /// <param name="node">node</param>
+        public void StartScan(ref Folder folder, ref TreeNode node)
+        {
+            _model.StartScan(ref folder, ref node);
         }
         #endregion
 
         #region Dispose Model
-        private bool disposedValue;
 
         protected new virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposedValue)
             {
                 if (disposing)
                 {
@@ -40,7 +70,7 @@ namespace P_Thesaurus.Controllers
 
                 // TODO: libérer les ressources non managées (objets non managés) et substituer le finaliseur
                 // TODO: affecter aux grands champs une valeur null
-                disposedValue = true;
+                _disposedValue = true;
             }
         }
 

@@ -1,17 +1,18 @@
-﻿using P_Thesaurus.Controllers;
-using System;
-
-
+﻿
 /*
  * ETML
  * Clément Sartoni
  * 23.04.2021
  * Projet P_OO-Smart-Thésaurus
- * Form permettant d'afficher l'historique des connexions FTP
+ * 
  */
+
+using P_Thesaurus.AppBusiness.HistoryReader;
 using P_Thesaurus.Controllers;
-
-
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Windows.Forms;
 
 namespace P_Thesaurus.Views
 {
@@ -42,14 +43,42 @@ namespace P_Thesaurus.Views
         /// </summary>
         public void Init()
         {
-            string[] drives = Controller.GetAllDrives();
+            List<DriveInfo> drives = Controller.GetAllDrives();
 
-            foreach (string item in drives)
+            foreach (DriveInfo item in drives)
             {
-                driveTreeView.Nodes.Add(item);
+                if (item.IsReady && item.DriveType != DriveType.Network)
+                {
+                    TreeNode node = new TreeNode("Nom : " + item.Name + "  Espace : " + item.AvailableFreeSpace / 1000000000);
+
+                    node.Name = item.Name.Substring(0, 2);
+
+                    driveTreeView.Nodes.Add(node);
+                }
+            }
+
+            List<HistoryEntry> history = Controller.GetHistory();
+
+            if (history.Count == 0)
+            {
+                TreeNode node = new TreeNode("Aucun dossier disponible");
+                node.Name = null;
+
+                historyTreeView.Nodes.Add(node);
+            }
+            else
+            {
+                foreach (HistoryEntry item in history)
+                {
+                    TreeNode node = new TreeNode("Dossier : " + item.Content + "  Date : " + item.DateTime);
+                    node.Name = item.Content;
+
+                    historyTreeView.Nodes.Add(node);
+                }
             }
 
             driveTreeView.NodeMouseDoubleClick += OnDriveSelection;
+            historyTreeView.NodeMouseDoubleClick += OnDriveSelection;
         }
 
         /// <summary>
@@ -59,7 +88,16 @@ namespace P_Thesaurus.Views
         /// <param name="e"></param>
         public void OnDriveSelection(object sender, EventArgs e)
         {
-            Controller.LaunchFolderNavigationView(null);
+            TreeView obj = (TreeView)sender;
+
+            TreeNode selected = obj.SelectedNode;
+
+            if (selected.Name != null)
+            {
+                // we are passing the path trough the node name, wich is a simple way if giving wich drive or folder the user wants
+                Controller.LaunchFolderNavigationView(selected.Name);
+            }
+            
         }
         #endregion
     }

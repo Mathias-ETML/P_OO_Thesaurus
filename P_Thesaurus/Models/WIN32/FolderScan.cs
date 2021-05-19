@@ -15,7 +15,7 @@ namespace P_Thesaurus.Models.WIN32
     /// Translating c++ into c#.
     /// 
     /// </summary>
-    public class FolderScanning
+    public class FolderScan
     {
         // https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.backgroundworker?view=net-5.0
 
@@ -82,7 +82,7 @@ namespace P_Thesaurus.Models.WIN32
         /// custom constructor
         /// </summary>
         /// <param name="parentFolder">parent folder</param>
-        public FolderScanning(ref Folder parentFolder)
+        public FolderScan(ref Folder parentFolder)
         {
             this._path = parentFolder.Path + "\\*";
             this._parentFolder = parentFolder;
@@ -92,7 +92,7 @@ namespace P_Thesaurus.Models.WIN32
         /// custom constructor
         /// </summary>
         /// <param name="parentFolder">parent folder</param>
-        public FolderScanning(ref Folder parentFolder, ref TreeNode node)
+        public FolderScan(ref Folder parentFolder, ref TreeNode node)
         {
             this._path = parentFolder.Path + "\\*";
             this._parentFolder = parentFolder;
@@ -146,9 +146,7 @@ namespace P_Thesaurus.Models.WIN32
 
                     if (_node != null)
                     {
-
                         _node.Nodes.Add(folder.Node);
-
                     }
                 }
             }
@@ -160,8 +158,6 @@ namespace P_Thesaurus.Models.WIN32
                 firstFile.SetHandleAsInvalid();
                 firstFile.Dispose();
             }
-
-            
 
             ScanFinished();
         }

@@ -159,6 +159,9 @@
     <EmbeddedResource Include="Views\FolderHistoryView.resx">
       <DependentUpon>FolderHistoryView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\FolderNavigationView.resx">
+      <DependentUpon>FolderNavigationView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\LaunchingView.resx">
       <DependentUpon>LaunchingView.cs</DependentUpon>
     </EmbeddedResource>

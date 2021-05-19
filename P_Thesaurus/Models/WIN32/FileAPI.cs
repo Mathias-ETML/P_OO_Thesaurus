@@ -177,7 +177,6 @@ namespace P_Thesaurus.Models.WIN32
         [System.Security.SecurityCritical]  // auto-generated
         [ResourceExposure(ResourceScope.Machine)]
         [ResourceConsumption(ResourceScope.Machine)]
-        [return: MarshalAs(UnmanagedType.AsAny)]
         public static SafeFileHandle SafeCreateFile(String lpFileName,
                     uint dwDesiredAccess, System.IO.FileShare dwShareMode,
                     SECURITY_ATTRIBUTES securityAttrs, System.IO.FileMode dwCreationDisposition,
@@ -218,7 +217,6 @@ namespace P_Thesaurus.Models.WIN32
         /// <returns>SafeFileHandle</returns>
         [DllImport(KERNEL32, SetLastError = true, CharSet = CharSet.Auto, BestFitMapping = false)]
         [ResourceExposure(ResourceScope.Machine)]
-        [return: MarshalAs(UnmanagedType.AsAny)]
         private static extern SafeFileHandle CreateFile(String lpFileName,
                     uint dwDesiredAccess, System.IO.FileShare dwShareMode,
                     SECURITY_ATTRIBUTES securityAttrs, System.IO.FileMode dwCreationDisposition,

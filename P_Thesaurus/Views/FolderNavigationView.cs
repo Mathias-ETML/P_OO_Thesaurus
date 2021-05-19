@@ -7,6 +7,7 @@
  */
 
 
+using P_Thesaurus.AppBusiness.WIN32;
 using P_Thesaurus.Controllers;
 
 namespace P_Thesaurus.Views
@@ -17,6 +18,9 @@ namespace P_Thesaurus.Views
     public partial class FolderNavigationView : NavigationView
     {
         #region Variables
+        private string _path;
+        private Folder _currentFolder;
+
         /// <summary>
         /// the view's controller
         /// </summary>
@@ -27,8 +31,10 @@ namespace P_Thesaurus.Views
         /// <summary>
         /// Default Controller
         /// </summary>
-        public FolderNavigationView()
+        public FolderNavigationView(string path)
         {
+            this._path = path;
+
             InitializeComponent();
         }
 
@@ -37,7 +43,7 @@ namespace P_Thesaurus.Views
         /// </summary>
         public void Init()
         {
-
+            _currentFolder = Controller.GetFolder(_path);
         }
         #endregion
     }

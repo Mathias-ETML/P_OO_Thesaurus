@@ -69,16 +69,15 @@ namespace P_Thesaurus.AppBusiness.WIN32
         /// </summary>
         protected void SetType()
         {
-            string[] buffer = this.Name.Split('.');
-
             // check if we just have a FILE
-            if (buffer.Length == 1)
+            if (!Name.Contains("."))
             {
                 this._type = Type.None;
                 return;
             }
 
             // setting extension
+            string[] buffer = this.Name.Split('.');
             this._extension = '.' + buffer[buffer.Length - 1];
 
             // swiching
