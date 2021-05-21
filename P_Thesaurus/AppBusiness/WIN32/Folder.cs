@@ -44,8 +44,6 @@ namespace P_Thesaurus.AppBusiness.WIN32
             // re init because split diid not happen like excpeted in ObjectFolder ctor
             // this is ok because we "only" can call this 26 time, optimisation is not required
             folder.Name = $"{letter}:";
-            folder.Node.Name = folder.Name;
-            folder.Node.Text = folder.Name;
 
             return folder;
         }
@@ -143,7 +141,6 @@ namespace P_Thesaurus.AppBusiness.WIN32
         {
             this._folders = new List<Folder>();
             this._files = new List<File>();
-            this._node = new TreeNode();
         }
 
         /// <summary>
@@ -164,6 +161,8 @@ namespace P_Thesaurus.AppBusiness.WIN32
             {
                 this.Path = _parentFolder.Path + "\\" + this._data.FileName;
             }
+
+            this.Text = this.Name;
 
             this._folders = new List<Folder>();
             this._files = new List<File>();

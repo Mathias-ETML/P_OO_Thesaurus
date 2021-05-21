@@ -22,16 +22,16 @@ namespace P_Thesaurus
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            /*
-            History<HistoryEntry> history = new History<HistoryEntry>(@"E:\Projets\P_Theau\P_Thesaurus\P_Thesaurus\P_Thesaurus\bin\folder_history.txt");
+            
+            History<HistoryEntry> history = new History<HistoryEntry>(FolderModel.DEFAULT_FOLDER_HISTORY_PATH);
 
             history.AddEntry(new HistoryEntry() {
-                Content = "C:\\",
+                Content = @"F:\Projets\P_Theau\P_Thesaurus\P_Thesaurus",
                 DateTime = DateTime.Now.Date,
             });
 
             history.Write();
-            */
+            
 
             /*
             History<FtpHistoryEntry> history = new History<FtpHistoryEntry>(FolderModel.DEFAULT_FOLDER_HISTORY_PATH);
@@ -42,10 +42,10 @@ namespace P_Thesaurus
                 DateTime = DateTime.Now.Date,
                 Password = "12345",
                 Username = "Mathias"
-            });
+            });*/
 
             history.Write();
-            */
+            
 
             MainController mainController = new MainController();
             

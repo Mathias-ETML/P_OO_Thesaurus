@@ -146,7 +146,7 @@ namespace P_Thesaurus.Models.WIN32
 
                     if (_node != null)
                     {
-                        _node.Nodes.Add(folder.Node);
+                        _node.Nodes.Add(folder);
                     }
                 }
             }

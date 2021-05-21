@@ -29,31 +29,65 @@ namespace P_Thesaurus.Views
         /// </summary>
         private void InitializeComponent()
         {
-            this.treeView1 = new System.Windows.Forms.TreeView();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.folderTreeView = new System.Windows.Forms.TreeView();
+            this.currentFolderListView = new System.Windows.Forms.ListView();
+            this.name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.modification = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.taille = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
-            // treeView1
+            // folderTreeView
             // 
-            this.treeView1.Location = new System.Drawing.Point(12, 108);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(217, 330);
-            this.treeView1.TabIndex = 0;
+            this.folderTreeView.Location = new System.Drawing.Point(71, 109);
+            this.folderTreeView.Name = "folderTreeView";
+            this.folderTreeView.Size = new System.Drawing.Size(217, 329);
+            this.folderTreeView.TabIndex = 0;
+            this.folderTreeView.DoubleClick += new System.EventHandler(this.OnFolderChange);
             // 
-            // listBox1
+            // currentFolderListView
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(245, 109);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(543, 329);
-            this.listBox1.TabIndex = 1;
+            this.currentFolderListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.name,
+            this.type,
+            this.modification,
+            this.taille});
+            this.currentFolderListView.GridLines = true;
+            this.currentFolderListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.currentFolderListView.HideSelection = false;
+            this.currentFolderListView.Location = new System.Drawing.Point(338, 188);
+            this.currentFolderListView.Name = "currentFolderListView";
+            this.currentFolderListView.Size = new System.Drawing.Size(400, 250);
+            this.currentFolderListView.TabIndex = 1;
+            this.currentFolderListView.UseCompatibleStateImageBehavior = false;
+            this.currentFolderListView.VirtualListSize = 4;
+            // 
+            // name
+            // 
+            this.name.Text = "Nom";
+            this.name.Width = 150;
+            // 
+            // type
+            // 
+            this.type.Text = "Type";
+            this.type.Width = 100;
+            // 
+            // modification
+            // 
+            this.modification.Text = "Modification Date";
+            this.modification.Width = 100;
+            // 
+            // taille
+            // 
+            this.taille.Text = "Taille";
+            this.taille.Width = 40;
             // 
             // FolderNavigationView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.listBox1);
-            this.Controls.Add(this.treeView1);
+            this.Controls.Add(this.currentFolderListView);
+            this.Controls.Add(this.folderTreeView);
             this.Name = "FolderNavigationView";
             this.ResumeLayout(false);
 
@@ -61,7 +95,11 @@ namespace P_Thesaurus.Views
 
         #endregion
 
-        private System.Windows.Forms.TreeView treeView1;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.TreeView folderTreeView;
+        private System.Windows.Forms.ListView currentFolderListView;
+        private System.Windows.Forms.ColumnHeader name;
+        private System.Windows.Forms.ColumnHeader type;
+        private System.Windows.Forms.ColumnHeader modification;
+        private System.Windows.Forms.ColumnHeader taille;
     }
 }
