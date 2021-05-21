@@ -11,6 +11,7 @@ using P_Thesaurus.AppBusiness.HistoryReader;
 using P_Thesaurus.AppBusiness.Logs;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 
@@ -41,16 +42,43 @@ namespace P_Thesaurus.Models
         /// <returns>all the links and images in the page</returns>
         public List<WebElement> GetWebElements(string url)
         {
+            //Deal with the "https://" prefix
+            if (!(url.StartsWith("https://") || url.StartsWith("http://")))
+            {
+                url = url.Insert(0, "https://");
+            }
+
             string code = GetSourceCode(url);
             List<WebElement> toReturn = new List<WebElement>();
+            string sourceUrl;
+
+            //contains temp variables for calculations
+            {
+                string[] urlSplitted = url.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+
+                sourceUrl = urlSplitted[0] + "//" +  urlSplitted[1];
+            }
 
             string[] hrefSplitted = code.Split(new string[] { "href=\"" }, StringSplitOptions.RemoveEmptyEntries);
 
-            for(int i = 0; i < hrefSplitted.Length; i++)
+            for(int i = 1; i < hrefSplitted.Length; i++)
             {
                 hrefSplitted[i] = hrefSplitted[i].Split('"')[0];
 
-                toReturn.Add(new WebElement() { link = hrefSplitted[i], type = WebElementType.Link});
+                //check if the file is a relative or a normal path
+                if (hrefSplitted[i].StartsWith("/"))
+                {
+                    hrefSplitted[i] = sourceUrl + hrefSplitted[i];
+                }
+
+                if ((hrefSplitted[i].StartsWith("https://") || hrefSplitted[i].StartsWith("http://")) && ! hrefSplitted[i].Contains(".css"))
+                {
+                    toReturn.Add(new WebElement() { link = hrefSplitted[i], type = WebElementType.Link });
+
+                    Debug.WriteLine(hrefSplitted[i]);
+                }
+
+                
             }
 
             string[] srcSplitted = code.Split(new string[] { "src=\"" }, StringSplitOptions.RemoveEmptyEntries);
@@ -64,8 +92,18 @@ namespace P_Thesaurus.Models
                    srcSplitted[i].EndsWith(".jpg") ||
                    srcSplitted[i].EndsWith(".gif") )
                 {
+                    //check if the file is a relative or a normal path
+                    if (srcSplitted[i].StartsWith("/"))
+                    {
+                        srcSplitted[i] = sourceUrl + srcSplitted[i];
+                    }
+
                     toReturn.Add(new WebElement() { link = srcSplitted[i], type = WebElementType.Image });
+
+                    Debug.WriteLine(srcSplitted[i]);
                 }
+
+                
 
             }
 
@@ -101,12 +139,6 @@ namespace P_Thesaurus.Models
         /// <returns></returns>
         private string GetSourceCode(string url)
         {
-            //Deal with the "https://" prefix
-            if( ! ( url.StartsWith("https://") || url.StartsWith("http://") ) )
-            {
-                url = url.Insert(0, "https://");
-            }
-
             WebClient webClient = new WebClient();
 
             StreamReader sr;
