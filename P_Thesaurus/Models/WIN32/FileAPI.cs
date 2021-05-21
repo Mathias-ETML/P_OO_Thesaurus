@@ -117,7 +117,6 @@ namespace P_Thesaurus.Models.WIN32
         /// <returns>SafeFileHandle</returns>
         [DllImport(KERNEL32, SetLastError = true, CharSet = CharSet.Unicode, BestFitMapping = false)]
         [ResourceExposure(ResourceScope.None)]
-        [return: MarshalAs(UnmanagedType.AsAny)]
         public static extern global::Microsoft.Win32.SafeHandles.SafeFileHandle FindFirstFile(string fileName, ref WIN32_FIND_DATA data);
 
         /// <summary>
@@ -130,7 +129,6 @@ namespace P_Thesaurus.Models.WIN32
         /// <returns>if next file was find</returns>
         [DllImport(KERNEL32, SetLastError = true, CharSet = CharSet.Unicode, BestFitMapping = false)]
         [ResourceExposure(ResourceScope.None)]
-        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool FindNextFile(
                 SafeFileHandle hndFindFile,
                 ref WIN32_FIND_DATA lpFindFileData);

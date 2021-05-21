@@ -33,7 +33,7 @@ namespace P_Thesaurus.Models
         /// </summary>
         public FolderModel()
         {
-            this._history = new History<HistoryEntry>(DEFAULT_FOLDER_HISTORY_PATH);
+            this._history = new History<HistoryEntry>(DEFAULT_FOLDER_HISTORY_PATH, true);
         }
 
         /// <summary>
@@ -64,6 +64,35 @@ namespace P_Thesaurus.Models
         }
 
         /// <summary>
+        /// Write in history function
+        /// </summary>
+        /// <param name="path">full path</param>
+        public void WriteInHistory(string path)
+        {
+            HistoryEntry entry = new HistoryEntry()
+            {
+                Content = path,
+                DateTime = DateTime.Now
+            };
+
+            _history.AddEntry(entry);
+        }
+
+        /// <summary>
+        /// Scan folder recursivly to get hsi root folder
+        /// </summary>
+        /// <param name="folder">folder</param>
+        public Folder GetRootFolderRecursivly(Folder folder)
+        {
+            if (!folder.IsRootFolder)
+            {
+                return GetRootFolderRecursivly(folder.ParentFolder);
+            }
+
+            return folder;
+        }
+
+        /// <summary>
         /// Get folder function
         /// </summary>
         /// <param name="path">pat</param>
@@ -75,7 +104,7 @@ namespace P_Thesaurus.Models
                 throw new ArgumentNullException("path");
             }
 
-            string[] folders = path.Split(new char['\\']);
+            string[] folders = path.Split(Path.DirectorySeparatorChar);
 
             // check if we have a folder like C:\
             if (folders.Length == 1)
@@ -90,7 +119,7 @@ namespace P_Thesaurus.Models
             // getting all the sub folders of the path
             for (int i = 1; i < folders.Length; i++)
             {
-                Folder buffer = Folder.GetFolder(String.Join("\\", folders, i, folders.Length - i));
+                Folder buffer = Folder.GetFolder(String.Join("\\", folders, 0, i + 1));
 
                 buffer.ParentFolder = last;
 
@@ -99,7 +128,7 @@ namespace P_Thesaurus.Models
                 last = buffer;
             }
 
-            return root;
+            return last;
         }
 
         /// <summary>
@@ -107,9 +136,16 @@ namespace P_Thesaurus.Models
         /// </summary>
         /// <param name="folder">folder</param>
         /// <param name="node">node</param>
-        public void StartScan(ref Folder folder, ref TreeNode node)
+        public void StartScan(ref Folder folder, ref TreeNode node, Delegate onScanEnded = null)
         {
+            _folderScan = new FolderScan(ref folder, ref node);
 
+            if (onScanEnded != null)
+            {
+                _folderScan.FolderScanEnd += (FolderScan.OnFolderScanEnd)onScanEnded;
+            }
+
+            _folderScan.Start();
         }
         #endregion
     }

@@ -10,7 +10,7 @@ namespace P_Thesaurus.AppBusiness.WIN32
     /// <summary>
     /// Folder object class
     /// </summary>
-    public class FolderObject
+    public class FolderObject : TreeNode
     {
         /// <summary>
         /// Struct for the folder data
@@ -31,24 +31,9 @@ namespace P_Thesaurus.AppBusiness.WIN32
         protected Data _data;
 
         /// <summary>
-        /// node field
-        /// </summary>
-        protected TreeNode _node;
-
-        /// <summary>
-        /// Node property
-        /// </summary>
-        public TreeNode Node { get => _node; set => _node = value; }
-
-        /// <summary>
         /// FolderData Property
         /// </summary>
         public Data FolderData { get => _data; }
-
-        /// <summary>
-        /// Name Property
-        /// </summary>
-        public string Name { get => _data.FileName; protected set => _data.FileName = value; }
 
         /// <summary>
         /// Path Property
@@ -70,7 +55,9 @@ namespace P_Thesaurus.AppBusiness.WIN32
                 ModifyTime = FileAPI.FileTimeToDateTime(ref data.ftLastWriteTime)
             };
 
-            this._node = new TreeNode(this.Name);
+            this.Name = data.cFileName;
+
+            this.Text = data.cFileName;
         }
 
         /// <summary>
@@ -80,7 +67,7 @@ namespace P_Thesaurus.AppBusiness.WIN32
         /// <param name="info">LPBY_HANDLE_FILE_INFORMATION struct</param>
         public FolderObject(string path, LPBY_HANDLE_FILE_INFORMATION info)
         {
-            string[] paths = path.Split('\\');
+            string[] paths = path.Split(System.IO.Path.DirectorySeparatorChar);
 
             _data = new Data
             {
@@ -92,7 +79,9 @@ namespace P_Thesaurus.AppBusiness.WIN32
                 ModifyTime = FileAPI.FileTimeToDateTime(ref info.ftLastWriteTime)
             };
 
-            this._node = new TreeNode(this.Name);
+            this.Name = _data.FileName;
+
+            this.Text = _data.FileName;
         }
 
         /// <summary>
@@ -104,8 +93,6 @@ namespace P_Thesaurus.AppBusiness.WIN32
             {
                 Path = path
             };
-
-            this._node = new TreeNode(this.Name);
         }
     }
 }
