@@ -180,6 +180,20 @@ namespace P_Thesaurus.Views
         {
             Controller.WriteInHistory(_currentFolder.Path);
         }
+
+        /// <summary>
+        /// on list view object selected
+        /// 
+        /// occure when the user select a object in the list view
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnListViewObjectSelected(object sender, EventArgs e)
+        {
+            
+        }
         #endregion
+
+
     }
 }

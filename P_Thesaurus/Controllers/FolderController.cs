@@ -89,8 +89,10 @@ namespace P_Thesaurus.Controllers
 
             FolderNavigationView view = new FolderNavigationView(path)
             {
-                Controller = this,
+                Controller = this
             };
+
+            view.FormClosed += OnFolderNavigationViewClosing;
 
             // call all the function from this controller
             view.Init();
@@ -98,6 +100,15 @@ namespace P_Thesaurus.Controllers
             view.Show(_view);
         }
 
+        /// <summary>
+        /// Occure when the second view is closing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void OnFolderNavigationViewClosing(object sender, EventArgs e)
+        {
+            ((FolderHistoryView)this._view).Init();
+        }
         
         #endregion
 

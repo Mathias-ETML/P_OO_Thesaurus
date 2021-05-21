@@ -45,20 +45,36 @@ namespace P_Thesaurus.Views
         {
             List<DriveInfo> drives = Controller.GetAllDrives();
 
+            // loop trough each drives
             foreach (DriveInfo item in drives)
             {
+                // check if the drive is like a local drive
                 if (item.IsReady && item.DriveType != DriveType.Network)
                 {
                     TreeNode node = new TreeNode("Nom : " + item.Name + "  Espace : " + item.AvailableFreeSpace / 1000000000);
-
                     node.Name = item.Name.Substring(0, 2);
 
-                    driveTreeView.Nodes.Add(node);
+                    // this is not the best way but we only do this once in the view, so it's pretty fine
+                    foreach (TreeNode drive in driveTreeView.Nodes)
+                    {
+                        // check if item exist
+                        if (drive.Name == node.Name)
+                        {
+                            node = null;
+                            break;
+                        }
+                    }
+
+                    if (node != null)
+                    {
+                        driveTreeView.Nodes.Add(node);
+                    }
                 }
             }
 
             List<HistoryEntry> history = Controller.GetHistory();
 
+            // check if user have history
             if (history.Count == 0)
             {
                 TreeNode node = new TreeNode("Aucun dossier disponible");
@@ -68,12 +84,27 @@ namespace P_Thesaurus.Views
             }
             else
             {
+                // we check foreach item in from the json reader if it has been added, wich is likly to happen
                 foreach (HistoryEntry item in history)
                 {
                     TreeNode node = new TreeNode("Dossier : " + item.Content + "  Date : " + item.DateTime);
                     node.Name = item.Content;
 
-                    historyTreeView.Nodes.Add(node);
+                    // this is not the best way but we only do this once in the view, so it's pretty fine
+                    foreach (TreeNode entry in historyTreeView.Nodes)
+                    {
+                        // check if item exist
+                        if (entry.Name == item.Content)
+                        {
+                            node = null;
+                            break;
+                        }
+                    }
+
+                    if (node != null)
+                    {
+                        historyTreeView.Nodes.Add(node);
+                    }
                 }
             }
 

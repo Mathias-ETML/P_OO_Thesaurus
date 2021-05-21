@@ -69,6 +69,9 @@ namespace P_Thesaurus.Models
         /// <param name="path">full path</param>
         public void WriteInHistory(string path)
         {
+            // we make sure we get all the last paths
+            _history.Read();
+
             HistoryEntry entry = new HistoryEntry()
             {
                 Content = path,

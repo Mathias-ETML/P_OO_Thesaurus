@@ -52,6 +52,7 @@ namespace P_Thesaurus.Views
             this.currentFolderListView.TabIndex = 1;
             this.currentFolderListView.UseCompatibleStateImageBehavior = false;
             this.currentFolderListView.VirtualListSize = 4;
+            this.currentFolderListView.DoubleClick += new System.EventHandler(this.OnListViewObjectSelected);
             // 
             // FolderNavigationView
             // 
