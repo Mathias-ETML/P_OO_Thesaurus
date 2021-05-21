@@ -47,11 +47,15 @@ namespace P_Thesaurus.Controllers
         public WebController()
         {
             _model = new  WebModel();
+
+            SetDatas("etml.ch");
         }
 
         public void SetDatas(string url)
         {
             List<WebElement> datas = _model.GetWebElements(url);
+
+            ((WebNavigationView)_view).InitializeElements(datas);
         }
         #endregion
 
