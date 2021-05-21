@@ -7,6 +7,7 @@
  */
 
 
+using P_Thesaurus.AppBusiness.WIN32;
 using P_Thesaurus.Controllers;
 
 namespace P_Thesaurus.Views
@@ -14,11 +15,12 @@ namespace P_Thesaurus.Views
     /// <summary>
     /// View that shows navigation in FTP or Windows Files
     /// </summary>
-    public partial class FolderNavigation : NavigationView
+    public partial class FolderNavigationView : NavigationView
     {
-
-
         #region Variables
+        private string _path;
+        private Folder _currentFolder;
+
         /// <summary>
         /// the view's controller
         /// </summary>
@@ -29,9 +31,19 @@ namespace P_Thesaurus.Views
         /// <summary>
         /// Default Controller
         /// </summary>
-        public FolderNavigation()
+        public FolderNavigationView(string path)
         {
+            this._path = path;
+
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Init function
+        /// </summary>
+        public void Init()
+        {
+            _currentFolder = Controller.GetFolder(_path);
         }
         #endregion
     }

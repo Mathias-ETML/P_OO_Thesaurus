@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace P_Thesaurus.Views
 {
-    public abstract partial class NavigationView : BaseView
+    public partial class NavigationView : BaseView
     {
         public NavigationView()
         {

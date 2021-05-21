@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using P_Thesaurus.AppBusiness.HistoryReader;
 using P_Thesaurus.Controllers;
+using P_Thesaurus.Models;
 
 namespace P_Thesaurus
 {
@@ -14,28 +15,40 @@ namespace P_Thesaurus
         /// <summary>
         /// Point d'entrée principal de l'application.
         /// </summary>
-        [MTAThread]
+        [STAThread]
         static void Main()
         {
+            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
             /*
-            History<FtpHistoryEntry> history = new History<FtpHistoryEntry>("./coucou.txt");
+            History<HistoryEntry> history = new History<HistoryEntry>(@"E:\Projets\P_Theau\P_Thesaurus\P_Thesaurus\P_Thesaurus\bin\folder_history.txt");
 
-            history.AddEntry(new FtpHistoryEntry() {
-                Content = "Bonjour",
+            history.AddEntry(new HistoryEntry() {
+                Content = "C:\\",
                 DateTime = DateTime.Now.Date,
-                Username = "buz",
-                Password = "12345"
             });
 
             history.Write();
+            */
 
-            FtpHistoryEntry he = history.Read()[0];
+            /*
+            History<FtpHistoryEntry> history = new History<FtpHistoryEntry>(FolderModel.DEFAULT_FOLDER_HISTORY_PATH);
+
+            history.AddEntry(new FtpHistoryEntry()
+            {
+                Content = "C:\\",
+                DateTime = DateTime.Now.Date,
+                Password = "12345",
+                Username = "Mathias"
+            });
+
+            history.Write();
             */
 
             MainController mainController = new MainController();
+            
             mainController.Launch();
             mainController.Dispose();
 

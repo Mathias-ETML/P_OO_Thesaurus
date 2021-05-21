@@ -47,6 +47,11 @@ namespace P_Thesaurus.Models.JSON
                 }
             }
 
+            if (obj == null)
+            {
+                obj = CreateFile<T>(path);
+            }
+
             // check if need to crypt
             if (obj.GetType().GetInterface(nameof(IList<ISecurityCritical>)) != null)
             {
@@ -56,17 +61,20 @@ namespace P_Thesaurus.Models.JSON
                 // getting the private array and casting it
                 ISecurityCritical[] field = typeof(T).GetField("_items", bindFlags).GetValue(obj) as ISecurityCritical[];
 
-                // decrypting
-                foreach (ISecurityCritical item in field)
+                if (field != null)
                 {
-                    if (item != null)
+                    // decrypting
+                    foreach (ISecurityCritical item in field)
                     {
-                        item.Password = PasswordManager.DecryptPassword(item.Password, null, null);
+                        if (item != null)
+                        {
+                            item.Password = PasswordManager.DecryptPassword(item.Password, null, null);
+                        }
                     }
-                }
 
-                // changing type
-                typeof(T).GetField("_items", bindFlags).SetValue(obj, field);
+                    // changing type
+                    typeof(T).GetField("_items", bindFlags).SetValue(obj, field);
+                }
             }
 
             return obj;
@@ -80,9 +88,20 @@ namespace P_Thesaurus.Models.JSON
         /// <param name="path">path</param>
         public static bool SerializeFile<T>(T obj, string path)
         {
+            if (path == null || path.Length <= 0)
+            {
+                throw new ArgumentNullException("path");
+            }
+
+            if (obj == null)
+            {
+                throw new ArgumentNullException("obj");
+            }
+
+            /*
             string[] infos = path.Split(new char['\\']);
             string file = '\\' + infos[infos.Length - 1];
-            path = path.Replace(file, "");
+            path = path.Replace(file, "");*/
 
             // check if need to crypt
             if (obj.GetType().GetInterface(nameof(IList<ISecurityCritical>)) != null)
@@ -93,17 +112,20 @@ namespace P_Thesaurus.Models.JSON
                 // getting the private array and casting it
                 ISecurityCritical[] field = typeof(T).GetField("_items", bindFlags).GetValue(obj) as ISecurityCritical[];
 
-                // crypting
-                foreach (ISecurityCritical item in field)
+                if (field != null)
                 {
-                    if (item != null)
+                    // crypting
+                    foreach (ISecurityCritical item in field)
                     {
-                        item.Password = PasswordManager.CryptPassword(item.Password, null, null);
+                        if (item != null)
+                        {
+                            item.Password = PasswordManager.CryptPassword(item.Password, null, null);
+                        }
                     }
-                }
 
-                // changing type
-                typeof(T).GetField("_items", bindFlags).SetValue(obj, field);
+                    // changing type
+                    typeof(T).GetField("_items", bindFlags).SetValue(obj, field);
+                }
             }
            
             FileStream fs = new FileStream(path, FileMode.Create);
@@ -122,6 +144,37 @@ namespace P_Thesaurus.Models.JSON
             fs.Dispose();
 
             return true;
+        }
+
+        /// <summary>
+        /// Create file function
+        /// 
+        /// Create a file with a basic deserilised 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path">path</param>
+        /// <returns>deserilised empty file</returns>
+        private static T CreateFile<T>(string path)
+        {
+            JsonSerializer deserializer = new JsonSerializer();
+
+            FileStream fs = new FileStream(path, FileMode.Create);
+
+            T obj = (T)Activator.CreateInstance(typeof(T));
+
+            using (StreamWriter sw = new StreamWriter(fs))
+            {
+                using (JsonWriter jw = new JsonTextWriter(sw))
+                {
+                    deserializer.Serialize(jw, obj);
+                }
+            }
+
+            // bonne manières
+            fs.Close();
+            fs.Dispose();
+
+            return obj;
         }
 
         /// <summary>

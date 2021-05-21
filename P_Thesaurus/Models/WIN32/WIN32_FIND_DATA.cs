@@ -22,8 +22,11 @@ namespace P_Thesaurus.Models.WIN32
         private const int FILE_ATTRIBUTE_DIRECTORY = 0x00000010;
 
         internal int dwFileAttributes;
+        [NonSerialized]
         internal FILE_TIME ftCreationTime;
+        [NonSerialized]
         internal FILE_TIME ftLastAccessTime;
+        [NonSerialized]
         internal FILE_TIME ftLastWriteTime;
         internal int nFileSizeHigh;
         internal int nFileSizeLow;
@@ -35,9 +38,11 @@ namespace P_Thesaurus.Models.WIN32
         internal int dwReserved0;
         internal int dwReserved1;
 
+        [NonSerialized]
         private fixed char _cFileName[260];
 
         // We never use this, don't expose it to avoid accidentally allocating strings
+        [NonSerialized]
         private fixed char _cAlternateFileName[14];
 
         internal string cFileName { get { fixed (char* c = _cFileName) return new string(c); } }
