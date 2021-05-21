@@ -73,6 +73,10 @@ namespace P_Thesaurus.Views
 
             // scannig current folder
             Controller.StartScan(ref _currentFolder, ref currentNode, onScanEnd);
+
+            folderTreeView.SelectedNode = _currentFolder;
+
+            _currentFolder.Expand();
         }
 
         /// <summary>
@@ -106,7 +110,7 @@ namespace P_Thesaurus.Views
         {
             // reset the list view
             currentFolderListView.Clear();
-            currentFolderListView.Columns.Add("Name", 150, HorizontalAlignment.Left);
+            currentFolderListView.Columns.Add("Name", 130, HorizontalAlignment.Left);
             currentFolderListView.Columns.Add("Type", 100, HorizontalAlignment.Left);
             currentFolderListView.Columns.Add("Modification", 100, HorizontalAlignment.Left);
             currentFolderListView.Columns.Add("Taille", 100, HorizontalAlignment.Left);
