@@ -146,16 +146,23 @@ namespace P_Thesaurus.Views
         {
             // casting
             TreeView obj = (TreeView)sender;
-            Folder folder = (Folder)obj.SelectedNode;
-            TreeNode node = folder; // this is stupid, but i am not a compilator so yea
+            Folder folder = obj.SelectedNode as Folder;
 
-            _currentFolder = folder;
+            // check if user clicked on a folder, else it's a file
+            if (folder != null)
+            {
+                TreeNode node = folder; // this is stupid, but i am not a compilator so yea
 
-            // function pointer
-            Delegate onScanEnd = new Models.WIN32.FolderScan.OnFolderScanEnd(ScanEnd);
+                _currentFolder = folder;
 
-            // scannig current folder
-            Controller.StartScan(ref folder, ref node, onScanEnd);
+                // function pointer
+                Delegate onScanEnd = new Models.WIN32.FolderScan.OnFolderScanEnd(ScanEnd);
+
+                // scannig current folder
+                Controller.StartScan(ref folder, ref node, onScanEnd);
+
+                node.Expand();
+            }
         }
 
         /// <summary>

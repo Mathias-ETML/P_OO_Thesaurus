@@ -152,15 +152,7 @@ namespace P_Thesaurus.AppBusiness.WIN32
         {
             this._parentFolder = parentFolder;
             this._type = Type.Normal;
-
-            if (parentFolder.IsRootFolder)
-            {
-                this.Path = _parentFolder.Path + this._data.FileName;
-            }
-            else
-            {
-                this.Path = _parentFolder.Path + "\\" + this._data.FileName;
-            }
+            this.Path = _parentFolder.Path + "\\" + this._data.FileName;
 
             this.Text = this.Name;
 
