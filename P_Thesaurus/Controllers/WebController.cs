@@ -5,9 +5,11 @@
  * Projet P_OO-Smart-Thésaurus
  * Controller gérant les opérations de la connexion et du transfert des données d'un site Web.
  */
+using P_Thesaurus.AppBusiness.EnumsAndStructs;
 using P_Thesaurus.Models;
 using P_Thesaurus.Views;
 using System;
+using System.Collections.Generic;
 
 namespace P_Thesaurus.Controllers
 {
@@ -44,7 +46,12 @@ namespace P_Thesaurus.Controllers
         /// </summary>
         public WebController()
         {
+            _model = new  WebModel();
+        }
 
+        public void SetDatas(string url)
+        {
+            List<WebElement> datas = _model.GetWebElements(url);
         }
         #endregion
 

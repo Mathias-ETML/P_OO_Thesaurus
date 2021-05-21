@@ -31,4 +31,19 @@ namespace P_Thesaurus.AppBusiness.EnumsAndStructs
         Folder,
         Web
     }
+
+    /// <summary>
+    /// Struct used to pass the web infos from model to view
+    /// </summary>
+    public struct WebElement
+    {
+        public string link;
+        public WebElementType type;
+    }
+
+    public enum WebElementType
+    {
+        Link,
+        Image
+    }
 }
