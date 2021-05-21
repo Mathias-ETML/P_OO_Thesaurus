@@ -104,6 +104,14 @@ namespace P_Thesaurus.Views
         /// </summary>
         private void ScanEnd()
         {
+            // reset the list view
+            currentFolderListView.Clear();
+            currentFolderListView.Columns.Add("Name", 150, HorizontalAlignment.Left);
+            currentFolderListView.Columns.Add("Type", 100, HorizontalAlignment.Left);
+            currentFolderListView.Columns.Add("Modification", 100, HorizontalAlignment.Left);
+            currentFolderListView.Columns.Add("Taille", 100, HorizontalAlignment.Left);
+
+            // add the objects in the list view
             foreach (Folder item in _currentFolder.Folders)
             {
                 ListViewItem items = new ListViewItem(new string[] {
@@ -117,7 +125,6 @@ namespace P_Thesaurus.Views
 
             foreach (File file in _currentFolder.Files)
             {
-                
                 ListViewItem items = new ListViewItem(new string[] {
                                                         file.Name,
                                                         "Fichier " + file.FileType,
@@ -138,8 +145,11 @@ namespace P_Thesaurus.Views
         private void OnFolderChange(object sender, EventArgs e)
         {
             // casting
-            Folder folder = (Folder)sender;
+            TreeView obj = (TreeView)sender;
+            Folder folder = (Folder)obj.SelectedNode;
             TreeNode node = folder; // this is stupid, but i am not a compilator so yea
+
+            _currentFolder = folder;
 
             // function pointer
             Delegate onScanEnd = new Models.WIN32.FolderScan.OnFolderScanEnd(ScanEnd);

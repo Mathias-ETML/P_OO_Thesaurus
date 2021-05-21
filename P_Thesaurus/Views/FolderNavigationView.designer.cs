@@ -31,10 +31,6 @@ namespace P_Thesaurus.Views
         {
             this.folderTreeView = new System.Windows.Forms.TreeView();
             this.currentFolderListView = new System.Windows.Forms.ListView();
-            this.name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.modification = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.taille = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // folderTreeView
@@ -47,11 +43,6 @@ namespace P_Thesaurus.Views
             // 
             // currentFolderListView
             // 
-            this.currentFolderListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.name,
-            this.type,
-            this.modification,
-            this.taille});
             this.currentFolderListView.GridLines = true;
             this.currentFolderListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.currentFolderListView.HideSelection = false;
@@ -61,26 +52,6 @@ namespace P_Thesaurus.Views
             this.currentFolderListView.TabIndex = 1;
             this.currentFolderListView.UseCompatibleStateImageBehavior = false;
             this.currentFolderListView.VirtualListSize = 4;
-            // 
-            // name
-            // 
-            this.name.Text = "Nom";
-            this.name.Width = 150;
-            // 
-            // type
-            // 
-            this.type.Text = "Type";
-            this.type.Width = 100;
-            // 
-            // modification
-            // 
-            this.modification.Text = "Modification Date";
-            this.modification.Width = 100;
-            // 
-            // taille
-            // 
-            this.taille.Text = "Taille";
-            this.taille.Width = 40;
             // 
             // FolderNavigationView
             // 
@@ -97,9 +68,5 @@ namespace P_Thesaurus.Views
 
         private System.Windows.Forms.TreeView folderTreeView;
         private System.Windows.Forms.ListView currentFolderListView;
-        private System.Windows.Forms.ColumnHeader name;
-        private System.Windows.Forms.ColumnHeader type;
-        private System.Windows.Forms.ColumnHeader modification;
-        private System.Windows.Forms.ColumnHeader taille;
     }
 }

@@ -133,10 +133,22 @@ namespace P_Thesaurus.Models.WIN32
                 // check wich type of file we have
                 if (data.IsFile)
                 {
-                    _parentFolder.Files.Add(new File(_parentFolder, data));
+                    File file = new File(_parentFolder, data);
 
-                    if (_node != null)
+                    foreach (TreeNode item in _parentFolder.Files)
                     {
+                        if (item.Name == file.Name)
+                        {
+                            file = null;
+
+                            break;
+                        }
+                    }
+
+                    if (_node != null && file != null)
+                    {
+                        _parentFolder.Files.Add(file);
+
                         _node.Nodes.Add(data.cFileName);
                     }
                 }
@@ -144,8 +156,20 @@ namespace P_Thesaurus.Models.WIN32
                 {
                     Folder folder = new Folder(_parentFolder, data);
 
-                    if (_node != null)
+                    foreach (TreeNode item in _parentFolder.Folders)
                     {
+                        if (item.Name == folder.Name)
+                        {
+                            folder = null;
+
+                            break;
+                        }
+                    }
+
+                    if (_node != null && folder != null)
+                    {
+                        _parentFolder.Folders.Add(folder);
+
                         _node.Nodes.Add(folder);
                     }
                 }
