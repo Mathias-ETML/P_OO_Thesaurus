@@ -84,7 +84,7 @@ namespace P_Thesaurus.Models.WIN32
         /// <param name="parentFolder">parent folder</param>
         public FolderScan(ref Folder parentFolder)
         {
-            this._path = parentFolder.Path + "\\*";
+            this._path = parentFolder.ObjectPath + "\\*";
             this._parentFolder = parentFolder;
         }
 
@@ -94,7 +94,7 @@ namespace P_Thesaurus.Models.WIN32
         /// <param name="parentFolder">parent folder</param>
         public FolderScan(ref Folder parentFolder, ref TreeNode node)
         {
-            this._path = parentFolder.Path + "\\*";
+            this._path = parentFolder.ObjectPath + "\\*";
             this._parentFolder = parentFolder;
             this._node = node;
         }
@@ -148,8 +148,6 @@ namespace P_Thesaurus.Models.WIN32
                     if (_node != null && file != null)
                     {
                         _parentFolder.Files.Add(file);
-
-                        _node.Nodes.Add(data.cFileName);
                     }
                 }
                 else

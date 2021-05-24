@@ -54,11 +54,11 @@ namespace P_Thesaurus.AppBusiness.WIN32
 
             if (_parentFolder.IsRootFolder)
             {
-                this.Path = _parentFolder.Path + this._data.FileName;
+                this.ObjectPath = _parentFolder.ObjectPath + this._data.FileName;
             }
             else
             {
-                this.Path = _parentFolder.Path + "\\" + this._data.FileName;
+                this.ObjectPath = _parentFolder.ObjectPath + "\\" + this._data.FileName;
             }
 
             SetType();

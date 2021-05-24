@@ -31,15 +31,18 @@ namespace P_Thesaurus.Views
         {
             this.folderTreeView = new System.Windows.Forms.TreeView();
             this.currentFolderListView = new System.Windows.Forms.ListView();
+            this.panInformation = new System.Windows.Forms.Panel();
+            this.currentFolderPathTxtBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // folderTreeView
             // 
-            this.folderTreeView.Location = new System.Drawing.Point(71, 109);
+            this.folderTreeView.Location = new System.Drawing.Point(71, 85);
             this.folderTreeView.Name = "folderTreeView";
-            this.folderTreeView.Size = new System.Drawing.Size(217, 329);
+            this.folderTreeView.Size = new System.Drawing.Size(217, 353);
             this.folderTreeView.TabIndex = 0;
-            this.folderTreeView.DoubleClick += new System.EventHandler(this.OnFolderChange);
+            this.folderTreeView.Click += new System.EventHandler(this.OnTreeViewObjectSelected);
+            this.folderTreeView.DoubleClick += new System.EventHandler(this.OnTreeViewFolderChange);
             // 
             // currentFolderListView
             // 
@@ -52,16 +55,35 @@ namespace P_Thesaurus.Views
             this.currentFolderListView.TabIndex = 1;
             this.currentFolderListView.UseCompatibleStateImageBehavior = false;
             this.currentFolderListView.VirtualListSize = 4;
-            this.currentFolderListView.DoubleClick += new System.EventHandler(this.OnListViewObjectSelected);
+            this.currentFolderListView.Click += new System.EventHandler(this.OnListViewObjectSelected);
+            this.currentFolderListView.DoubleClick += new System.EventHandler(this.OnListViewObjectDoubleClick);
+            // 
+            // panInformation
+            // 
+            this.panInformation.BackColor = System.Drawing.Color.White;
+            this.panInformation.Location = new System.Drawing.Point(338, 85);
+            this.panInformation.Name = "panInformation";
+            this.panInformation.Size = new System.Drawing.Size(400, 84);
+            this.panInformation.TabIndex = 2;
+            // 
+            // currentFolderPathTxtBox
+            // 
+            this.currentFolderPathTxtBox.Location = new System.Drawing.Point(71, 42);
+            this.currentFolderPathTxtBox.Name = "currentFolderPathTxtBox";
+            this.currentFolderPathTxtBox.Size = new System.Drawing.Size(667, 20);
+            this.currentFolderPathTxtBox.TabIndex = 3;
             // 
             // FolderNavigationView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.currentFolderPathTxtBox);
+            this.Controls.Add(this.panInformation);
             this.Controls.Add(this.currentFolderListView);
             this.Controls.Add(this.folderTreeView);
             this.Name = "FolderNavigationView";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -69,5 +91,7 @@ namespace P_Thesaurus.Views
 
         private System.Windows.Forms.TreeView folderTreeView;
         private System.Windows.Forms.ListView currentFolderListView;
+        private System.Windows.Forms.Panel panInformation;
+        private System.Windows.Forms.TextBox currentFolderPathTxtBox;
     }
 }

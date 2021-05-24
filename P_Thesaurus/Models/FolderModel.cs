@@ -139,13 +139,13 @@ namespace P_Thesaurus.Models
         /// </summary>
         /// <param name="folder">folder</param>
         /// <param name="node">node</param>
-        public void StartScan(ref Folder folder, ref TreeNode node, Delegate onScanEnded = null)
+        public void StartScan(ref Folder folder, ref TreeNode node, FolderScan.OnFolderScanEnd onScanEnded = null)
         {
             _folderScan = new FolderScan(ref folder, ref node);
 
             if (onScanEnded != null)
             {
-                _folderScan.FolderScanEnd += (FolderScan.OnFolderScanEnd)onScanEnded;
+                _folderScan.FolderScanEnd += onScanEnded;
             }
 
             _folderScan.Start();

@@ -33,12 +33,12 @@ namespace P_Thesaurus.AppBusiness.WIN32
         /// <summary>
         /// FolderData Property
         /// </summary>
-        public Data FolderData { get => _data; }
+        public Data ObjectData { get => _data; }
 
         /// <summary>
         /// Path Property
         /// </summary>
-        public string Path { get => _data.Path; set => _data.Path = value; }
+        public string ObjectPath { get => _data.Path; set => _data.Path = value; }
 
         /// <summary>
         /// Custom constructor
