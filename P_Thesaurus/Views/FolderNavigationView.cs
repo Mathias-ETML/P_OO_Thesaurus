@@ -11,6 +11,7 @@ using P_Thesaurus.AppBusiness.WIN32;
 using P_Thesaurus.Controllers;
 using P_Thesaurus.Models.WIN32;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -22,6 +23,7 @@ namespace P_Thesaurus.Views
     public partial class FolderNavigationView : NavigationView
     {
         #region Variables
+        private const int BITS_IN_MEGA_BYTE = 1024;
         private string _path;
         private Folder _currentFolder;
 
@@ -44,7 +46,6 @@ namespace P_Thesaurus.Views
             InitializeComponent();
         }
 
-
         /// <summary>
         /// Init function
         /// </summary>
@@ -58,9 +59,6 @@ namespace P_Thesaurus.Views
 
             // adding root folder at the tree view
             folderTreeView.Nodes.Add(root);
-
-            // scanning the root from top to bottom
-            ScanRootFolderRecursivly(root);
 
             // getting current tree node cause pointers
             TreeNode currentNode = _currentFolder;
@@ -82,6 +80,12 @@ namespace P_Thesaurus.Views
         /// <param name="root">folder</param>
         private void ScanRootFolderRecursivly(Folder folder)
         {
+            // we can't add a node to himself
+            if (folder.IsRootFolder)
+            {
+                return;
+            }
+
             // check if we are not in the folder that contain this folder
             if (!folder.Folders.Contains(_currentFolder))
             {
@@ -90,8 +94,6 @@ namespace P_Thesaurus.Views
                 {
                     // adding the node of the future folder to the current scanned view
                     folder.Nodes.Add(folder.Folders[0]);
-
-                    Debug.WriteLine($"FOLDER {folder.Folders[0].ObjectPath} added");
 
                     ScanRootFolderRecursivly(folder.Folders[0]);
                 }
@@ -191,25 +193,94 @@ namespace P_Thesaurus.Views
                 _currentFolder.Collapse();
             }
 
-            TreeNode node = folder; // this is stupid, but i am not a compilator so yea
-
             _currentFolder = folder;
 
             // function pointer
             FolderScan.OnFolderScanEnd onScanEnd = new Models.WIN32.FolderScan.OnFolderScanEnd(ScanEnd);
 
             // scannig current folder
-            Controller.StartScan(ref folder, ref node, onScanEnd);
+            Controller.StartScan(ref folder, onScanEnd);
 
             // showing user location
             folderTreeView.SelectedNode = _currentFolder;
-            node.Expand();
+            _currentFolder.Expand();
 
-            // show current folder
-            currentFolderPathTxtBox.Text = _currentFolder.ObjectPath;
+            // show current folder in the top panel
+            BuildPathListView();
 
             // show information about current folder
             ShowInformationSelectedListViewFolder(_currentFolder);
+        }
+
+        /// <summary>
+        /// Build a list view with the full path and creat a column for each 
+        /// </summary>
+        private void BuildPathListView()
+        {
+            // clear items from panel
+            if (panHistoryPath.Controls.Count > 0)
+            {
+                foreach (Control item in panInformation.Controls)
+                {
+                    item.Dispose();
+                }
+            }
+
+            // create list view
+            ListView lsv = new ListView();
+
+            lsv.ColumnWidthChanging += CancelListViewResize;
+
+            lsv.Width = panHistoryPath.Width;
+            lsv.Height = panHistoryPath.Height;
+
+            lsv.AllowColumnReorder = false;
+            lsv.FullRowSelect = true;
+            lsv.MultiSelect = false;
+            lsv.View = View.Details;
+
+            // this is stupid, we scan recursivly to then reverse
+            List<Folder> ls = new List<Folder>();
+
+            // scan
+            BuildPathRecursivly(_currentFolder);
+
+            // reverse
+            ls.Reverse();
+
+            // build columns
+            BuildColumns(ls);
+
+            /// <summary>
+            /// Build the list view recursivly
+            /// 
+            /// </summary>
+            /// <param name="parent">parent folder</param>
+            void BuildPathRecursivly(Folder parent)
+            {
+                ls.Add(parent);
+
+                if (parent.FolderType != Folder.Type.Root)
+                {
+                    BuildPathRecursivly(parent.ParentFolder);
+                }
+            }
+
+            /// <summary>
+            /// Build the columns
+            /// 
+            /// </summary>
+            /// <param name="lsf">list of folder</param>
+            void BuildColumns(List<Folder> lsf)
+            {
+                foreach (Folder item in lsf)
+                {
+                    lsv.Columns.Add(item.Name);
+                }
+            }
+
+            // add to view
+            panHistoryPath.Controls.Add(lsv);
         }
 
         /// <summary>
@@ -285,7 +356,7 @@ namespace P_Thesaurus.Views
         /// <param name="obj">folder object</param>
         private void ShowInformationSelectedListViewFolder(Folder obj)
         {
-            CreateListViewToShowInformation(new string[] {"Name", "Fichiers", "Dossiers" }, 
+            CreateListViewToShowInformation(new string[] {"Nom", "Fichiers", "Dossiers" }, 
                 new string[] {obj.Name, obj.Files.Count.ToString(), obj.Folders.Count.ToString() });
         }
 
@@ -295,8 +366,8 @@ namespace P_Thesaurus.Views
         /// <param name="obj">folder object</param>
         private void ShowInformationSelectedListViewFile(File obj)
         {
-            CreateListViewToShowInformation(new string[] { "Name", "Type", "Taille en MB" }, 
-                new string[] { obj.Name, obj.FileType.ToString(), (obj.ObjectData.Size / 1024).ToString() });
+            CreateListViewToShowInformation(new string[] { "Nom", "Type", "Taille en MB" }, 
+                new string[] { obj.Name, obj.FileType.ToString(), (obj.ObjectData.Size / BITS_IN_MEGA_BYTE).ToString() });
         }
 
         /// <summary>
@@ -380,8 +451,19 @@ namespace P_Thesaurus.Views
             }
         }
 
-        
+        /// <summary>
+        /// Occure when the listener of a list view trigger the resize of a column
+        /// 
+        /// </summary>
+        /// <param name="sender">list view</param>
+        /// <param name="e"></param>
+        private void CancelListViewResize(object sender, ColumnWidthChangingEventArgs e)
+        {
+            ListView ls = (ListView)sender;
 
+            e.Cancel = true;
+            e.NewWidth = ls.Columns[e.ColumnIndex].Width;
+        }
         #endregion
     }
 }

@@ -139,9 +139,9 @@ namespace P_Thesaurus.Models
         /// </summary>
         /// <param name="folder">folder</param>
         /// <param name="node">node</param>
-        public void StartScan(ref Folder folder, ref TreeNode node, FolderScan.OnFolderScanEnd onScanEnded = null)
+        public void StartScan(ref Folder folder, FolderScan.OnFolderScanEnd onScanEnded = null)
         {
-            _folderScan = new FolderScan(ref folder, ref node);
+            _folderScan = new FolderScan(ref folder);
 
             if (onScanEnded != null)
             {

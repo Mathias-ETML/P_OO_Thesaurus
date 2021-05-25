@@ -127,6 +127,10 @@ namespace P_Thesaurus.Views
             {
                 // we are passing the path trough the node name, wich is a simple way if giving wich drive or folder the user wants
                 Controller.LaunchFolderNavigationView(selected.Name);
+
+                // stupid bug where the event is doubled
+                driveTreeView.NodeMouseDoubleClick -= OnDriveSelection;
+                historyTreeView.NodeMouseDoubleClick -= OnDriveSelection;
             }
             
         }

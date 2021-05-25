@@ -32,12 +32,12 @@ namespace P_Thesaurus.Views
             this.folderTreeView = new System.Windows.Forms.TreeView();
             this.currentFolderListView = new System.Windows.Forms.ListView();
             this.panInformation = new System.Windows.Forms.Panel();
-            this.currentFolderPathTxtBox = new System.Windows.Forms.TextBox();
+            this.panHistoryPath = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // folderTreeView
             // 
-            this.folderTreeView.Location = new System.Drawing.Point(71, 85);
+            this.folderTreeView.Location = new System.Drawing.Point(71, 77);
             this.folderTreeView.Name = "folderTreeView";
             this.folderTreeView.Size = new System.Drawing.Size(217, 353);
             this.folderTreeView.TabIndex = 0;
@@ -49,7 +49,7 @@ namespace P_Thesaurus.Views
             this.currentFolderListView.GridLines = true;
             this.currentFolderListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.currentFolderListView.HideSelection = false;
-            this.currentFolderListView.Location = new System.Drawing.Point(338, 188);
+            this.currentFolderListView.Location = new System.Drawing.Point(338, 180);
             this.currentFolderListView.Name = "currentFolderListView";
             this.currentFolderListView.Size = new System.Drawing.Size(400, 250);
             this.currentFolderListView.TabIndex = 1;
@@ -61,29 +61,29 @@ namespace P_Thesaurus.Views
             // panInformation
             // 
             this.panInformation.BackColor = System.Drawing.Color.White;
-            this.panInformation.Location = new System.Drawing.Point(338, 85);
+            this.panInformation.Location = new System.Drawing.Point(338, 77);
             this.panInformation.Name = "panInformation";
             this.panInformation.Size = new System.Drawing.Size(400, 84);
             this.panInformation.TabIndex = 2;
             // 
-            // currentFolderPathTxtBox
+            // panHistoryPath
             // 
-            this.currentFolderPathTxtBox.Location = new System.Drawing.Point(71, 42);
-            this.currentFolderPathTxtBox.Name = "currentFolderPathTxtBox";
-            this.currentFolderPathTxtBox.Size = new System.Drawing.Size(667, 20);
-            this.currentFolderPathTxtBox.TabIndex = 3;
+            this.panHistoryPath.BackColor = System.Drawing.Color.White;
+            this.panHistoryPath.Location = new System.Drawing.Point(71, 12);
+            this.panHistoryPath.Name = "panHistoryPath";
+            this.panHistoryPath.Size = new System.Drawing.Size(667, 45);
+            this.panHistoryPath.TabIndex = 3;
             // 
             // FolderNavigationView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.currentFolderPathTxtBox);
+            this.Controls.Add(this.panHistoryPath);
             this.Controls.Add(this.panInformation);
             this.Controls.Add(this.currentFolderListView);
             this.Controls.Add(this.folderTreeView);
             this.Name = "FolderNavigationView";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -92,6 +92,6 @@ namespace P_Thesaurus.Views
         private System.Windows.Forms.TreeView folderTreeView;
         private System.Windows.Forms.ListView currentFolderListView;
         private System.Windows.Forms.Panel panInformation;
-        private System.Windows.Forms.TextBox currentFolderPathTxtBox;
+        private System.Windows.Forms.Panel panHistoryPath;
     }
 }
