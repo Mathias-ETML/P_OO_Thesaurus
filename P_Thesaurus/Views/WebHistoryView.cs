@@ -30,6 +30,11 @@ namespace P_Thesaurus.Views
         {
             InitializeComponent();
         }
+
+        public void Init()
+        {
+
+        }
         #endregion
 
 

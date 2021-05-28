@@ -48,7 +48,12 @@ namespace P_Thesaurus.Controllers
         {
             _model = new  WebModel();
 
-            SetDatas("etml.ch");
+            this._view = new WebHistoryView()
+            {
+                Controller = this
+            };
+
+            ((WebHistoryView)this._view).Init();
         }
 
         public void SetDatas(string url)

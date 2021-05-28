@@ -23,8 +23,22 @@ namespace P_Thesaurus.Views
         {
             InitializeComponent();
         }
+
         #endregion
 
+        private void button2_Click(object sender, System.EventArgs e)
+        {
 
+        }
+
+        /// <summary>
+        /// BtnBack click that close the current form to go back
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnBackClick(object sender, System.EventArgs e)
+        {
+            this.Dispose();
+        }
     }
 }

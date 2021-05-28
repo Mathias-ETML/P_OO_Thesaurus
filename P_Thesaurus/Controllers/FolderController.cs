@@ -98,7 +98,43 @@ namespace P_Thesaurus.Controllers
             view.Show(_view);
         }
 
-        
+        /// <summary>
+        /// Get folder function
+        /// </summary>
+        /// <param name="path">pat</param>
+        /// <returns>Folder</returns>
+        public Folder GetFolder(string path)
+        {
+            return _model.GetFolder(path);
+        }
+
+        /// <summary>
+        /// Start scan function
+        /// </summary>
+        /// <param name="folder">folder</param>
+        /// <param name="node">node</param>
+        public void StartScan(ref Folder folder, ref TreeNode node, Delegate onScanEnded = null)
+        {
+            _model.StartScan(ref folder, ref node, onScanEnded);
+        }
+
+        /// <summary>
+        /// Write in history function
+        /// </summary>
+        /// <param name="path">full path</param>
+        public void WriteInHistory(string path)
+        {
+            _model.WriteInHistory(path);
+        }
+
+        /// <summary>
+        /// Scan folder recursivly to get hsi root folder
+        /// </summary>
+        /// <param name="folder">folder</param>
+        public Folder GetRootFolderRecursivly(Folder folder)
+        {
+            return _model.GetRootFolderRecursivly(folder);
+        }
         #endregion
 
         #region Dispose Model

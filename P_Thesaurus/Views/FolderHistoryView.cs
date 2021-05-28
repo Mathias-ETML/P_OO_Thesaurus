@@ -49,6 +49,7 @@ namespace P_Thesaurus.Views
             {
                 if (item.IsReady && item.DriveType != DriveType.Network)
                 {
+                    //Convert bytes into Gigabytes when displaying disks
                     TreeNode node = new TreeNode("Nom : " + item.Name + "  Espace : " + item.AvailableFreeSpace / 1000000000);
 
                     node.Name = item.Name.Substring(0, 2);
@@ -61,24 +62,23 @@ namespace P_Thesaurus.Views
 
             if (history.Count == 0)
             {
-                TreeNode node = new TreeNode("Aucun dossier disponible");
-                node.Name = null;
+                ListViewItem line = new ListViewItem(new string[] { "Aucun historique disponible", "" });
 
-                historyTreeView.Nodes.Add(node);
+                historyListView.Items.Add(line);
             }
             else
             {
                 foreach (HistoryEntry item in history)
                 {
-                    TreeNode node = new TreeNode("Dossier : " + item.Content + "  Date : " + item.DateTime);
-                    node.Name = item.Content;
+                    ListViewItem line = new ListViewItem(new string[] { item.Content, item.DateTime.ToString("g") });
 
-                    historyTreeView.Nodes.Add(node);
+                    historyListView.Items.Add(line);
                 }
             }
 
-            driveTreeView.NodeMouseDoubleClick += OnDriveSelection;
-            historyTreeView.NodeMouseDoubleClick += OnDriveSelection;
+            driveTreeView.NodeMouseDoubleClick += OnDriveSelectionRoots;
+            //TODO : trouver le bon event
+            //historyListView. += OnDriveSelectionHistory;
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace P_Thesaurus.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void OnDriveSelection(object sender, EventArgs e)
+        public void OnDriveSelectionRoots(object sender, EventArgs e)
         {
             TreeView obj = (TreeView)sender;
 
@@ -97,6 +97,11 @@ namespace P_Thesaurus.Views
                 // we are passing the path trough the node name, wich is a simple way if giving wich drive or folder the user wants
                 Controller.LaunchFolderNavigationView(selected.Name);
             }
+            
+        }
+
+        public void OnDriveSelectionHistory(object sender, EventArgs e)
+        {
             
         }
         #endregion

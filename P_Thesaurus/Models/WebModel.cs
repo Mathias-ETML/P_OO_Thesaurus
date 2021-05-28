@@ -39,7 +39,7 @@ namespace P_Thesaurus.Models
         /// Get all web elements in an url. Make sure to check the url before using this method, else it will crash
         /// </summary>
         /// <param name="url">the url to get elements from</param>
-        /// <returns>all the links and images in the page</returns>
+        /// <returns> all the links and images in the page</returns>
         public List<WebElement> GetWebElements(string url)
         {
             //Deal with the "https://" prefix
@@ -59,8 +59,10 @@ namespace P_Thesaurus.Models
                 sourceUrl = urlSplitted[0] + "//" +  urlSplitted[1];
             }
 
+            //get all hrefs in the page
             string[] hrefSplitted = code.Split(new string[] { "href=\"" }, StringSplitOptions.RemoveEmptyEntries);
 
+            //filters the results of the href split
             for(int i = 1; i < hrefSplitted.Length; i++)
             {
                 hrefSplitted[i] = hrefSplitted[i].Split('"')[0];
@@ -81,8 +83,10 @@ namespace P_Thesaurus.Models
                 
             }
 
+            //get all srcs in the page
             string[] srcSplitted = code.Split(new string[] { "src=\"" }, StringSplitOptions.RemoveEmptyEntries);
 
+            //filter the src's split
             for (int i = 0; i < srcSplitted.Length; i++)
             {
                 srcSplitted[i] = srcSplitted[i].Split('"')[0];
@@ -161,6 +165,29 @@ namespace P_Thesaurus.Models
 
         }
 
+        /// <summary>
+        /// GetHistory function
+        /// </summary>
+        /// <returns>list on histories entries</returns>
+        public List<HistoryEntry> GetHistory()
+        {
+            return _history.Read();
+        }
+
+        /// <summary>
+        /// Write in history function
+        /// </summary>
+        /// <param name="url">full path</param>
+        public void WriteInHistory(string url)
+        {
+            HistoryEntry entry = new HistoryEntry()
+            {
+                Content = url,
+                DateTime = DateTime.Now
+            };
+
+            _history.AddEntry(entry);
+        }
 
         #endregion
     }

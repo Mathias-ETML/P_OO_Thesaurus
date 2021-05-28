@@ -73,6 +73,12 @@ namespace P_Thesaurus.Views
 
             // scannig current folder
             Controller.StartScan(ref _currentFolder, ref currentNode, onScanEnd);
+
+            //creating columns in the ListView
+            currentFolderListView.Columns.Add("Name", 150, HorizontalAlignment.Left);
+            currentFolderListView.Columns.Add("Type", 100, HorizontalAlignment.Left);
+            currentFolderListView.Columns.Add("Modification", 100, HorizontalAlignment.Left);
+            currentFolderListView.Columns.Add("Taille", 100, HorizontalAlignment.Left);
         }
 
         /// <summary>
@@ -105,11 +111,7 @@ namespace P_Thesaurus.Views
         private void ScanEnd()
         {
             // reset the list view
-            currentFolderListView.Clear();
-            currentFolderListView.Columns.Add("Name", 150, HorizontalAlignment.Left);
-            currentFolderListView.Columns.Add("Type", 100, HorizontalAlignment.Left);
-            currentFolderListView.Columns.Add("Modification", 100, HorizontalAlignment.Left);
-            currentFolderListView.Columns.Add("Taille", 100, HorizontalAlignment.Left);
+            currentFolderListView.Items.Clear();
 
             // add the objects in the list view
             foreach (Folder item in _currentFolder.Folders)
