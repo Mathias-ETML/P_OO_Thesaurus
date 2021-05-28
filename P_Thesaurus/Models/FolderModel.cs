@@ -69,6 +69,9 @@ namespace P_Thesaurus.Models
         /// <param name="path">full path</param>
         public void WriteInHistory(string path)
         {
+            // we make sure we get all the last paths
+            _history.Read();
+
             HistoryEntry entry = new HistoryEntry()
             {
                 Content = path,
@@ -136,13 +139,13 @@ namespace P_Thesaurus.Models
         /// </summary>
         /// <param name="folder">folder</param>
         /// <param name="node">node</param>
-        public void StartScan(ref Folder folder, ref TreeNode node, Delegate onScanEnded = null)
+        public void StartScan(ref Folder folder, FolderScan.OnFolderScanEnd onScanEnded = null)
         {
-            _folderScan = new FolderScan(ref folder, ref node);
+            _folderScan = new FolderScan(ref folder);
 
             if (onScanEnded != null)
             {
-                _folderScan.FolderScanEnd += (FolderScan.OnFolderScanEnd)onScanEnded;
+                _folderScan.FolderScanEnd += onScanEnded;
             }
 
             _folderScan.Start();

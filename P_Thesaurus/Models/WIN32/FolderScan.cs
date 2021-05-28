@@ -69,11 +69,6 @@ namespace P_Thesaurus.Models.WIN32
         protected Folder _parentFolder;
 
         /// <summary>
-        /// node field
-        /// </summary>
-        protected TreeNode _node;
-
-        /// <summary>
         /// stoped field
         /// </summary>
         protected bool _stoped;
@@ -84,19 +79,8 @@ namespace P_Thesaurus.Models.WIN32
         /// <param name="parentFolder">parent folder</param>
         public FolderScan(ref Folder parentFolder)
         {
-            this._path = parentFolder.Path + "\\*";
+            this._path = parentFolder.ObjectPath + "\\*";
             this._parentFolder = parentFolder;
-        }
-
-        /// <summary>
-        /// custom constructor
-        /// </summary>
-        /// <param name="parentFolder">parent folder</param>
-        public FolderScan(ref Folder parentFolder, ref TreeNode node)
-        {
-            this._path = parentFolder.Path + "\\*";
-            this._parentFolder = parentFolder;
-            this._node = node;
         }
 
         /// <summary>
@@ -133,44 +117,32 @@ namespace P_Thesaurus.Models.WIN32
                 // check wich type of file we have
                 if (data.IsFile)
                 {
-                    File file = new File(_parentFolder, data);
+                    // compact a foreach loop in 1 line
+                    // check if the file is allready in the node system of the folder
+                    bool isDuplicate = _parentFolder.Files.Exists(item => item.Name == data.cFileName);
 
-                    foreach (TreeNode item in _parentFolder.Files)
+                    // if no, add it
+                    if (!isDuplicate)
                     {
-                        if (item.Name == file.Name)
-                        {
-                            file = null;
+                        File file = new File(_parentFolder, data);
 
-                            break;
-                        }
-                    }
-
-                    if (_node != null && file != null)
-                    {
                         _parentFolder.Files.Add(file);
-
-                        _node.Nodes.Add(data.cFileName);
                     }
                 }
                 else
                 {
-                    Folder folder = new Folder(_parentFolder, data);
+                    // compact a foreach loop in 1 line
+                    // check if the file is allready in the node system of the folder
+                    bool isDuplicate = _parentFolder.Files.Exists(item => item.Name == data.cFileName);
 
-                    foreach (TreeNode item in _parentFolder.Folders)
+                    // if no, add it
+                    if (!isDuplicate)
                     {
-                        if (item.Name == folder.Name)
-                        {
-                            folder = null;
+                        Folder folder = new Folder(_parentFolder, data);
 
-                            break;
-                        }
-                    }
-
-                    if (_node != null && folder != null)
-                    {
                         _parentFolder.Folders.Add(folder);
 
-                        _node.Nodes.Add(folder);
+                        _parentFolder.Nodes.Add(folder);
                     }
                 }
             }

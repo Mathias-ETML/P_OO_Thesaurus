@@ -35,14 +35,19 @@ namespace P_Thesaurus.Controllers
         private FolderModel _model;
 
         /// <summary>
-        /// view attribute
+        /// folder history view
         /// </summary>
-        private BaseView _view;
+        private FolderHistoryView _historyView;
+
+        /// <summary>
+        /// folder navigation view
+        /// </summary>
+        private FolderNavigationView _folderNavigationView;
 
         /// <summary>
         /// view field
         /// </summary>
-        public override BaseView View { get => _view; set => _view = value; }
+        public override BaseView View { get => _historyView; set => _historyView = (FolderHistoryView)value; }
         #endregion
 
         #region Public Methods
@@ -53,12 +58,12 @@ namespace P_Thesaurus.Controllers
         {
             this._model = new FolderModel();
 
-            this._view = new FolderHistoryView()
+            this._historyView = new FolderHistoryView()
             {
                 Controller = this
             };
 
-            ((FolderHistoryView)this._view).Init();
+            _historyView.Init();
         }
 
         /// <summary>
@@ -85,19 +90,35 @@ namespace P_Thesaurus.Controllers
         /// <param name="path">path to start with</param>
         public void LaunchFolderNavigationView(string path)
         {
-            this._view.Hide();
+            this._historyView.Hide();
 
-            FolderNavigationView view = new FolderNavigationView(path)
+            _folderNavigationView = new FolderNavigationView(path)
             {
-                Controller = this,
+                Controller = this
             };
 
-            // call all the function from this controller
-            view.Init();
+            _folderNavigationView.FormClosed += OnFolderNavigationViewClosing;
 
-            view.Show(_view);
+            // call all the function from this controller
+            _folderNavigationView.Init();
+
+            _folderNavigationView.Show(_historyView);
         }
 
+        /// <summary>
+        /// Occure when the second view is closing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void OnFolderNavigationViewClosing(object sender, EventArgs e)
+        {
+            _historyView.Init();
+
+            //_historyView.RemoveOwnedForm(_folderNavigationView);
+
+            _folderNavigationView.Dispose();
+        }
+        
         /// <summary>
         /// Get folder function
         /// </summary>

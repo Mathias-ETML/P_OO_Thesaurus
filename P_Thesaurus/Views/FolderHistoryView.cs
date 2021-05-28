@@ -45,21 +45,37 @@ namespace P_Thesaurus.Views
         {
             List<DriveInfo> drives = Controller.GetAllDrives();
 
+            // loop trough each drives
             foreach (DriveInfo item in drives)
             {
+                // check if the drive is like a local drive
                 if (item.IsReady && item.DriveType != DriveType.Network)
                 {
                     //Convert bytes into Gigabytes when displaying disks
                     TreeNode node = new TreeNode("Nom : " + item.Name + "  Espace : " + item.AvailableFreeSpace / 1000000000);
-
                     node.Name = item.Name.Substring(0, 2);
 
-                    driveTreeView.Nodes.Add(node);
+                    // this is not the best way but we only do this once in the view, so it's pretty fine
+                    foreach (TreeNode drive in driveTreeView.Nodes)
+                    {
+                        // check if item exist
+                        if (drive.Name == node.Name)
+                        {
+                            node = null;
+                            break;
+                        }
+                    }
+
+                    if (node != null)
+                    {
+                        driveTreeView.Nodes.Add(node);
+                    }
                 }
             }
 
             List<HistoryEntry> history = Controller.GetHistory();
 
+            // check if user have history
             if (history.Count == 0)
             {
                 ListViewItem line = new ListViewItem(new string[] { "Aucun historique disponible", "" });
@@ -68,6 +84,7 @@ namespace P_Thesaurus.Views
             }
             else
             {
+                // we check foreach item in from the json reader if it has been added, wich is likly to happen
                 foreach (HistoryEntry item in history)
                 {
                     ListViewItem line = new ListViewItem(new string[] { item.Content, item.DateTime.ToString("g") });
@@ -96,6 +113,10 @@ namespace P_Thesaurus.Views
             {
                 // we are passing the path trough the node name, wich is a simple way if giving wich drive or folder the user wants
                 Controller.LaunchFolderNavigationView(selected.Name);
+
+                // stupid bug where the event is doubled
+                driveTreeView.NodeMouseDoubleClick -= OnDriveSelection;
+                historyTreeView.NodeMouseDoubleClick -= OnDriveSelection;
             }
             
         }

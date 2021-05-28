@@ -22,7 +22,7 @@ namespace P_Thesaurus
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            
+            /*
             History<HistoryEntry> history = new History<HistoryEntry>(FolderModel.DEFAULT_FOLDER_HISTORY_PATH);
 
             history.AddEntry(new HistoryEntry() {
@@ -31,6 +31,7 @@ namespace P_Thesaurus
             });
 
             history.Write();
+            */
             
 
             /*
@@ -42,10 +43,10 @@ namespace P_Thesaurus
                 DateTime = DateTime.Now.Date,
                 Password = "12345",
                 Username = "Mathias"
-            });*/
+            });
 
             history.Write();
-            
+            */
 
             MainController mainController = new MainController();
             

@@ -10,6 +10,7 @@ using System;
 using System.Windows.Forms;
 using P_Thesaurus.AppBusiness.WIN32;
 using P_Thesaurus.Models;
+using P_Thesaurus.Models.WIN32;
 using P_Thesaurus.Views;
 
 namespace P_Thesaurus.Controllers
@@ -51,9 +52,9 @@ namespace P_Thesaurus.Controllers
         /// </summary>
         /// <param name="folder">folder</param>
         /// <param name="node">node</param>
-        public void StartScan(ref Folder folder, ref TreeNode node, Delegate onScanEnded = null)
+        public void StartScan(ref Folder folder, FolderScan.OnFolderScanEnd onScanEnded = null)
         {
-            _model.StartScan(ref folder, ref node, onScanEnded);
+            _model.StartScan(ref folder, onScanEnded);
         }
 
         /// <summary>
@@ -66,7 +67,7 @@ namespace P_Thesaurus.Controllers
         }
 
         /// <summary>
-        /// Scan folder recursivly to get hsi root folder
+        /// Scan folder recursivly to get his root folder
         /// </summary>
         /// <param name="folder">folder</param>
         public Folder GetRootFolderRecursivly(Folder folder)

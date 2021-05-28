@@ -60,7 +60,7 @@ namespace P_Thesaurus.Controllers
         {
             List<WebElement> datas = _model.GetWebElements(url);
 
-            ((WebNavigationView)_view).InitializeElements(datas);
+            //((WebNavigationView)_view).InitializeElements(datas);
         }
         #endregion
 

@@ -13,6 +13,11 @@ namespace P_Thesaurus.AppBusiness.HistoryReader
     public class History<T> : IDisposable
     {
         /// <summary>
+        /// maximum entry field
+        /// </summary>
+        public const int MAXIMUM_ENTRY_COUNT = 25;
+
+        /// <summary>
         /// reader field
         /// </summary>
         private JsonReader<List<T>> _reader;
@@ -71,6 +76,12 @@ namespace P_Thesaurus.AppBusiness.HistoryReader
         /// <param name="entry">entry</param>
         public void AddEntry(T entry)
         {
+            // check if we need to cascade list
+            if (_entries.Count >= MAXIMUM_ENTRY_COUNT)
+            {
+                this._entries = new List<T>(_entries.GetRange(1, 24));
+            }
+
             this._entries.Add(entry);
 
             if (_reloadOnWrite)
@@ -85,7 +96,9 @@ namespace P_Thesaurus.AppBusiness.HistoryReader
         /// <returns>list of elements</returns>
         public List<T> Read()
         {
-            return _reader.Read();
+            this._entries = _reader.Reload();
+
+            return this._entries;
         }
 
         /// <summary>

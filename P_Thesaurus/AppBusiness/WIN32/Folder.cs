@@ -152,7 +152,7 @@ namespace P_Thesaurus.AppBusiness.WIN32
         {
             this._parentFolder = parentFolder;
             this._type = Type.Normal;
-            this.Path = _parentFolder.Path + "\\" + this._data.FileName;
+            this.ObjectPath = _parentFolder.ObjectPath + "\\" + this._data.FileName;
 
             this.Text = this.Name;
 
@@ -174,7 +174,7 @@ namespace P_Thesaurus.AppBusiness.WIN32
             this._folders = new List<Folder>();
             this._files = new List<File>();
 
-            this.Path = path;
+            this.ObjectPath = path;
         }
     }
 }
