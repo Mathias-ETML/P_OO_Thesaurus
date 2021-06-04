@@ -60,19 +60,13 @@ namespace P_Thesaurus.Views
             // adding root folder at the tree view
             folderTreeView.Nodes.Add(root);
 
-            // getting current tree node cause pointers
-            TreeNode currentNode = _currentFolder;
-
-            // function pointer
-            FolderScan.OnFolderScanEnd onScanEnd = new Models.WIN32.FolderScan.OnFolderScanEnd(ScanEnd);
-
             // scannig current folder
             ScanFolder(_currentFolder);
 
+            root.ExpandAll();
+
             // showing user location
-            folderTreeView.SelectedNode = currentNode;
-            _currentFolder.Expand();
-            Controller.StartScan(ref _currentFolder, onScanEnd);
+            folderTreeView.SelectedNode = _currentFolder;
 
             //creating columns in the ListView
             currentFolderListView.Columns.Add("Name", 150, HorizontalAlignment.Left);
@@ -126,6 +120,7 @@ namespace P_Thesaurus.Views
         /// </summary>
         private void ScanEnd()
         {
+
             // add the objects in the list view
             foreach (Folder item in _currentFolder.Folders)
             {
@@ -152,23 +147,6 @@ namespace P_Thesaurus.Views
 
                 currentFolderListView.Items.Add(items);
             }
-        }
-
-        /// <summary>
-        /// Reset list view function
-        /// </summary>
-        private void ResetListView()
-        {
-            // reset the list view
-            currentFolderListView.Clear();
-            currentFolderListView.Columns.Add("Name", 130, HorizontalAlignment.Left);
-            currentFolderListView.Columns.Add("Type", 100, HorizontalAlignment.Left);
-            currentFolderListView.Columns.Add("Modification", 100, HorizontalAlignment.Left);
-
-            currentFolderListView.AllowColumnReorder = true;
-            currentFolderListView.FullRowSelect = true;
-            currentFolderListView.MultiSelect = false;
-            currentFolderListView.View = View.Details;
         }
 
         /// <summary>
@@ -202,6 +180,8 @@ namespace P_Thesaurus.Views
             {
                 _currentFolder.Collapse();
             }
+
+            currentFolderListView.Items.Clear();
 
             _currentFolder = folder;
 
@@ -336,14 +316,24 @@ namespace P_Thesaurus.Views
             if (current.Name == nameof(Folder))
             {
                 // find the folder with the same name as the one that is selected
-                Folder selectedFolder = (Folder)FindObjectFolderViaNameFromListView(current);
+                Folder selectedFolder = FindFolderViaNameFromListView(current);
 
                 ShowInformationSelectedListViewFolder(selectedFolder);
+
+                _currentFolder = selectedFolder;
+                ScanFolder(_currentFolder);
+
+
+                /*
+                _currentFolder = selectedFolder;
+                ScanFolder(_currentFolder);
+                _currentFolder.Expand();
+                */
             }
             else
             {
                 // find the file with the same name as the one that is selected
-                File selectedFile = (File)FindObjectFolderViaNameFromListView(current);
+                File selectedFile = FindFileViaNameFromListView(current);
 
                 ShowInformationSelectedListViewFile(selectedFile);
             }
@@ -354,10 +344,21 @@ namespace P_Thesaurus.Views
         /// </summary>
         /// <param name="name">name</param>
         /// <param name="current">current list view item</param>
-        /// <returns>FolderObject</returns>
-        private FolderObject FindObjectFolderViaNameFromListView(ListViewItem current)
+        /// <returns>File</returns>
+        private File FindFileViaNameFromListView(ListViewItem current)
         {
             return _currentFolder.Files.Find(item => item.Name == current.SubItems[0].Text);
+        }
+
+        /// <summary>
+        /// find folder object that match the name of 
+        /// </summary>
+        /// <param name="name">name</param>
+        /// <param name="current">current list view item</param>
+        /// <returns>FolderObject</returns>
+        private Folder FindFolderViaNameFromListView(ListViewItem current)
+        {
+            return _currentFolder.Folders.Find(item => item.Name == current.SubItems[0].Text);
         }
 
         /// <summary>

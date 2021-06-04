@@ -125,9 +125,25 @@ namespace P_Thesaurus.Views
             }
         }
 
+        /// <summary>
+        /// Occure when the user click on a object of the history
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void OnDriveSelectionHistory(object sender, EventArgs e)
         {
-            
+            string selected = historyListView.SelectedItems[0].Text;
+
+            if (selected != null)
+            {
+                // we are passing the path trough the node name, wich is a simple way if giving wich drive or folder the user wants
+                Controller.LaunchFolderNavigationView(selected);
+
+                // stupid bug where the event is doubled
+                driveTreeView.NodeMouseDoubleClick -= OnDriveSelectionRoots;
+                driveTreeView.NodeMouseDoubleClick -= OnDriveSelectionRoots;
+            }
         }
         #endregion
     }

@@ -32,6 +32,10 @@ namespace P_Thesaurus.Views
             this.driveTreeView = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
             // 
+            // historyListView
+            // 
+            this.historyListView.DoubleClick += new System.EventHandler(this.OnDriveSelectionHistory);
+            // 
             // driveTreeView
             // 
             this.driveTreeView.Location = new System.Drawing.Point(39, 207);
@@ -47,6 +51,7 @@ namespace P_Thesaurus.Views
             this.Controls.Add(this.driveTreeView);
             this.Name = "FolderHistoryView";
             this.Text = "FolderHistoryView";
+            this.Controls.SetChildIndex(this.historyListView, 0);
             this.Controls.SetChildIndex(this.driveTreeView, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
