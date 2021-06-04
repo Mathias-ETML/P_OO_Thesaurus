@@ -19,5 +19,15 @@ namespace P_Thesaurus.Views
         {
             InitializeComponent();
         }
+
+        /// <summary>
+        /// Shows a MessageBox in the view because controller shouldn't do it
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="icon"></param>
+        public void ShowMessageBox(string message, MessageBoxIcon icon = MessageBoxIcon.Error)
+        {
+
+        }
     }
 }

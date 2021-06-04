@@ -19,17 +19,20 @@ namespace P_Thesaurus.Views
         #region Public Methods
         /// <summary>
         /// Default Constructor
+        /// 
         public HistoryView()
         {
             InitializeComponent();
+
+            historyListView.AllowColumnReorder = true;
+            historyListView.FullRowSelect = true;
+            historyListView.MultiSelect = false;
+            historyListView.View = View.Details;
+
+
         }
 
         #endregion
-
-        private void button2_Click(object sender, System.EventArgs e)
-        {
-
-        }
 
         /// <summary>
         /// BtnBack click that close the current form to go back

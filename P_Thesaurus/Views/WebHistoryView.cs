@@ -7,6 +7,8 @@
  */
 
 using P_Thesaurus.Controllers;
+using System;
+using System.Windows.Forms;
 
 namespace P_Thesaurus.Views
 {
@@ -29,6 +31,10 @@ namespace P_Thesaurus.Views
         public WebHistoryView()
         {
             InitializeComponent();
+
+            PathLabel.Text = "Url";
+
+            button2.Click += new EventHandler(Button2Click);
         }
 
         public void Init()
@@ -37,6 +43,13 @@ namespace P_Thesaurus.Views
         }
         #endregion
 
+        #region Private Methods
+        private void Button2Click(object sender, EventArgs e)
+        {
+            Controller.TestUrl(textBox1.Text);
+        }
+
+        #endregion
 
     }
 }
