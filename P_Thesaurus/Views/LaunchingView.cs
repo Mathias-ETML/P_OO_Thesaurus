@@ -42,6 +42,19 @@ namespace P_Thesaurus.Views
         {
             Controller.OnCloseNotifying(AppBusiness.EnumsAndStructs.ControllerType.Folder);
         }
+
+        /// <summary>
+        /// Button "Web" Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnWebClick(object sender, System.EventArgs e)
+        {
+            Controller.OnCloseNotifying(AppBusiness.EnumsAndStructs.ControllerType.Web);
+        }
+
         #endregion
+
+
     }
 }

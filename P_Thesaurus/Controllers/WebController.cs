@@ -35,9 +35,20 @@ namespace P_Thesaurus.Controllers
         private BaseView _view;
 
         /// <summary>
+        /// folder history view
+        /// </summary>
+        private WebHistoryView _historyView;
+
+        /// <summary>
+        /// folder navigation view
+        /// </summary>
+        private WebNavigationView _webNavigationView;
+
+        /// <summary>
         /// View field
         /// </summary>
-        public override BaseView View { get => this._view; set => this._view = value; }
+        public override BaseView View { get => _historyView; set => _historyView = (WebHistoryView)value; }
+
         #endregion
 
         #region Public Methods
@@ -48,19 +59,46 @@ namespace P_Thesaurus.Controllers
         {
             _model = new  WebModel();
 
-            this._view = new WebHistoryView()
+            this._historyView = new WebHistoryView()
             {
                 Controller = this
             };
 
-            ((WebHistoryView)this._view).Init();
+            this._historyView.Init();
         }
 
         public void SetDatas(string url)
         {
             List<WebElement> datas = _model.GetWebElements(url);
 
-            //((WebNavigationView)_view).InitializeElements(datas);
+            _webNavigationView.InitializeElements(datas);
+        }
+
+        public bool TestUrl(string url)
+        {
+            if(_model.TestURL(url))
+            {
+                this._historyView.Hide();
+
+                _webNavigationView = new WebNavigationView()
+                {
+                    Controller = this
+                };
+
+                //TODO : the onclosing event was here once 
+
+                // call all the function from this controller
+                SetDatas(url);
+
+                _webNavigationView.Show(_historyView);
+
+                return true;
+            }
+            else
+            {
+                _historyView.ShowMessageBox("L'url sélectionnée n'est pas accessible");
+                return false;
+            }
         }
         #endregion
 

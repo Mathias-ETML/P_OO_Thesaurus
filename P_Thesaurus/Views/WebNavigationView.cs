@@ -17,6 +17,11 @@ namespace P_Thesaurus.Views
     public partial class WebNavigationView : NavigationView
     {
         /// <summary>
+        /// the view's controller
+        /// </summary>
+        public WebController Controller { get; set; }
+
+        /// <summary>
         /// default Controller
         /// </summary>
         public WebNavigationView()

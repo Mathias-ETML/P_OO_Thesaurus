@@ -122,6 +122,12 @@ namespace P_Thesaurus.Models
         /// <returns>true if the url is valid, else false</returns>
         public bool TestURL(string url)
         {
+            //Deal with the "https://" prefix
+            if (!(url.StartsWith("https://") || url.StartsWith("http://")))
+            {
+                url = url.Insert(0, "https://");
+            }
+
             try
             {
                 new WebClient().OpenRead(url);

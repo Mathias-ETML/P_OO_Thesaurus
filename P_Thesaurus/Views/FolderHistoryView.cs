@@ -37,10 +37,7 @@ namespace P_Thesaurus.Views
         {
             InitializeComponent();
 
-            historyListView.AllowColumnReorder = true;
-            historyListView.FullRowSelect = true;
-            historyListView.MultiSelect = false;
-            historyListView.View = View.Details;
+
         }
 
         /// <summary>

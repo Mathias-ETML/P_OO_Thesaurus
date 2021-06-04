@@ -36,7 +36,7 @@ namespace P_Thesaurus.Views
             this.btnBack = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblHistoryTitle = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // historyListView
@@ -57,6 +57,7 @@ namespace P_Thesaurus.Views
             // columnHeaderPath
             // 
             this.columnHeaderPath.Text = "Chemin";
+            this.columnHeaderPath.Width = 200;
             // 
             // columnHeaderDate
             // 
@@ -98,24 +99,23 @@ namespace P_Thesaurus.Views
             this.button2.TabIndex = 6;
             this.button2.Text = "GO";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // label1
+            // lblHistoryTitle
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(244, 118);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 18);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Historique";
+            this.lblHistoryTitle.AutoSize = true;
+            this.lblHistoryTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHistoryTitle.Location = new System.Drawing.Point(244, 118);
+            this.lblHistoryTitle.Name = "lblHistoryTitle";
+            this.lblHistoryTitle.Size = new System.Drawing.Size(75, 18);
+            this.lblHistoryTitle.TabIndex = 7;
+            this.lblHistoryTitle.Text = "Historique";
             // 
             // HistoryView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 484);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblHistoryTitle);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.btnBack);
@@ -131,11 +131,11 @@ namespace P_Thesaurus.Views
         #endregion
         private System.Windows.Forms.ColumnHeader columnHeaderPath;
         private System.Windows.Forms.ColumnHeader columnHeaderDate;
-        private System.Windows.Forms.Label PathLabel;
         private System.Windows.Forms.Button btnBack;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Label label1;
         protected System.Windows.Forms.ListView historyListView;
+        private System.Windows.Forms.Label lblHistoryTitle;
+        public System.Windows.Forms.Label PathLabel;
+        protected System.Windows.Forms.Button button2;
+        protected System.Windows.Forms.TextBox textBox1;
     }
 }

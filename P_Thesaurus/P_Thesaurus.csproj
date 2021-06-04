@@ -167,6 +167,9 @@
     <EmbeddedResource Include="Views\WebHistoryView.resx">
       <DependentUpon>WebHistoryView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\WebNavigationView.resx">
+      <DependentUpon>WebNavigationView.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
