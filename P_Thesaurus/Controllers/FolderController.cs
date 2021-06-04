@@ -134,9 +134,9 @@ namespace P_Thesaurus.Controllers
         /// </summary>
         /// <param name="folder">folder</param>
         /// <param name="node">node</param>
-        public void StartScan(ref Folder folder, ref TreeNode node, Delegate onScanEnded = null)
+        public void StartScan(ref Folder folder, Models.WIN32.FolderScan.OnFolderScanEnd onScanEnded = null)
         {
-            _model.StartScan(ref folder, ref node, onScanEnded);
+            _model.StartScan(ref folder, onScanEnded);
         }
 
         /// <summary>

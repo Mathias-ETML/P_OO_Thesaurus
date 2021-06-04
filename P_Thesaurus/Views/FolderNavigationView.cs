@@ -72,7 +72,7 @@ namespace P_Thesaurus.Views
             // showing user location
             folderTreeView.SelectedNode = currentNode;
             _currentFolder.Expand();
-            Controller.StartScan(ref _currentFolder, ref currentNode, onScanEnd);
+            Controller.StartScan(ref _currentFolder, onScanEnd);
 
             //creating columns in the ListView
             currentFolderListView.Columns.Add("Name", 150, HorizontalAlignment.Left);

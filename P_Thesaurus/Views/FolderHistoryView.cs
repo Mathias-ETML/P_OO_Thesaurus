@@ -115,10 +115,9 @@ namespace P_Thesaurus.Views
                 Controller.LaunchFolderNavigationView(selected.Name);
 
                 // stupid bug where the event is doubled
-                driveTreeView.NodeMouseDoubleClick -= OnDriveSelection;
-                historyTreeView.NodeMouseDoubleClick -= OnDriveSelection;
+                driveTreeView.NodeMouseDoubleClick -= OnDriveSelectionRoots;
+                driveTreeView.NodeMouseDoubleClick -= OnDriveSelectionRoots;
             }
-            
         }
 
         public void OnDriveSelectionHistory(object sender, EventArgs e)

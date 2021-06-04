@@ -29,7 +29,10 @@ namespace P_Thesaurus.Models.JSON
 
             if (!File.Exists(path))
             {
-                throw new FileNotFoundException("File is non exsitent");
+                using (FileStream sf = File.Create(path))
+                {
+                    
+                }
             }
 
             T obj;
