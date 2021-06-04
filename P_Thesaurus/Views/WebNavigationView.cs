@@ -8,6 +8,7 @@
 using P_Thesaurus.AppBusiness.EnumsAndStructs;
 using P_Thesaurus.Controllers;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace P_Thesaurus.Views
 {
@@ -31,7 +32,10 @@ namespace P_Thesaurus.Views
 
         public void InitializeElements(List<WebElement> datas)
         {
-
+            foreach(WebElement element in datas)
+            {
+                _listView.Items.Add(new ListViewItem(element.link, element.type.ToString()));
+            }
         }
     }
 }

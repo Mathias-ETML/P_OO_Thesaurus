@@ -83,6 +83,10 @@ namespace P_Thesaurus.Views
             this.Controls.Add(this.currentFolderListView);
             this.Controls.Add(this.folderTreeView);
             this.Name = "FolderNavigationView";
+            this.Controls.SetChildIndex(this.folderTreeView, 0);
+            this.Controls.SetChildIndex(this.currentFolderListView, 0);
+            this.Controls.SetChildIndex(this.panInformation, 0);
+            this.Controls.SetChildIndex(this.panHistoryPath, 0);
             this.ResumeLayout(false);
 
         }

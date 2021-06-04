@@ -438,6 +438,11 @@ namespace P_Thesaurus.Views
         {
             ListView obj = (ListView)sender;
 
+            if (obj.SelectedItems.Count == 0)
+            {
+                return;
+            }
+
             ListViewItem current = obj.SelectedItems[0];
 
             // check if user selected a folder or a file
@@ -459,6 +464,11 @@ namespace P_Thesaurus.Views
             {
                 // find the file with the same name as the one that is selected
                 File selectedFile = _currentFolder.Files.Find(item => item.Name == current.SubItems[0].Text);
+
+                if(selectedFile != null)
+                {
+                    Process.Start(selectedFile.ObjectPath);
+                }
             }
         }
 

@@ -69,9 +69,18 @@ namespace P_Thesaurus.Controllers
 
         public void SetDatas(string url)
         {
-            List<WebElement> datas = _model.GetWebElements(url);
+            if(_model.TestURL(url))
+            {
+                List<WebElement> datas = _model.GetWebElements(url);
 
-            _webNavigationView.InitializeElements(datas);
+                _webNavigationView.InitializeElements(datas);
+
+                _model.WriteInHistory(url);
+            }
+            else
+            {
+                _historyView.ShowMessageBox("L'url sélectionnée n'est pas accessible. Beaucoup d'erreurs externes peuvent en être la cause (sites fermés, erreurs de serveur ou votre connexion internet)");
+            }
         }
 
         public bool TestUrl(string url)

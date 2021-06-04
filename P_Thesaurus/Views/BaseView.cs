@@ -27,7 +27,7 @@ namespace P_Thesaurus.Views
         /// <param name="icon"></param>
         public void ShowMessageBox(string message, MessageBoxIcon icon = MessageBoxIcon.Error)
         {
-
+            MessageBox.Show(message, "un problème est survenu.");
         }
     }
 }

@@ -164,6 +164,9 @@
     <EmbeddedResource Include="Views\LaunchingView.resx">
       <DependentUpon>LaunchingView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\NavigationView.resx">
+      <DependentUpon>NavigationView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\WebHistoryView.resx">
       <DependentUpon>WebHistoryView.cs</DependentUpon>
     </EmbeddedResource>
