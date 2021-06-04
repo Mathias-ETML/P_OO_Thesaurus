@@ -79,6 +79,11 @@ namespace P_Thesaurus.Views
             currentFolderListView.Columns.Add("Type", 100, HorizontalAlignment.Left);
             currentFolderListView.Columns.Add("Modification", 100, HorizontalAlignment.Left);
             currentFolderListView.Columns.Add("Taille", 100, HorizontalAlignment.Left);
+
+            currentFolderListView.AllowColumnReorder = true;
+            currentFolderListView.FullRowSelect = true;
+            currentFolderListView.MultiSelect = false;
+            currentFolderListView.View = View.Details;
         }
 
         /// <summary>
@@ -121,13 +126,6 @@ namespace P_Thesaurus.Views
         /// </summary>
         private void ScanEnd()
         {
-            // reset the list view
-            currentFolderListView.Items.Clear();
-            currentFolderListView.Columns.Add("Name", 150, HorizontalAlignment.Left);
-            currentFolderListView.Columns.Add("Type", 100, HorizontalAlignment.Left);
-            currentFolderListView.Columns.Add("Modification", 100, HorizontalAlignment.Left);
-            currentFolderListView.Columns.Add("Taille", 100, HorizontalAlignment.Left);
-
             // add the objects in the list view
             foreach (Folder item in _currentFolder.Folders)
             {

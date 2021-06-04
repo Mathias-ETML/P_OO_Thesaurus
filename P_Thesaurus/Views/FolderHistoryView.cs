@@ -36,6 +36,11 @@ namespace P_Thesaurus.Views
         public FolderHistoryView()
         {
             InitializeComponent();
+
+            historyListView.AllowColumnReorder = true;
+            historyListView.FullRowSelect = true;
+            historyListView.MultiSelect = false;
+            historyListView.View = View.Details;
         }
 
         /// <summary>
