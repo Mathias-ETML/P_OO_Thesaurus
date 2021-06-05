@@ -146,8 +146,6 @@ namespace P_Thesaurus.Controllers
         /// <returns>the object or null if not found</returns>
         public List<FolderObject> GetObjectRecursivly(Folder start, string name, bool forceRescan = false)
         {
-            name = name.ToLowerInvariant();
-
             return _model.GetObjectRecursivly(start, name, forceRescan);
         }
         

@@ -12,6 +12,7 @@ using P_Thesaurus.Controllers;
 using P_Thesaurus.Models.WIN32;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace P_Thesaurus.Views
@@ -25,7 +26,10 @@ namespace P_Thesaurus.Views
         private const int BITS_IN_MEGA_BYTE = 1024;
         private string _path;
         private Folder _currentFolder;
+        private Folder _root;
         private List<File.Type> _filters;
+        private bool _researchMode = false;
+        private List<FolderObject> _foundItems = null;
 
         /// <summary>
         /// the view's controller
@@ -61,13 +65,15 @@ namespace P_Thesaurus.Views
             if (!_currentFolder.IsRootFolder)
             {
                 // getting root folder of the athx
-                Folder root = Controller.GetRootFolderRecursivly(_currentFolder);
+                _root = Controller.GetRootFolderRecursivly(_currentFolder);
 
                 // adding root folder at the tree view
-                folderTreeView.Nodes.Add(root);
+                folderTreeView.Nodes.Add(_root);
             }
             else
             {
+                _root = _currentFolder;
+
                 // adding root folder at the tree view
                 folderTreeView.Nodes.Add(_currentFolder);
             }
@@ -137,10 +143,7 @@ namespace P_Thesaurus.Views
                 // add the objects in the list view
                 foreach (Folder item in _currentFolder.Folders)
                 {
-                    ListViewItem items = new ListViewItem(new string[] {
-                                                        item.Name,
-                                                        "Dossier",
-                                                        item.ObjectData.ModifyTime.ToLongDateString() });
+                    ListViewItem items = GetFormatedFolderItem(item);
 
                     // what do we do here is that we assign the typeof the list view item via the name of the list view
                     items.Name = nameof(Folder);
@@ -154,10 +157,7 @@ namespace P_Thesaurus.Views
                 // check if we can add the item to the current list view
                 if (_filters.Contains(file.FileType) || _filters.Count == 0)
                 {
-                    ListViewItem items = new ListViewItem(new string[] {
-                                                        file.Name,
-                                                        "Fichier " + file.FileType,
-                                                        file.ObjectData.ModifyTime.ToLongDateString() });
+                    ListViewItem items = GetFormatedFileItem(file);
 
                     // what do we do here is that we assign the typeof the list view item via the name of the list view
                     items.Name = nameof(File);
@@ -165,6 +165,36 @@ namespace P_Thesaurus.Views
                     currentFolderListView.Items.Add(items);
                 }
             }
+        }
+
+        /// <summary>
+        /// Get you a formated list view item
+        /// </summary>
+        /// <param name="folder">folder</param>
+        /// <returns>ListViewItem</returns>
+        private ListViewItem GetFormatedFolderItem(Folder folder)
+        {
+            ListViewItem buffer = new ListViewItem(new string[] {
+                                    folder.Name,
+                                    "Dossier",
+                                    folder.ObjectData.ModifyTime.ToLongDateString() });
+
+            buffer.Name = nameof(Folder);
+
+            return buffer;
+        }
+
+        /// <summary>
+        /// Get formated list view item
+        /// </summary>
+        /// <param name="file">file</param>
+        /// <returns>ListViewItem</returns>
+        private ListViewItem GetFormatedFileItem(File file)
+        {
+            return new ListViewItem(new string[] {
+                                    file.Name,
+                                    "Fichier " + file.FileType,
+                                    file.ObjectData.ModifyTime.ToLongDateString() });
         }
 
         /// <summary>
@@ -211,10 +241,7 @@ namespace P_Thesaurus.Views
         private void ScanFolder(Folder folder)
         {
             // fold the current node so the user see the tree view of the selected folder
-            if (_currentFolder != null)
-            {
-                _currentFolder.Collapse();
-            }
+            _root.Collapse();
 
             _currentFolder = folder;
 
@@ -381,7 +408,7 @@ namespace P_Thesaurus.Views
             {
                 if (!parent.IsRootFolder && parent.Name != name)
                 {
-                    FindFolder(parent.ParentFolder);
+                    return FindFolder(parent.ParentFolder);
                 }
 
                 return parent;
@@ -470,22 +497,49 @@ namespace P_Thesaurus.Views
             // check if user selected a folder or a file
             if (current.Name == nameof(Folder))
             {
-                // find the folder with the same name as the one that is selected
-                Folder selectedFolder = _currentFolder.Folders.Find(item => item.Name == current.SubItems[0].Text);
-
-                if (selectedFolder != null)
+                if (_researchMode)
                 {
-                    ScanFolder(selectedFolder);
+                    _researchMode = false;
+
+                    // find the selected item with the matching name of all of them
+                    FolderObject flo = _foundItems.Find(item => item.Name == current.SubItems[0].Text);
+
+                    _foundItems = null;
+
+                    if ((flo as Folder) != null)
+                    {
+                        Folder item = (Folder)flo;
+
+                        ScanFolder(item);
+                    }
+                    else
+                    {
+                        File item = (File)flo;
+
+                        Process.Start(item.ObjectPath);
+                    }
                 }
                 else
                 {
-                    throw new NotSupportedException($"There is no folder with the name {current.SubItems[0].Text} on the current branche of the tree view");
+                    // find the folder with the same name as the one that is selected
+                    Folder selectedFolder = _currentFolder.Folders.Find(item => item.Name == current.SubItems[0].Text);
+
+                    if (selectedFolder != null)
+                    {
+                        ScanFolder(selectedFolder);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException($"There is no folder with the name {current.SubItems[0].Text} on the current branche of the tree view");
+                    }
                 }
             }
             else
             {
                 // find the file with the same name as the one that is selected
                 File selectedFile = _currentFolder.Files.Find(item => item.Name == current.SubItems[0].Text);
+
+                Process.Start(selectedFile.ObjectPath);
             }
         }
 
@@ -530,6 +584,7 @@ namespace P_Thesaurus.Views
         /// <param name="e"></param>
         private void BtnFiltre_Click(object sender, EventArgs e)
         {
+            // check if the user entered a word to be research, so we don't show the filters
             if (txtBoxObjectName.Text.Length > 0)
             {
                 ResearchObjectRecursivly();
@@ -578,11 +633,34 @@ namespace P_Thesaurus.Views
         /// </summary>
         private void ResearchObjectRecursivly()
         {
-            List<FolderObject> flo = Controller.GetObjectRecursivly(_currentFolder, txtBoxObjectName.Text);
+            _researchMode = true;
 
-            if (flo != null)
+            List<FolderObject> _foundItems = Controller.GetObjectRecursivly(_currentFolder, txtBoxObjectName.Text);
+
+
+            if (_foundItems != null)
             {
+                currentFolderListView.Items.Clear();
 
+                foreach (FolderObject item in _foundItems)
+                {
+                    if ((item as Folder) != null)
+                    {
+                        Folder obj = (Folder)item;
+
+                        currentFolderListView.Items.Add(GetFormatedFolderItem(obj));
+                    }
+                    else
+                    {
+                        File obj = (File)item;
+
+                        currentFolderListView.Items.Add(GetFormatedFileItem(obj));
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Aucun résultat trouvé");
             }
         }
 

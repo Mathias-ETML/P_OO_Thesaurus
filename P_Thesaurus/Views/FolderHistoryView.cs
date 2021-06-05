@@ -37,7 +37,6 @@ namespace P_Thesaurus.Views
         {
             InitializeComponent();
 
-
         }
 
         /// <summary>
@@ -45,6 +44,8 @@ namespace P_Thesaurus.Views
         /// </summary>
         public void Init()
         {
+            historyListView.Items.Clear();
+
             List<DriveInfo> drives = Controller.GetAllDrives();
 
             // loop trough each drives

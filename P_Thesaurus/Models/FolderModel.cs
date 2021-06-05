@@ -144,10 +144,13 @@ namespace P_Thesaurus.Models
         {
             List<FolderObject> items = new List<FolderObject>();
 
+            name = name.ToLowerInvariant();
+
             return GetObjectRecursivly(start, name, forceRescan, ref items);
         }
 
         /// <summary>
+        /// Scan the folder recursivly for all the items with the entered name
         /// 
         /// </summary>
         /// <param name="start"></param>
@@ -187,7 +190,7 @@ namespace P_Thesaurus.Models
             }
 
             // this sould never happen, because of the if statment below
-            return null;
+            return objects;
         }
 
         /// <summary>
