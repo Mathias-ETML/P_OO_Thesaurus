@@ -50,7 +50,7 @@ namespace P_Thesaurus.AppBusiness.EnumsAndStructs
     public struct ResearchElement
     {
         public FolderObject Object;
-        public float Ration;
+        public float Ratio;
 
         
     }

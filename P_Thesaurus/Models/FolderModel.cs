@@ -179,7 +179,7 @@ namespace P_Thesaurus.Models
                     {
                         objects.Add(new ResearchElement {
                             Object = item,
-                            Ration = term.Length / item.ObjectData.FileName.Length
+                            Ratio = term.Length / item.ObjectData.FileName.Length
                         });
                     }
                 }

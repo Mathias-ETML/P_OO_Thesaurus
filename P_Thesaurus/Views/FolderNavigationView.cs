@@ -675,12 +675,12 @@ namespace P_Thesaurus.Views
             /// </summary>
             int CompareObject(ResearchElement first, ResearchElement other)
             {
-                if (first.Ration == other.Ration)
+                if (first.Ratio == other.Ratio)
                 {
                     return 0;
                 }
 
-                if (first.Ration < other.Ration)
+                if (first.Ratio < other.Ratio)
                 {
                     return -1;
                 }
