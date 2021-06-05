@@ -12,7 +12,6 @@ using P_Thesaurus.Controllers;
 using P_Thesaurus.Models.WIN32;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace P_Thesaurus.Views
@@ -26,11 +25,12 @@ namespace P_Thesaurus.Views
         private const int BITS_IN_MEGA_BYTE = 1024;
         private string _path;
         private Folder _currentFolder;
+        private List<File.Type> _filters;
 
         /// <summary>
         /// the view's controller
         /// </summary>
-        public FolderNavigationController Controller { get; set; }
+        public FolderController Controller {  get; set; }
         #endregion
 
         #region Public Methods
@@ -44,6 +44,10 @@ namespace P_Thesaurus.Views
             this._path = path;
 
             InitializeComponent();
+
+            this.filterChckdLstBox.Visible = false;
+
+            this._filters = new List<File.Type>();
         }
 
         /// <summary>
@@ -54,24 +58,25 @@ namespace P_Thesaurus.Views
             // get current folder at the end of the path
             _currentFolder = Controller.GetFolder(_path);
 
-            // getting root folder of the athx
-            Folder root = Controller.GetRootFolderRecursivly(_currentFolder);
+            if (!_currentFolder.IsRootFolder)
+            {
+                // getting root folder of the athx
+                Folder root = Controller.GetRootFolderRecursivly(_currentFolder);
 
-            // adding root folder at the tree view
-            folderTreeView.Nodes.Add(root);
-
-            // getting current tree node cause pointers
-            TreeNode currentNode = _currentFolder;
+                // adding root folder at the tree view
+                folderTreeView.Nodes.Add(root);
+            }
+            else
+            {
+                // adding root folder at the tree view
+                folderTreeView.Nodes.Add(_currentFolder);
+            }
 
             // function pointer
             FolderScan.OnFolderScanEnd onScanEnd = new Models.WIN32.FolderScan.OnFolderScanEnd(ScanEnd);
 
             // scannig current folder
             ScanFolder(_currentFolder);
-
-            // showing user location
-            folderTreeView.SelectedNode = currentNode;
-            _currentFolder.Expand();
         }
 
         /// <summary>
@@ -116,31 +121,49 @@ namespace P_Thesaurus.Views
         {
             ResetListView();
 
-            // add the objects in the list view
-            foreach (Folder item in _currentFolder.Folders)
+            AddItemsCurrentListView();
+        }
+
+        /// <summary>
+        /// add item in the current list view
+        /// </summary>
+        private void AddItemsCurrentListView()
+        {
+            // check if the user has selected filters
+            // if yes, we don't show the folders
+            // caus they are in the tree view
+            if (_filters.Count == 0)
             {
-                ListViewItem items = new ListViewItem(new string[] {
-                                                    item.Name,
-                                                    "Dossier",
-                                                    item.ObjectData.ModifyTime.ToLongDateString() });
+                // add the objects in the list view
+                foreach (Folder item in _currentFolder.Folders)
+                {
+                    ListViewItem items = new ListViewItem(new string[] {
+                                                        item.Name,
+                                                        "Dossier",
+                                                        item.ObjectData.ModifyTime.ToLongDateString() });
 
-                // what do we do here is that we assign the typeof the list view item via the name of the list view
-                items.Name = nameof(Folder);
+                    // what do we do here is that we assign the typeof the list view item via the name of the list view
+                    items.Name = nameof(Folder);
 
-                currentFolderListView.Items.Add(items);
+                    currentFolderListView.Items.Add(items);
+                }
             }
 
             foreach (File file in _currentFolder.Files)
             {
-                ListViewItem items = new ListViewItem(new string[] {
+                // check if we can add the item to the current list view
+                if (_filters.Contains(file.FileType) || _filters.Count == 0)
+                {
+                    ListViewItem items = new ListViewItem(new string[] {
                                                         file.Name,
                                                         "Fichier " + file.FileType,
                                                         file.ObjectData.ModifyTime.ToLongDateString() });
 
-                // what do we do here is that we assign the typeof the list view item via the name of the list view
-                items.Name = nameof(File);
+                    // what do we do here is that we assign the typeof the list view item via the name of the list view
+                    items.Name = nameof(File);
 
-                currentFolderListView.Items.Add(items);
+                    currentFolderListView.Items.Add(items);
+                }
             }
         }
 
@@ -218,18 +241,13 @@ namespace P_Thesaurus.Views
         private void BuildPathListView()
         {
             // clear items from panel
-            if (panHistoryPath.Controls.Count > 0)
-            {
-                foreach (Control item in panInformation.Controls)
-                {
-                    item.Dispose();
-                }
-            }
+            panHistoryPath.Controls.Clear();
 
             // create list view
             ListView lsv = new ListView();
 
             lsv.ColumnWidthChanging += CancelListViewResize;
+            lsv.ColumnClick += OnListViewColumnClicked;
 
             lsv.Width = panHistoryPath.Width;
             lsv.Height = panHistoryPath.Height;
@@ -248,8 +266,11 @@ namespace P_Thesaurus.Views
             // reverse
             ls.Reverse();
 
-            // build columns
-            BuildColumns(ls);
+            // add folder to name to list
+            foreach (Folder item in ls)
+            {
+                lsv.Columns.Add(item.Name);
+            }
 
             /// <summary>
             /// Build the list view recursivly
@@ -263,19 +284,6 @@ namespace P_Thesaurus.Views
                 if (parent.FolderType != Folder.Type.Root)
                 {
                     BuildPathRecursivly(parent.ParentFolder);
-                }
-            }
-
-            /// <summary>
-            /// Build the columns
-            /// 
-            /// </summary>
-            /// <param name="lsf">list of folder</param>
-            void BuildColumns(List<Folder> lsf)
-            {
-                foreach (Folder item in lsf)
-                {
-                    lsv.Columns.Add(item.Name);
                 }
             }
 
@@ -340,14 +348,44 @@ namespace P_Thesaurus.Views
         }
 
         /// <summary>
-        /// find folder object that match the name of 
+        /// find folder object that match the name of list view item
         /// </summary>
         /// <param name="name">name</param>
         /// <param name="current">current list view item</param>
-        /// <returns>FolderObject</returns>
+        /// <returns>FolderObject or null if not found</returns>
         private FolderObject FindObjectFolderViaNameFromListView(ListViewItem current)
         {
-            return _currentFolder.Files.Find(item => item.Name == current.SubItems[0].Text);
+            return _currentFolder.FolderObjectsList.Find(item => item.Name == current.SubItems[0].Text);
+        }
+
+        /// <summary>
+        /// find folder that match name of input
+        /// </summary>
+        /// <param name="name">name</param>
+        /// <returns>Folder or null if not found</returns>
+        private Folder FindFolderFromListViewViaName(string name)
+        {
+            if (_currentFolder.IsRootFolder)
+            {
+                return _currentFolder;
+            }
+
+            return FindFolder(_currentFolder.ParentFolder);
+
+            /// <summary>
+            /// find folder that match name of input
+            /// </summary>
+            /// <param folder="parent">name</param>
+            /// <returns>Folder or null if not found</returns>
+            Folder FindFolder(Folder parent)
+            {
+                if (!parent.IsRootFolder && parent.Name != name)
+                {
+                    FindFolder(parent.ParentFolder);
+                }
+
+                return parent;
+            }
         }
 
         /// <summary>
@@ -452,8 +490,8 @@ namespace P_Thesaurus.Views
         }
 
         /// <summary>
-        /// Occure when the listener of a list view trigger the resize of a column
-        /// 
+        /// Occure when the a list view trigger the resize of a column
+        /// Need to add as listener to work
         /// </summary>
         /// <param name="sender">list view</param>
         /// <param name="e"></param>
@@ -463,6 +501,102 @@ namespace P_Thesaurus.Views
 
             e.Cancel = true;
             e.NewWidth = ls.Columns[e.ColumnIndex].Width;
+        }
+
+        /// <summary>
+        /// Occure when the a list view trigger the click on a list view column title
+        /// Need to add as listener to work
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnListViewColumnClicked(object sender, ColumnClickEventArgs e)
+        {
+            ListView ls = (ListView)sender;
+
+            Folder fl = FindFolderFromListViewViaName(ls.Columns[e.Column].Text);
+
+            // if null, then user clicked on the column of the actual folder
+            if (fl != null)
+            {
+                ScanFolder(fl);
+            }
+        }
+
+        /// <summary>
+        /// Occure when the user click on the filter button
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnFiltre_Click(object sender, EventArgs e)
+        {
+            if (txtBoxObjectName.Text.Length > 0)
+            {
+                ResearchObjectRecursivly();
+
+                return;
+            }
+
+            if (filterChckdLstBox.Visible)
+            {
+                filterChckdLstBox.Visible = false;
+            }
+            else
+            {
+                filterChckdLstBox.Visible = true;
+            }
+        }
+
+        /// <summary>
+        /// Occure when the user click on a item from the list of item to check
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FilterChckdLstBox_ItemCheck(object sender, EventArgs e)
+        {
+            // yes, this is stupid
+            // but we need to compare to file type
+            File.Type name = (File.Type)Enum.Parse(typeof(File.Type), filterChckdLstBox.SelectedItem.ToString(), true);
+
+            if (_filters.Contains(name))
+            {
+                _filters.Remove(name);
+            }
+            else
+            {
+                _filters.Add(name);
+            }
+
+            ResetListView();
+
+            AddItemsCurrentListView();
+        }
+
+        /// <summary>
+        /// research an object from the current folder recursivly
+        /// </summary>
+        private void ResearchObjectRecursivly()
+        {
+            List<FolderObject> flo = Controller.GetObjectRecursivly(_currentFolder, txtBoxObjectName.Text);
+
+            if (flo != null)
+            {
+
+            }
+        }
+
+        /// <summary>
+        /// Occure when the user press a key in the text box
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TxtBoxResearchKeyPress(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                ResearchObjectRecursivly();
+            }
         }
         #endregion
     }

@@ -135,6 +135,62 @@ namespace P_Thesaurus.Models
         }
 
         /// <summary>
+        /// Get you the object that match the name recursivly
+        /// </summary>
+        /// <param name="start">the current folder where you want to start</param>
+        /// <param name="name">the object name (case ignored)</param>
+        /// <returns>the object or null if not found</returns>
+        public List<FolderObject> GetObjectRecursivly(Folder start, string name, bool forceRescan)
+        {
+            List<FolderObject> items = new List<FolderObject>();
+
+            return GetObjectRecursivly(start, name, forceRescan, ref items);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="name"></param>
+        /// <param name="forceRescan"></param>
+        /// <param name="objects"></param>
+        private List<FolderObject> GetObjectRecursivly(Folder start, string name, bool forceRescan, ref List<FolderObject> objects)
+        {
+            // check if we need to scan the folder
+            if (start.Folders.Count == 0 || !start.Scanned || forceRescan)
+            {
+                StartScan(ref start);
+            }
+
+            // search item
+            foreach (FolderObject item in start.FolderObjects)
+            {
+                if (item.ObjectData.FileName.Equals(name, StringComparison.InvariantCultureIgnoreCase) ||
+                    item.ObjectData.FileName.ToLowerInvariant().Contains(name))
+                {
+                    objects.Add(item);
+                }
+            }
+
+            // check if we are at the top of the folder system
+            if (start.Folders.Count == 0)
+            {
+                return objects;
+            }
+            else
+            {
+                // scan recursivly
+                foreach (Folder item in start.Folders)
+                {
+                    return GetObjectRecursivly(item, name, forceRescan, ref objects);
+                }
+            }
+
+            // this sould never happen, because of the if statment below
+            return null;
+        }
+
+        /// <summary>
         /// Start scan function
         /// </summary>
         /// <param name="folder">folder</param>

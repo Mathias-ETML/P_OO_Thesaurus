@@ -15,11 +15,12 @@ using System.Threading;
 using System.Windows.Forms;
 using P_Thesaurus.AppBusiness.HistoryReader;
 using P_Thesaurus.AppBusiness.WIN32;
+using P_Thesaurus.Models.WIN32;
 
 namespace P_Thesaurus.Controllers
 {
     /// <summary>
-    /// Controller that controls the folder reading and navigation options
+    /// Controller that controls the folder reading and navigation optionsx
     /// </summary>
     public class FolderController : FolderNavigationController
     {
@@ -76,15 +77,6 @@ namespace P_Thesaurus.Controllers
         }
 
         /// <summary>
-        /// GetHistory function
-        /// </summary>
-        /// <returns></returns>
-        public List<HistoryEntry> GetHistory()
-        {
-            return _model.GetHistory();
-        }
-
-        /// <summary>
         /// LaunchFolderNavigationView function
         /// </summary>
         /// <param name="path">path to start with</param>
@@ -106,6 +98,35 @@ namespace P_Thesaurus.Controllers
         }
 
         /// <summary>
+        /// Get folder function
+        /// </summary>
+        /// <param name="path">pat</param>
+        /// <returns>Folder</returns>
+        public Folder GetFolder(string path)
+        {
+            return _model.GetFolder(path);
+        }
+
+        /// <summary>
+        /// Start scan function
+        /// </summary>
+        /// <param name="folder">folder</param>
+        /// <param name="node">node</param>
+        public void StartScan(ref Folder folder, FolderScan.OnFolderScanEnd onScanEnded = null)
+        {
+            _model.StartScan(ref folder, onScanEnded);
+        }
+
+        /// <summary>
+        /// Scan folder recursivly to get his root folder
+        /// </summary>
+        /// <param name="folder">folder</param>
+        public Folder GetRootFolderRecursivly(Folder folder)
+        {
+            return _model.GetRootFolderRecursivly(folder);
+        }
+
+        /// <summary>
         /// Occure when the second view is closing
         /// </summary>
         /// <param name="sender"></param>
@@ -114,9 +135,20 @@ namespace P_Thesaurus.Controllers
         {
             _historyView.Init();
 
-            //_historyView.RemoveOwnedForm(_folderNavigationView);
-
             _folderNavigationView.Dispose();
+        }
+
+        /// <summary>
+        /// Get you the object that match the name recursivly
+        /// </summary>
+        /// <param name="start">the current folder where you want to start</param>
+        /// <param name="name">the object name (case ignored)</param>
+        /// <returns>the object or null if not found</returns>
+        public List<FolderObject> GetObjectRecursivly(Folder start, string name, bool forceRescan = false)
+        {
+            name = name.ToLowerInvariant();
+
+            return _model.GetObjectRecursivly(start, name, forceRescan);
         }
         
         #endregion

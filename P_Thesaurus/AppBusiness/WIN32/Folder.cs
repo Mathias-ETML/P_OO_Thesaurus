@@ -108,6 +108,11 @@ namespace P_Thesaurus.AppBusiness.WIN32
         private List<File> _files;
 
         /// <summary>
+        /// scanned field
+        /// </summary>
+        private bool _scanned = false;
+
+        /// <summary>
         /// Folders Property
         /// </summary>
         public List<Folder> Folders { get => _folders; set => _folders = value; }
@@ -116,6 +121,54 @@ namespace P_Thesaurus.AppBusiness.WIN32
         /// Files Property
         /// </summary>
         public List<File> Files { get => _files; set => _files = value; }
+
+        /// <summary>
+        /// Scanned field
+        /// </summary>
+        public bool Scanned { get => _scanned; set => _scanned = value; }
+
+        /// <summary>
+        /// Get all folder and files in the folder
+        /// </summary>
+        public List<FolderObject> FolderObjectsList
+        {
+            get
+            {
+                List<FolderObject> flo = new List<FolderObject>();
+
+                foreach (Folder item in Folders)
+                {
+                    flo.Add(item);
+                }
+
+                foreach (File item in Files)
+                {
+                    flo.Add(item);
+                }
+
+                return flo;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public IEnumerable<FolderObject> FolderObjects
+        {
+            get
+            {
+                foreach (Folder item in Folders)
+                {
+                    yield return item;
+                }
+
+                foreach (File item in Files)
+                {
+                    yield return item;
+                }
+            }
+        }
+
 
         /// <summary>
         /// ParentFolder Property

@@ -7,7 +7,9 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
+using P_Thesaurus.AppBusiness.HistoryReader;
 using P_Thesaurus.AppBusiness.WIN32;
 using P_Thesaurus.Models;
 using P_Thesaurus.Models.WIN32;
@@ -38,23 +40,12 @@ namespace P_Thesaurus.Controllers
         }
 
         /// <summary>
-        /// Get folder function
+        /// GetHistory function
         /// </summary>
-        /// <param name="path">pat</param>
-        /// <returns>Folder</returns>
-        public Folder GetFolder(string path)
+        /// <returns></returns>
+        public List<HistoryEntry> GetHistory()
         {
-            return _model.GetFolder(path);
-        }
-
-        /// <summary>
-        /// Start scan function
-        /// </summary>
-        /// <param name="folder">folder</param>
-        /// <param name="node">node</param>
-        public void StartScan(ref Folder folder, FolderScan.OnFolderScanEnd onScanEnded = null)
-        {
-            _model.StartScan(ref folder, onScanEnded);
+            return _model.GetHistory();
         }
 
         /// <summary>
@@ -64,15 +55,6 @@ namespace P_Thesaurus.Controllers
         public void WriteInHistory(string path)
         {
             _model.WriteInHistory(path);
-        }
-
-        /// <summary>
-        /// Scan folder recursivly to get his root folder
-        /// </summary>
-        /// <param name="folder">folder</param>
-        public Folder GetRootFolderRecursivly(Folder folder)
-        {
-            return _model.GetRootFolderRecursivly(folder);
         }
         #endregion
 

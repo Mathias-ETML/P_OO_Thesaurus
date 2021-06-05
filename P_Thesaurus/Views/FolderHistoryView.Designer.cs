@@ -54,7 +54,10 @@ namespace P_Thesaurus.Views
             this.ClientSize = new System.Drawing.Size(474, 337);
             this.Controls.Add(this.historyTreeView);
             this.Controls.Add(this.driveTreeView);
+            this.MaximumSize = new System.Drawing.Size(490, 376);
+            this.MinimumSize = new System.Drawing.Size(490, 376);
             this.Name = "FolderHistoryView";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FolderHistoryView";
             this.ResumeLayout(false);
 

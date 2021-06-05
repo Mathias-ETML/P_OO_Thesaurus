@@ -143,7 +143,6 @@ namespace P_Thesaurus.Models.WIN32
         [DllImport(KERNEL32)]
         [ResourceExposure(ResourceScope.None)]
         [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
-        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool FindClose(IntPtr handle);
 
         /// <summary>
@@ -153,7 +152,6 @@ namespace P_Thesaurus.Models.WIN32
         /// <returns>file type</returns>
         [DllImport(KERNEL32)]
         [ResourceExposure(ResourceScope.None)]
-        [return: MarshalAs(UnmanagedType.U4)]
         public static extern int GetFileType(SafeFileHandle handle);
 
         /// <summary>
@@ -229,7 +227,6 @@ namespace P_Thesaurus.Models.WIN32
         /// <param name="fileInformation">pointer file information</param>
         /// <returns>success</returns>
         [DllImport(KERNEL32, SetLastError = true, CharSet = CharSet.Auto, BestFitMapping = false)]
-        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool GetFileInformationByHandle(SafeFileHandle handle,
                                                              ref LPBY_HANDLE_FILE_INFORMATION fileInformation);
 
@@ -242,7 +239,6 @@ namespace P_Thesaurus.Models.WIN32
         /// <param name="lpSystemTime">lpSystemTime struct</param>
         /// <returns>success</returns>
         [DllImport(KERNEL32, SetLastError = true, CharSet = CharSet.Auto, BestFitMapping = false)]
-        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool FileTimeToSystemTime(ref FILE_TIME lpFileTime,
                                                        ref SYSTEM_TIME lpSystemTime);
         #endregion dll

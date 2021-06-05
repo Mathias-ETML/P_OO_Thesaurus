@@ -66,7 +66,7 @@ namespace P_Thesaurus.Models.WIN32
         /// <summary>
         /// parentFolder field
         /// </summary>
-        protected Folder _parentFolder;
+        protected Folder _folder;
 
         /// <summary>
         /// stoped field
@@ -80,7 +80,7 @@ namespace P_Thesaurus.Models.WIN32
         public FolderScan(ref Folder parentFolder)
         {
             this._path = parentFolder.ObjectPath + "\\*";
-            this._parentFolder = parentFolder;
+            this._folder = parentFolder;
         }
 
         /// <summary>
@@ -119,30 +119,30 @@ namespace P_Thesaurus.Models.WIN32
                 {
                     // compact a foreach loop in 1 line
                     // check if the file is allready in the node system of the folder
-                    bool isDuplicate = _parentFolder.Files.Exists(item => item.Name == data.cFileName);
+                    bool isDuplicate = _folder.Files.Exists(item => item.ObjectData.FileName == data.cFileName);
 
                     // if no, add it
                     if (!isDuplicate)
                     {
-                        File file = new File(_parentFolder, data);
+                        File file = new File(_folder, data);
 
-                        _parentFolder.Files.Add(file);
+                        _folder.Files.Add(file);
                     }
                 }
                 else
                 {
                     // compact a foreach loop in 1 line
                     // check if the file is allready in the node system of the folder
-                    bool isDuplicate = _parentFolder.Files.Exists(item => item.Name == data.cFileName);
+                    bool isDuplicate = _folder.Folders.Exists(item => item.ObjectData.FileName == data.cFileName);
 
                     // if no, add it
                     if (!isDuplicate)
                     {
-                        Folder folder = new Folder(_parentFolder, data);
+                        Folder folder = new Folder(_folder, data);
 
-                        _parentFolder.Folders.Add(folder);
+                        _folder.Folders.Add(folder);
 
-                        _parentFolder.Nodes.Add(folder);
+                        _folder.Nodes.Add(folder);
                     }
                 }
             }
@@ -170,6 +170,8 @@ namespace P_Thesaurus.Models.WIN32
             else
             {
                 this.OnFolderScanEndRaiseEvent();
+
+                _folder.Scanned = true;
             }
         }
 
