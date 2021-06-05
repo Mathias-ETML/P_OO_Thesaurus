@@ -23,6 +23,7 @@ namespace P_Thesaurus.Models
     public class WebModel
     {
         #region Variables
+        public const string DEFAULT_WEB_HISTORY_PATH = ".\\web_history.txt";
         private History<HistoryEntry> _history;
         #endregion
 
@@ -32,21 +33,17 @@ namespace P_Thesaurus.Models
         /// </summary>
         public WebModel()
         {
-
+            this._history = new History<HistoryEntry>(DEFAULT_WEB_HISTORY_PATH, true);
         }
 
         /// <summary>
         /// Get all web elements in an url. Make sure to check the url before using this method, else it will crash
         /// </summary>
         /// <param name="url">the url to get elements from</param>
-        /// <returns>all the links and images in the page</returns>
+        /// <returns> all the links and images in the page</returns>
         public List<WebElement> GetWebElements(string url)
         {
-            //Deal with the "https://" prefix
-            if (!(url.StartsWith("https://") || url.StartsWith("http://")))
-            {
-                url = url.Insert(0, "https://");
-            }
+            url = CheckUrlStart(url);
 
             string code = GetSourceCode(url);
             List<WebElement> toReturn = new List<WebElement>();
@@ -56,12 +53,14 @@ namespace P_Thesaurus.Models
             {
                 string[] urlSplitted = url.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 
-                sourceUrl = urlSplitted[0] + "//" +  urlSplitted[1];
+                sourceUrl = urlSplitted[0] + "//" + urlSplitted[1];
             }
 
+            //get all hrefs in the page
             string[] hrefSplitted = code.Split(new string[] { "href=\"" }, StringSplitOptions.RemoveEmptyEntries);
 
-            for(int i = 1; i < hrefSplitted.Length; i++)
+            //filters the results of the href split
+            for (int i = 1; i < hrefSplitted.Length; i++)
             {
                 hrefSplitted[i] = hrefSplitted[i].Split('"')[0];
 
@@ -71,26 +70,28 @@ namespace P_Thesaurus.Models
                     hrefSplitted[i] = sourceUrl + hrefSplitted[i];
                 }
 
-                if ((hrefSplitted[i].StartsWith("https://") || hrefSplitted[i].StartsWith("http://")) && ! hrefSplitted[i].Contains(".css"))
+                if ((hrefSplitted[i].StartsWith("https://") || hrefSplitted[i].StartsWith("http://")) && !hrefSplitted[i].Contains(".css"))
                 {
                     toReturn.Add(new WebElement() { link = hrefSplitted[i], type = WebElementType.Link });
 
                     Debug.WriteLine(hrefSplitted[i]);
                 }
 
-                
+
             }
 
+            //get all srcs in the page
             string[] srcSplitted = code.Split(new string[] { "src=\"" }, StringSplitOptions.RemoveEmptyEntries);
 
+            //filter the src's split
             for (int i = 0; i < srcSplitted.Length; i++)
             {
                 srcSplitted[i] = srcSplitted[i].Split('"')[0];
 
                 //Check if file is an image
-                if(srcSplitted[i].EndsWith(".png") ||
+                if (srcSplitted[i].EndsWith(".png") ||
                    srcSplitted[i].EndsWith(".jpg") ||
-                   srcSplitted[i].EndsWith(".gif") )
+                   srcSplitted[i].EndsWith(".gif"))
                 {
                     //check if the file is a relative or a normal path
                     if (srcSplitted[i].StartsWith("/"))
@@ -103,12 +104,28 @@ namespace P_Thesaurus.Models
                     Debug.WriteLine(srcSplitted[i]);
                 }
 
-                
+
 
             }
 
             return toReturn;
 
+        }
+
+        private static string CheckUrlStart(string url)
+        {
+            //Deal with the "https://" prefix
+            if (!(url.StartsWith("https://") || url.StartsWith("http://")))
+            {
+                if (!url.StartsWith("www."))
+                {
+                    url = url.Insert(0, "www.");
+                }
+
+                url = url.Insert(0, "https://");
+            }
+
+            return url;
         }
 
         /// <summary>
@@ -118,6 +135,8 @@ namespace P_Thesaurus.Models
         /// <returns>true if the url is valid, else false</returns>
         public bool TestURL(string url)
         {
+            url = CheckUrlStart(url);
+
             try
             {
                 new WebClient().OpenRead(url);
@@ -145,7 +164,8 @@ namespace P_Thesaurus.Models
 
             try
             {
-                sr = new StreamReader( webClient.OpenRead(url) );
+                Stream blbl = webClient.OpenRead(url);
+                sr = new StreamReader( blbl );
             }
             catch (Exception e)
             {
@@ -161,6 +181,29 @@ namespace P_Thesaurus.Models
 
         }
 
+        /// <summary>
+        /// GetHistory function
+        /// </summary>
+        /// <returns>list on histories entries</returns>
+        public List<HistoryEntry> GetHistory()
+        {
+            return _history.Read();
+        }
+
+        /// <summary>
+        /// Write in history function
+        /// </summary>
+        /// <param name="url">full path</param>
+        public void WriteInHistory(string url)
+        {
+            HistoryEntry entry = new HistoryEntry()
+            {
+                Content = url,
+                DateTime = DateTime.Now
+            };
+
+            _history.AddEntry(entry);
+        }
 
         #endregion
     }

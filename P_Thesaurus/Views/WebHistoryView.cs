@@ -7,6 +7,8 @@
  */
 
 using P_Thesaurus.Controllers;
+using System;
+using System.Windows.Forms;
 
 namespace P_Thesaurus.Views
 {
@@ -29,9 +31,43 @@ namespace P_Thesaurus.Views
         public WebHistoryView()
         {
             InitializeComponent();
+
+            PathLabel.Text = "Url";
+
+            button2.Click += new EventHandler(Button2Click);
+        }
+
+        public void Init()
+        {
+
         }
         #endregion
 
+        #region Private Methods
+        private void Button2Click(object sender, EventArgs e)
+        {
+            Controller.TestUrl(textBox1.Text);
+        }
+
+        /// <summary>
+        /// Occure when the user click on a object of the history
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void OnDriveSelectionHistory(object sender, EventArgs e)
+        {
+            string selected = historyListView.SelectedItems[0].Text;
+
+            if (selected != null)
+            {
+                // we are passing the path trough the node name, wich is a simple way if giving wich drive or folder the user wants
+                Controller.TestUrl(selected);
+
+            }
+        }
+
+        #endregion
 
     }
 }

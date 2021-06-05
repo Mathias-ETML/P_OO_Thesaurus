@@ -36,6 +36,8 @@ namespace P_Thesaurus.Views
         public FolderHistoryView()
         {
             InitializeComponent();
+
+
         }
 
         /// <summary>
@@ -51,6 +53,7 @@ namespace P_Thesaurus.Views
                 // check if the drive is like a local drive
                 if (item.IsReady && item.DriveType != DriveType.Network)
                 {
+                    //Convert bytes into Gigabytes when displaying disks
                     TreeNode node = new TreeNode("Nom : " + item.Name + "  Espace : " + item.AvailableFreeSpace / 1000000000);
                     node.Name = item.Name.Substring(0, 2);
 
@@ -77,39 +80,24 @@ namespace P_Thesaurus.Views
             // check if user have history
             if (history.Count == 0)
             {
-                TreeNode node = new TreeNode("Aucun dossier disponible");
-                node.Name = null;
+                ListViewItem line = new ListViewItem(new string[] { "Aucun historique disponible", "" });
 
-                historyTreeView.Nodes.Add(node);
+                historyListView.Items.Add(line);
             }
             else
             {
                 // we check foreach item in from the json reader if it has been added, wich is likly to happen
                 foreach (HistoryEntry item in history)
                 {
-                    TreeNode node = new TreeNode("Dossier : " + item.Content + "  Date : " + item.DateTime);
-                    node.Name = item.Content;
+                    ListViewItem line = new ListViewItem(new string[] { item.Content, item.DateTime.ToString("g") });
 
-                    // this is not the best way but we only do this once in the view, so it's pretty fine
-                    foreach (TreeNode entry in historyTreeView.Nodes)
-                    {
-                        // check if item exist
-                        if (entry.Name == item.Content)
-                        {
-                            node = null;
-                            break;
-                        }
-                    }
-
-                    if (node != null)
-                    {
-                        historyTreeView.Nodes.Add(node);
-                    }
+                    historyListView.Items.Add(line);
                 }
             }
 
-            driveTreeView.NodeMouseDoubleClick += OnDriveSelection;
-            historyTreeView.NodeMouseDoubleClick += OnDriveSelection;
+            driveTreeView.NodeMouseDoubleClick += OnDriveSelectionRoots;
+            //TODO : trouver le bon event
+            //historyListView. += OnDriveSelectionHistory;
         }
 
         /// <summary>
@@ -117,7 +105,7 @@ namespace P_Thesaurus.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void OnDriveSelection(object sender, EventArgs e)
+        public void OnDriveSelectionRoots(object sender, EventArgs e)
         {
             TreeView obj = (TreeView)sender;
 
@@ -129,10 +117,30 @@ namespace P_Thesaurus.Views
                 Controller.LaunchFolderNavigationView(selected.Name);
 
                 // stupid bug where the event is doubled
-                driveTreeView.NodeMouseDoubleClick -= OnDriveSelection;
-                historyTreeView.NodeMouseDoubleClick -= OnDriveSelection;
+                driveTreeView.NodeMouseDoubleClick -= OnDriveSelectionRoots;
+                driveTreeView.NodeMouseDoubleClick -= OnDriveSelectionRoots;
             }
-            
+        }
+
+        /// <summary>
+        /// Occure when the user click on a object of the history
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void OnDriveSelectionHistory(object sender, EventArgs e)
+        {
+            string selected = historyListView.SelectedItems[0].Text;
+
+            if (selected != null)
+            {
+                // we are passing the path trough the node name, wich is a simple way if giving wich drive or folder the user wants
+                Controller.LaunchFolderNavigationView(selected);
+
+                // stupid bug where the event is doubled
+                driveTreeView.NodeMouseDoubleClick -= OnDriveSelectionRoots;
+                driveTreeView.NodeMouseDoubleClick -= OnDriveSelectionRoots;
+            }
         }
         #endregion
     }

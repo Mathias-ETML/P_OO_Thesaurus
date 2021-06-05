@@ -29,10 +29,23 @@ namespace P_Thesaurus.Views
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // historyListView
+            // 
+            this.historyListView.Location = new System.Drawing.Point(68, 139);
+            this.historyListView.Size = new System.Drawing.Size(458, 313);
+            // 
+            // WebHistoryView
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "WebNavigationView";
+            this.ClientSize = new System.Drawing.Size(586, 498);
+            this.Name = "WebHistoryView";
+            this.Text = "Historique Web";
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion

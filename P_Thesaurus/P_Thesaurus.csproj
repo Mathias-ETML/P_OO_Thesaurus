@@ -127,10 +127,6 @@
     <Compile Include="Views\NavigationView.Designer.cs">
       <DependentUpon>NavigationView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Objects\BackArrow.cs" />
-    <Compile Include="Views\Objects\Filter.cs" />
-    <Compile Include="Views\Objects\HistoryPanel.cs" />
-    <Compile Include="Views\Objects\SearchBar.cs" />
     <Compile Include="Views\WebNavigationView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -162,8 +158,20 @@
     <EmbeddedResource Include="Views\FolderNavigationView.resx">
       <DependentUpon>FolderNavigationView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\HistoryView.resx">
+      <DependentUpon>HistoryView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\LaunchingView.resx">
       <DependentUpon>LaunchingView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\NavigationView.resx">
+      <DependentUpon>NavigationView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WebHistoryView.resx">
+      <DependentUpon>WebHistoryView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WebNavigationView.resx">
+      <DependentUpon>WebNavigationView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

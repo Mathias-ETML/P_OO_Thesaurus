@@ -5,7 +5,10 @@
  * Projet P_OO-Smart-Thésaurus
  * Form permettant d'afficher la navigation dans un site web
  */
+using P_Thesaurus.AppBusiness.EnumsAndStructs;
 using P_Thesaurus.Controllers;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace P_Thesaurus.Views
 {
@@ -15,11 +18,24 @@ namespace P_Thesaurus.Views
     public partial class WebNavigationView : NavigationView
     {
         /// <summary>
+        /// the view's controller
+        /// </summary>
+        public WebController Controller { get; set; }
+
+        /// <summary>
         /// default Controller
         /// </summary>
         public WebNavigationView()
         {
             InitializeComponent();
+        }
+
+        public void InitializeElements(List<WebElement> datas)
+        {
+            foreach(WebElement element in datas)
+            {
+                _listView.Items.Add(new ListViewItem(element.link, element.type.ToString()));
+            }
         }
     }
 }
