@@ -29,7 +29,7 @@ namespace P_Thesaurus.Views
         private Folder _root;
         private List<File.Type> _filters;
         private bool _researchMode = false;
-        private List<FolderObject> _foundItems = null;
+        private List<FolderObject> _foundItems;
 
         /// <summary>
         /// the view's controller
@@ -83,6 +83,7 @@ namespace P_Thesaurus.Views
 
             // scannig current folder
             ScanFolder(_currentFolder);
+
         }
 
         /// <summary>
@@ -165,6 +166,8 @@ namespace P_Thesaurus.Views
                     currentFolderListView.Items.Add(items);
                 }
             }
+
+            _currentFolder.Expand();
         }
 
         /// <summary>
@@ -217,7 +220,7 @@ namespace P_Thesaurus.Views
         /// <summary>
         /// OnFolderChange function
         /// 
-        /// occure when the user
+        /// occure when the user click on another folder
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -360,15 +363,34 @@ namespace P_Thesaurus.Views
             // check if user selected a folder or a file
             if (current.Name == nameof(Folder))
             {
-                // find the folder with the same name as the one that is selected
-                Folder selectedFolder = (Folder)FindObjectFolderViaNameFromListView(current);
+                Folder selectedFolder;
+
+                if (_researchMode)
+                {
+                    selectedFolder = (Folder)_foundItems.Find(item => item.Name == current.SubItems[0].Text && item.GetType() == typeof(Folder));
+                }
+                else
+                {
+                    // find the folder with the same name as the one that is selected
+                    selectedFolder = (Folder)FindObjectFolderViaNameFromListView(current);
+                }
 
                 ShowInformationSelectedListViewFolder(selectedFolder);
+
             }
             else
             {
-                // find the file with the same name as the one that is selected
-                File selectedFile = (File)FindObjectFolderViaNameFromListView(current);
+                File selectedFile;
+
+                if (_researchMode)
+                {
+                    selectedFile = (File)_foundItems.Find(item => item.Name == current.SubItems[0].Text && item.GetType() == typeof(File));
+                }
+                else
+                {
+                    // find the file with the same name as the one that is selected
+                    selectedFile = (File)FindObjectFolderViaNameFromListView(current);
+                }
 
                 ShowInformationSelectedListViewFile(selectedFile);
             }
@@ -504,10 +526,10 @@ namespace P_Thesaurus.Views
                     // find the selected item with the matching name of all of them
                     FolderObject flo = _foundItems.Find(item => item.Name == current.SubItems[0].Text);
 
-                    _foundItems = null;
-
                     if ((flo as Folder) != null)
                     {
+                        _foundItems = null;
+
                         Folder item = (Folder)flo;
 
                         ScanFolder(item);
@@ -635,10 +657,9 @@ namespace P_Thesaurus.Views
         {
             _researchMode = true;
 
-            List<FolderObject> _foundItems = Controller.GetObjectRecursivly(_currentFolder, txtBoxObjectName.Text);
+            _foundItems = Controller.GetObjectRecursivly(_currentFolder, txtBoxObjectName.Text);
 
-
-            if (_foundItems != null)
+            if (_foundItems.Count > 0)
             {
                 currentFolderListView.Items.Clear();
 
