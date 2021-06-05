@@ -72,7 +72,7 @@ namespace P_Thesaurus.Models
 
                 if ((hrefSplitted[i].StartsWith("https://") || hrefSplitted[i].StartsWith("http://")) && !hrefSplitted[i].Contains(".css"))
                 {
-                    toReturn.Add(new WebElement() { link = hrefSplitted[i], type = WebElementType.Link });
+                    toReturn.Add(new WebElement() { Link = hrefSplitted[i], Type = WebElementType.Link });
 
                     Debug.WriteLine(hrefSplitted[i]);
                 }
@@ -99,7 +99,7 @@ namespace P_Thesaurus.Models
                         srcSplitted[i] = sourceUrl + srcSplitted[i];
                     }
 
-                    toReturn.Add(new WebElement() { link = srcSplitted[i], type = WebElementType.Image });
+                    toReturn.Add(new WebElement() { Link = srcSplitted[i], Type = WebElementType.Image });
 
                     Debug.WriteLine(srcSplitted[i]);
                 }

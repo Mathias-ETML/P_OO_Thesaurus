@@ -7,6 +7,7 @@
  */
 
 
+using P_Thesaurus.AppBusiness.EnumsAndStructs;
 using P_Thesaurus.AppBusiness.WIN32;
 using P_Thesaurus.Controllers;
 using P_Thesaurus.Models.WIN32;
@@ -29,7 +30,7 @@ namespace P_Thesaurus.Views
         private Folder _root;
         private List<File.Type> _filters;
         private bool _researchMode = false;
-        private List<FolderObject> _foundItems;
+        private List<ResearchElement> _foundItems;
 
         /// <summary>
         /// the view's controller
@@ -367,7 +368,7 @@ namespace P_Thesaurus.Views
 
                 if (_researchMode)
                 {
-                    selectedFolder = (Folder)_foundItems.Find(item => item.Name == current.SubItems[0].Text && item.GetType() == typeof(Folder));
+                    selectedFolder = (Folder)_foundItems.Find(item => item.Object.Name == current.SubItems[0].Text && item.GetType() == typeof(Folder)).Object;
                 }
                 else
                 {
@@ -384,7 +385,7 @@ namespace P_Thesaurus.Views
 
                 if (_researchMode)
                 {
-                    selectedFile = (File)_foundItems.Find(item => item.Name == current.SubItems[0].Text && item.GetType() == typeof(File));
+                    selectedFile = (File)_foundItems.Find(item => item.Object.Name == current.SubItems[0].Text && item.GetType() == typeof(File)).Object;
                 }
                 else
                 {
@@ -524,7 +525,7 @@ namespace P_Thesaurus.Views
                     _researchMode = false;
 
                     // find the selected item with the matching name of all of them
-                    FolderObject flo = _foundItems.Find(item => item.Name == current.SubItems[0].Text);
+                    FolderObject flo = _foundItems.Find(item => item.Object.Name == current.SubItems[0].Text).Object;
 
                     if ((flo as Folder) != null)
                     {
@@ -657,23 +658,54 @@ namespace P_Thesaurus.Views
         {
             _researchMode = true;
 
-            _foundItems = Controller.GetObjectRecursivly(_currentFolder, txtBoxObjectName.Text);
+            // split for the + and trim the spaces, caus doesn't work
+            List<string> terms = new List<string>(txtBoxObjectName.Text.Split(new string[1] { "+" }, StringSplitOptions.RemoveEmptyEntries));
 
+            for (int i = 0; i < terms.Count; i++)
+            {
+                terms[i] = terms[i].Trim();
+            }
+
+            // get all the found items and sort them via the ratio
+            _foundItems = Controller.GetObjectRecursivly(_currentFolder, terms);
+            _foundItems.Sort(CompareObject);
+
+            /// <summary>
+            /// compare function
+            /// </summary>
+            int CompareObject(ResearchElement first, ResearchElement other)
+            {
+                if (first.Ration == other.Ration)
+                {
+                    return 0;
+                }
+
+                if (first.Ration < other.Ration)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+
+            // check if we have found something
             if (_foundItems.Count > 0)
             {
                 currentFolderListView.Items.Clear();
 
-                foreach (FolderObject item in _foundItems)
+                foreach (ResearchElement item in _foundItems)
                 {
-                    if ((item as Folder) != null)
+                    if ((item.Object as Folder) != null)
                     {
-                        Folder obj = (Folder)item;
+                        Folder obj = (Folder)item.Object;
 
                         currentFolderListView.Items.Add(GetFormatedFolderItem(obj));
                     }
                     else
                     {
-                        File obj = (File)item;
+                        File obj = (File)item.Object;
 
                         currentFolderListView.Items.Add(GetFormatedFileItem(obj));
                     }

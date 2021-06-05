@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using P_Thesaurus.Models.WIN32;
 using P_Thesaurus.AppBusiness.WIN32;
 using System.Windows.Forms;
+using P_Thesaurus.AppBusiness.EnumsAndStructs;
 
 namespace P_Thesaurus.Models
 {
@@ -140,13 +141,16 @@ namespace P_Thesaurus.Models
         /// <param name="start">the current folder where you want to start</param>
         /// <param name="name">the object name (case ignored)</param>
         /// <returns>the object or null if not found</returns>
-        public List<FolderObject> GetObjectRecursivly(Folder start, string name, bool forceRescan)
+        public List<ResearchElement> GetObjectRecursivly(Folder start, List<string> names, bool forceRescan)
         {
-            List<FolderObject> items = new List<FolderObject>();
+            List<ResearchElement> items = new List<ResearchElement>();
 
-            name = name.ToLowerInvariant();
+            for (int i = 0; i < names.Count; i++)
+            {
+                names[i] = names[i].ToLowerInvariant();
+            }
 
-            return GetObjectRecursivly(start, name, forceRescan, ref items);
+            return GetObjectRecursivly(start, names, forceRescan, ref items);
         }
 
         /// <summary>
@@ -157,7 +161,7 @@ namespace P_Thesaurus.Models
         /// <param name="name"></param>
         /// <param name="forceRescan"></param>
         /// <param name="objects"></param>
-        private List<FolderObject> GetObjectRecursivly(Folder start, string name, bool forceRescan, ref List<FolderObject> objects)
+        private List<ResearchElement> GetObjectRecursivly(Folder start, List<string> names, bool forceRescan, ref List<ResearchElement> objects)
         {
             // check if we need to scan the folder
             if (start.Folders.Count == 0 || !start.Scanned || forceRescan)
@@ -168,10 +172,16 @@ namespace P_Thesaurus.Models
             // search item
             foreach (FolderObject item in start.FolderObjects)
             {
-                if (item.ObjectData.FileName.Equals(name, StringComparison.InvariantCultureIgnoreCase) ||
-                    item.ObjectData.FileName.ToLowerInvariant().Contains(name))
+                foreach (string term in names)
                 {
-                    objects.Add(item);
+                    if (item.ObjectData.FileName.Equals(term, StringComparison.InvariantCultureIgnoreCase) ||
+                    item.ObjectData.FileName.ToLowerInvariant().Contains(term))
+                    {
+                        objects.Add(new ResearchElement {
+                            Object = item,
+                            Ration = term.Length / item.ObjectData.FileName.Length
+                        });
+                    }
                 }
             }
 
@@ -185,7 +195,7 @@ namespace P_Thesaurus.Models
                 // scan recursivly
                 foreach (Folder item in start.Folders)
                 {
-                    return GetObjectRecursivly(item, name, forceRescan, ref objects);
+                    return GetObjectRecursivly(item, names, forceRescan, ref objects);
                 }
             }
 

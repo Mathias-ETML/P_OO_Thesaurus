@@ -34,7 +34,7 @@ namespace P_Thesaurus.Views
         {
             foreach(WebElement element in datas)
             {
-                _listView.Items.Add(new ListViewItem(element.link, element.type.ToString()));
+                _listView.Items.Add(new ListViewItem(element.Link, element.Type.ToString()));
             }
         }
     }
