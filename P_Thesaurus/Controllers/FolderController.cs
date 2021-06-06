@@ -85,16 +85,14 @@ namespace P_Thesaurus.Controllers
         {
             this._historyView.Hide();
 
+            // create and init controller
             _folderNavigationView = new FolderNavigationView(path)
             {
                 Controller = this
             };
 
             _folderNavigationView.FormClosed += OnFolderNavigationViewClosing;
-
-            // call all the function from this controller
             _folderNavigationView.Init();
-
             _folderNavigationView.Show(_historyView);
         }
 
@@ -156,32 +154,34 @@ namespace P_Thesaurus.Controllers
         /// <summary>
         /// Dispose function
         /// </summary>
-        /// <param name="disposing"></param>
+        /// <param name="disposing">disposing</param>
         protected new virtual void Dispose(bool disposing)
         {
             if (!_disposedValue)
             {
                 if (disposing)
                 {
-                    // TODO: supprimer l'état managé (objets managés)
+                    // memory managment
+                    if (_folderNavigationView != null)
+                    {
+                        _folderNavigationView.Dispose();
+                    }
+
+                    if (_historyView != null)
+                    {
+                        _historyView.Dispose();
+                    }
                 }
 
-                // TODO: libérer les ressources non managées (objets non managés) et substituer le finaliseur
-                // TODO: affecter aux grands champs une valeur null
                 _disposedValue = true;
             }
         }
 
-        // // TODO: substituer le finaliseur uniquement si 'Dispose(bool disposing)' a du code pour libérer les ressources non managées
-        // ~ControllerFactory()
-        // {
-        //     // Ne changez pas ce code. Placez le code de nettoyage dans la méthode 'Dispose(bool disposing)'
-        //     Dispose(disposing: false);
-        // }
-
+        /// <summary>
+        /// Dispose function
+        /// </summary>
         public new void Dispose()
         {
-            // Ne changez pas ce code. Placez le code de nettoyage dans la méthode 'Dispose(bool disposing)'
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }

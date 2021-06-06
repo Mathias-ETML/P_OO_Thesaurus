@@ -113,7 +113,10 @@ namespace P_Thesaurus.Controllers
 
         #region Dispose Model
 
-
+        /// <summary>
+        /// Dispose function
+        /// </summary>
+        /// <param name="disposing">dispose</param>
         protected new virtual void Dispose(bool disposing)
         {
             if (!_disposedValue)

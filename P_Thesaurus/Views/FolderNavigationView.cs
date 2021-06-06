@@ -100,11 +100,13 @@ namespace P_Thesaurus.Views
             }
 
             // check if we are not in the folder that contain this folder
+            // if this is true, it mean that we are at the bottom of the scanned system
             if (!folder.Folders.Contains(_currentFolder))
             {
                 // check if we have 1 folder, else there is a litle problem
                 if (folder.Folders.Count == 1)
                 {
+                    // we get the child folder and we redo this again
                     // adding the node of the future folder to the current scanned view
                     folder.Nodes.Add(folder.Folders[0]);
 
@@ -366,8 +368,10 @@ namespace P_Thesaurus.Views
             {
                 Folder selectedFolder;
 
+                // in research mode, the current folder doesn't always contain the wanted file, so we need to check in the list of founded file
                 if (_researchMode)
                 {
+                    // check if the object is a folder and the name match
                     selectedFolder = (Folder)_foundItems.Find(item => item.Object.Name == current.SubItems[0].Text && item.GetType() == typeof(Folder)).Object;
                 }
                 else
@@ -383,8 +387,10 @@ namespace P_Thesaurus.Views
             {
                 File selectedFile;
 
+                // in research mode, the current folder doesn't always contain the wanted file, so we need to check in the list of founded file
                 if (_researchMode)
                 {
+                    // check if the object is a file and the name match
                     selectedFile = (File)_foundItems.Find(item => item.Object.Name == current.SubItems[0].Text && item.GetType() == typeof(File)).Object;
                 }
                 else
@@ -405,6 +411,7 @@ namespace P_Thesaurus.Views
         /// <returns>FolderObject or null if not found</returns>
         private FolderObject FindObjectFolderViaNameFromListView(ListViewItem current)
         {
+            // simple way to make a foreach lopp in 1 line
             return _currentFolder.FolderObjectsList.Find(item => item.Name == current.SubItems[0].Text);
         }
 
@@ -527,16 +534,20 @@ namespace P_Thesaurus.Views
                     // find the selected item with the matching name of all of them
                     FolderObject flo = _foundItems.Find(item => item.Object.Name == current.SubItems[0].Text).Object;
 
+                    // check if user click on a file or folder
                     if ((flo as Folder) != null)
                     {
+                        // reset list
                         _foundItems = null;
 
+                        // user want to open the folder
                         Folder item = (Folder)flo;
 
                         ScanFolder(item);
                     }
                     else
                     {
+                        // else the user want to open the file
                         File item = (File)flo;
 
                         Process.Start(item.ObjectPath);
@@ -697,6 +708,7 @@ namespace P_Thesaurus.Views
 
                 foreach (ResearchElement item in _foundItems)
                 {
+                    // check if we got a folder or file
                     if ((item.Object as Folder) != null)
                     {
                         Folder obj = (Folder)item.Object;

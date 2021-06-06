@@ -57,6 +57,10 @@ namespace P_Thesaurus.Controllers
         #endregion
 
         #region Dispose Model
+        /// <summary>
+        /// Dispose function
+        /// </summary>
+        /// <param name="disposing">disposing</param>
         protected new virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
@@ -71,9 +75,11 @@ namespace P_Thesaurus.Controllers
             }
         }
 
+        /// <summary>
+        /// Dispose function
+        /// </summary>
         public new void Dispose()
         {
-            // Ne changez pas ce code. Placez le code de nettoyage dans la méthode 'Dispose(bool disposing)'
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }

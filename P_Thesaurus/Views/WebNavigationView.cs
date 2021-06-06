@@ -30,6 +30,10 @@ namespace P_Thesaurus.Views
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Init the view with all the objects in the history
+        /// </summary>
+        /// <param name="datas"></param>
         public void InitializeElements(List<WebElement> datas)
         {
             foreach(WebElement element in datas)

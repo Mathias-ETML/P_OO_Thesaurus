@@ -27,6 +27,7 @@ namespace P_Thesaurus.Models.JSON
                 throw new ArgumentNullException(path);
             }
 
+            // check if we need to create a file
             if (!File.Exists(path))
             {
                 using (FileStream sf = File.Create(path))
@@ -50,6 +51,7 @@ namespace P_Thesaurus.Models.JSON
                 }
             }
 
+            // check if the file contain something, if null there was nothing
             if (obj == null)
             {
                 obj = CreateFile<T>(path);
@@ -101,11 +103,6 @@ namespace P_Thesaurus.Models.JSON
                 throw new ArgumentNullException("obj");
             }
 
-            /*
-            string[] infos = path.Split(new char['\\']);
-            string file = '\\' + infos[infos.Length - 1];
-            path = path.Replace(file, "");*/
-
             // check if need to crypt
             if (obj.GetType().GetInterface(nameof(IList<ISecurityCritical>)) != null)
             {
@@ -131,10 +128,12 @@ namespace P_Thesaurus.Models.JSON
                 }
             }
            
+            // erase old file
             FileStream fs = new FileStream(path, FileMode.Create);
 
             JsonSerializer serializer = new JsonSerializer();
 
+            // writinge data
             using (StreamWriter sw = new StreamWriter(fs))
             {
                 using (JsonWriter jw = new JsonTextWriter(sw))
@@ -163,6 +162,7 @@ namespace P_Thesaurus.Models.JSON
 
             FileStream fs = new FileStream(path, FileMode.Create);
 
+            // smart way to create an instance of T
             T obj = (T)Activator.CreateInstance(typeof(T));
 
             using (StreamWriter sw = new StreamWriter(fs))
@@ -246,6 +246,7 @@ namespace P_Thesaurus.Models.JSON
 
                     ICryptoTransform cryptoTransform = aes.CreateEncryptor();
 
+                    // crypting
                     using (MemoryStream ms = new MemoryStream())
                     {
                         using (CryptoStream cs = new CryptoStream(ms, cryptoTransform, CryptoStreamMode.Write))
@@ -301,6 +302,7 @@ namespace P_Thesaurus.Models.JSON
 
                     ICryptoTransform cryptoTransform = aes.CreateDecryptor();
 
+                    // decrypting
                     using (MemoryStream ms = new MemoryStream(passwordByte))
                     {
                         using (CryptoStream cs = new CryptoStream(ms, cryptoTransform, CryptoStreamMode.Read))

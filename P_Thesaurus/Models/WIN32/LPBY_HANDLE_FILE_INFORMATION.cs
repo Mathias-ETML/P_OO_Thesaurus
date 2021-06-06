@@ -6,7 +6,6 @@ namespace P_Thesaurus.Models.WIN32
 {
     /// <summary>
     /// LPBY_HANDLE_FILE_INFORMATION struct
-    /// made by me :)
     /// 
     /// https://docs.microsoft.com/en-us/windows/win32/api/fileapi/ns-fileapi-by_handle_file_information
     /// </summary>

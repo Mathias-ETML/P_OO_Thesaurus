@@ -30,10 +30,12 @@ namespace P_Thesaurus.AppBusiness.WIN32
             // path setting
             string path = $"{letter}" + ":";
 
+            // get handle for folder
             SafeFileHandle safeFileHandle = FileAPI.CreateFileShortcut(path);
 
             LPBY_HANDLE_FILE_INFORMATION info = new LPBY_HANDLE_FILE_INFORMATION();
 
+            // get info for folder
             FileAPI.GetFileInformationByHandle(safeFileHandle, ref info);
 
             // folder creation
@@ -55,16 +57,15 @@ namespace P_Thesaurus.AppBusiness.WIN32
         /// <returns>just the folder, not the full tree</returns>
         public static Folder GetFolder(string path)
         {
-            //FileAPI.FILE_INFO_BY_HANDLE_CLASS info2 = new FileAPI.FILE_INFO_BY_HANDLE_CLASS();
-
-            //FileAPI.GetFileInformationByHandleEx(safeFileHandle, FileAPI.FILE_INFO_BY_HANDLE_ENUM.FileBasicInfo, ref info2, sizeof(FileAPI.FILE_INFO_BY_HANDLE_CLASS));
-
+            // get folder
             SafeFileHandle safeFileHandle = FileAPI.CreateFileShortcut(path);
 
             LPBY_HANDLE_FILE_INFORMATION info = new LPBY_HANDLE_FILE_INFORMATION();
 
+            // get infos about folder
             FileAPI.GetFileInformationByHandle(safeFileHandle, ref info);
 
+            // create object
             Folder folder = new Folder(null, path, info);
 
             return folder;
@@ -132,6 +133,7 @@ namespace P_Thesaurus.AppBusiness.WIN32
         /// </summary>
         public List<FolderObject> FolderObjectsList
         {
+            // a basic way to create a list of evrything the folder have
             get
             {
                 List<FolderObject> flo = new List<FolderObject>();
@@ -155,6 +157,7 @@ namespace P_Thesaurus.AppBusiness.WIN32
         /// </summary>
         public IEnumerable<FolderObject> FolderObjects
         {
+            // a basic way to get all the folder content for a foreach loop
             get
             {
                 foreach (Folder item in Folders)

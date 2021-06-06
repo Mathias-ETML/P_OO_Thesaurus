@@ -40,7 +40,14 @@ namespace P_Thesaurus.AppBusiness.EnumsAndStructs
     /// </summary>
     public struct WebElement
     {
+        /// <summary>
+        /// Link field
+        /// </summary>
         public string Link;
+
+        /// <summary>
+        /// Type field
+        /// </summary>
         public WebElementType Type;
     }
 
@@ -49,10 +56,15 @@ namespace P_Thesaurus.AppBusiness.EnumsAndStructs
     /// </summary>
     public struct ResearchElement
     {
+        /// <summary>
+        /// Object field
+        /// </summary>
         public FolderObject Object;
-        public float Ratio;
 
-        
+        /// <summary>
+        /// Ratio field
+        /// </summary>
+        public float Ratio;
     }
 
     /// <summary>

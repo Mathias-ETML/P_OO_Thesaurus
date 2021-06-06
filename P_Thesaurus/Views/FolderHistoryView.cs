@@ -97,8 +97,6 @@ namespace P_Thesaurus.Views
             }
 
             driveTreeView.NodeMouseDoubleClick += OnDriveSelectionRoots;
-            //TODO : trouver le bon event
-            //historyListView. += OnDriveSelectionHistory;
         }
 
         /// <summary>

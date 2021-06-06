@@ -15,7 +15,7 @@ namespace P_Thesaurus.Models.WIN32
     /// Translating c++ into c#.
     /// 
     /// </summary>
-    public class FolderScan
+    public class FolderScan : IDisposable
     {
         // https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.backgroundworker?view=net-5.0
 
@@ -72,6 +72,12 @@ namespace P_Thesaurus.Models.WIN32
         /// stoped field
         /// </summary>
         protected bool _stoped;
+
+        /// <summary>
+        /// disposed value
+        /// </summary>
+        private bool _disposedValue = false; // Pour détecter les appels redondants
+
 
         /// <summary>
         /// custom constructor
@@ -182,5 +188,33 @@ namespace P_Thesaurus.Models.WIN32
         {
             this._stoped = true;
         }
+
+        #region IDisposable Support
+        /// <summary>
+        /// Dispose function
+        /// </summary>
+        /// <param name="disposing">disposing</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposedValue)
+            {
+                if (disposing)
+                {
+
+                }
+
+                _disposedValue = true;
+            }
+        }
+
+        /// <summary>
+        /// Dispose function
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

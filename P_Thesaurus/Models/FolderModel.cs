@@ -20,12 +20,14 @@ namespace P_Thesaurus.Models
     /// <summary>
     /// Model used to get datas from the windows folders
     /// </summary>
-    public class FolderModel
+    public class FolderModel : IDisposable
     {
         #region Variables
-        public const string DEFAULT_FOLDER_HISTORY_PATH = ".\\folder_history.txt";
+        public static readonly string DEFAULT_FOLDER_HISTORY_PATH = AppDomain.CurrentDomain.BaseDirectory + "\\folder_history.txt";
         private History<HistoryEntry> _history;
         private FolderScan _folderScan;
+        private bool disposedValue = false; // Pour détecter les appels redondants
+
         #endregion
 
         #region Public Methods
@@ -123,6 +125,8 @@ namespace P_Thesaurus.Models
             // getting all the sub folders of the path
             for (int i = 1; i < folders.Length; i++)
             {
+                // getting the sub folder, creating it and chaining it to his parent
+                // and doing it again
                 Folder buffer = Folder.GetFolder(String.Join("\\", folders, 0, i + 1));
 
                 buffer.ParentFolder = last;
@@ -145,6 +149,7 @@ namespace P_Thesaurus.Models
         {
             List<ResearchElement> items = new List<ResearchElement>();
 
+            // put all names to lower
             for (int i = 0; i < names.Count; i++)
             {
                 names[i] = names[i].ToLowerInvariant();
@@ -172,6 +177,7 @@ namespace P_Thesaurus.Models
             // search item
             foreach (FolderObject item in start.FolderObjects)
             {
+                // check for each term
                 foreach (string term in names)
                 {
                     if (item.ObjectData.FileName.Equals(term, StringComparison.InvariantCultureIgnoreCase) ||
@@ -218,6 +224,35 @@ namespace P_Thesaurus.Models
             }
 
             _folderScan.Start();
+        }
+        #endregion
+
+        #region IDisposable Support
+        /// <summary>
+        /// Dispose function
+        /// </summary>
+        /// <param name="disposing">disposing</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    _history.Dispose();
+                    _folderScan.Dispose();
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        /// <summary>
+        /// Dispose function
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
         #endregion
     }
