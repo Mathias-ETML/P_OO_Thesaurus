@@ -62,7 +62,7 @@ namespace P_Thesaurus.Views
         /// <param name="e"></param>
         private void BtnFtpClick(object sender, System.EventArgs e)
         {
-            ShowMessageBox("Fonction non implémenté").
+            ShowMessageBox("Fonction non implémenté");
         }
     }
 }
