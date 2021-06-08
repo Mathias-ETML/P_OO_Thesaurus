@@ -38,6 +38,18 @@ namespace P_Thesaurus.Views
         public FolderController Controller {  get; set; }
         #endregion
 
+        #region delegates
+        /// <summary>
+        /// AddNodeToNodeViaInvokeDelegate field
+        /// </summary>
+        public delegate void AddNodeToNodeViaInvokeDelegate(TreeNode parent, TreeNode child);
+
+        /// <summary>
+        /// ScanEnded field
+        /// </summary>
+        public delegate void ResearchEndedDelegate(List<ResearchElement> elements);
+        #endregion delegates
+
         #region Public Methods
         /// <summary>
         /// Default Controller
@@ -669,6 +681,9 @@ namespace P_Thesaurus.Views
         {
             _researchMode = true;
 
+            currentFolderListView.Items.Clear();
+            currentFolderListView.Items.Add(new ListViewItem("Recherche en cours"));
+
             // split for the + and trim the spaces, caus doesn't work
             List<string> terms = new List<string>(txtBoxObjectName.Text.Split(new string[1] { "+" }, StringSplitOptions.RemoveEmptyEntries));
 
@@ -677,56 +692,11 @@ namespace P_Thesaurus.Views
                 terms[i] = terms[i].Trim();
             }
 
+            AddNodeToNodeViaInvokeDelegate invoke = new AddNodeToNodeViaInvokeDelegate(AddNodeToNodeViaInvoke);
+            ResearchEndedDelegate end = new ResearchEndedDelegate(ResearchEnded);
+
             // get all the found items and sort them via the ratio
-            _foundItems = Controller.GetObjectRecursivly(_currentFolder, terms);
-            _foundItems.Sort(CompareObject);
-
-            /// <summary>
-            /// compare function
-            /// </summary>
-            int CompareObject(ResearchElement first, ResearchElement other)
-            {
-                if (first.Ratio == other.Ratio)
-                {
-                    return 0;
-                }
-
-                if (first.Ratio < other.Ratio)
-                {
-                    return -1;
-                }
-                else
-                {
-                    return 1;
-                }
-            }
-
-            // check if we have found something
-            if (_foundItems.Count > 0)
-            {
-                currentFolderListView.Items.Clear();
-
-                foreach (ResearchElement item in _foundItems)
-                {
-                    // check if we got a folder or file
-                    if ((item.Object as Folder) != null)
-                    {
-                        Folder obj = (Folder)item.Object;
-
-                        currentFolderListView.Items.Add(GetFormatedFolderItem(obj));
-                    }
-                    else
-                    {
-                        File obj = (File)item.Object;
-
-                        currentFolderListView.Items.Add(GetFormatedFileItem(obj));
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("Aucun résultat trouvé");
-            }
+            Controller.GetObjectRecursivly(_currentFolder, terms, AddNodeToNodeViaInvoke, ResearchEnded, true);
         }
 
         /// <summary>
@@ -739,6 +709,84 @@ namespace P_Thesaurus.Views
             if (e.KeyCode == Keys.Enter)
             {
                 ResearchObjectRecursivly();
+            }
+        }
+
+        /// <summary>
+        /// FolderScanEnd field
+        /// </summary>
+        private void AddNodeToNodeViaInvoke(TreeNode parent, TreeNode child)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => parent.Nodes.Add(child)));
+            }
+            else
+            {
+                parent.Nodes.Add(child);
+            }
+        }
+
+        /// <summary>
+        /// ResearchEnded function
+        /// 
+        /// call when all the folders have been scanned
+        /// </summary>
+        private void ResearchEnded(List<ResearchElement> elements)
+        {
+            if (_researchMode)
+            {
+                _foundItems = elements;
+                _foundItems.Sort(CompareObject);
+
+                /// <summary>
+                /// compare function
+                /// </summary>
+                int CompareObject(ResearchElement first, ResearchElement other)
+                {
+                    if (first.Ratio == other.Ratio)
+                    {
+                        return 0;
+                    }
+
+                    if (first.Ratio < other.Ratio)
+                    {
+                        return -1;
+                    }
+                    else
+                    {
+                        return 1;
+                    }
+                }
+
+                // check if we have found something
+                if (_foundItems.Count > 0)
+                {
+                    Invoke(new Action(() => currentFolderListView.Items.Clear()));
+
+                    for (int i = 0; i < _foundItems.Count; i++)
+                    {
+                        ResearchElement item = _foundItems[i];
+
+                        // check if we got a folder or file
+                        if ((item.Object as Folder) != null)
+                        {
+                            Folder obj = (Folder)item.Object;
+
+                            Invoke(new Action(() => currentFolderListView.Items.Add(GetFormatedFolderItem(obj))));
+                        }
+                        else
+                        {
+                            File obj = (File)item.Object;
+
+                            Invoke(new Action(() => currentFolderListView.Items.Add(GetFormatedFileItem(obj))));
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Aucun résultat trouvé");
+                }
             }
         }
         #endregion

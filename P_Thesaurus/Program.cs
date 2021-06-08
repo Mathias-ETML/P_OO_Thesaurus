@@ -18,7 +18,7 @@ namespace P_Thesaurus
         /// <summary>
         /// Point d'entrée principal de l'application.
         /// </summary>
-        [STAThread]
+        [MTAThread]
         static void Main()
         {
             

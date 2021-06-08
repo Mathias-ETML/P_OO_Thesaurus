@@ -17,6 +17,7 @@ using P_Thesaurus.AppBusiness.HistoryReader;
 using P_Thesaurus.AppBusiness.WIN32;
 using P_Thesaurus.Models.WIN32;
 using P_Thesaurus.AppBusiness.EnumsAndStructs;
+using static P_Thesaurus.Views.FolderNavigationView;
 
 namespace P_Thesaurus.Controllers
 {
@@ -143,9 +144,9 @@ namespace P_Thesaurus.Controllers
         /// <param name="start">the current folder where you want to start</param>
         /// <param name="name">the object name (case ignored)</param>
         /// <returns>the object or null if not found</returns>
-        public List<ResearchElement> GetObjectRecursivly(Folder start, List<string> names, bool forceRescan = false)
+        public void GetObjectRecursivly(Folder start, List<string> names, AddNodeToNodeViaInvokeDelegate invoke, ResearchEndedDelegate end, bool forceRescan = false)
         {
-            return _model.GetObjectRecursivly(start, names, forceRescan);
+            _model.GetObjectRecursivly(start, names, invoke, end, forceRescan);
         }
         
         #endregion

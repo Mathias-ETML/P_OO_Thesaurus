@@ -4,6 +4,7 @@ using System.Windows.Forms;
 
 using P_Thesaurus.AppBusiness.WIN32;
 using static P_Thesaurus.Models.WIN32.FileAPI;
+using static P_Thesaurus.Views.FolderNavigationView;
 
 namespace P_Thesaurus.Models.WIN32
 {
@@ -78,13 +79,22 @@ namespace P_Thesaurus.Models.WIN32
         /// </summary>
         private bool _disposedValue = false; // Pour détecter les appels redondants
 
+        /// <summary>
+        /// node invoke field
+        /// </summary>
+        private AddNodeToNodeViaInvokeDelegate _nodeInvoke;
 
         /// <summary>
         /// custom constructor
         /// </summary>
         /// <param name="parentFolder">parent folder</param>
-        public FolderScan(ref Folder parentFolder)
+        public FolderScan(ref Folder parentFolder, AddNodeToNodeViaInvokeDelegate invoke = null)
         {
+            if (invoke != null)
+            {
+                _nodeInvoke = invoke;
+            }
+
             this._path = parentFolder.ObjectPath + "\\*";
             this._folder = parentFolder;
         }
@@ -123,9 +133,23 @@ namespace P_Thesaurus.Models.WIN32
                 // check wich type of file we have
                 if (data.IsFile)
                 {
-                    // compact a foreach loop in 1 line
                     // check if the file is allready in the node system of the folder
-                    bool isDuplicate = _folder.Files.Exists(item => item.ObjectData.FileName == data.cFileName);
+                    bool isDuplicate = false;
+
+                    for (int i = 0; i < _folder.Files.Count; i++)
+                    {
+                        File item = _folder.Files[i];
+
+                        if (item != null)
+                        {
+                            if (item.ObjectData.FileName == data.cFileName)
+                            {
+                                isDuplicate = true;
+
+                                break;
+                            }
+                        }
+                    }
 
                     // if no, add it
                     if (!isDuplicate)
@@ -139,7 +163,22 @@ namespace P_Thesaurus.Models.WIN32
                 {
                     // compact a foreach loop in 1 line
                     // check if the file is allready in the node system of the folder
-                    bool isDuplicate = _folder.Folders.Exists(item => item.ObjectData.FileName == data.cFileName);
+                    bool isDuplicate = false;
+
+                    for (int i = 0; i < _folder.Folders.Count; i++)
+                    {
+                        Folder item = _folder.Folders[i];
+
+                        if (item != null)
+                        {
+                            if (item.ObjectData.FileName == data.cFileName)
+                            {
+                                isDuplicate = true;
+
+                                break;
+                            }
+                        }
+                    }
 
                     // if no, add it
                     if (!isDuplicate)
@@ -148,7 +187,14 @@ namespace P_Thesaurus.Models.WIN32
 
                         _folder.Folders.Add(folder);
 
-                        _folder.Nodes.Add(folder);
+                        if (_nodeInvoke != null)
+                        {
+                            _nodeInvoke(_folder, folder);
+                        }
+                        else
+                        {
+                            _folder.Nodes.Add(folder);
+                        }
                     }
                 }
             }

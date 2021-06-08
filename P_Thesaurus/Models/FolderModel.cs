@@ -14,6 +14,11 @@ using P_Thesaurus.Models.WIN32;
 using P_Thesaurus.AppBusiness.WIN32;
 using System.Windows.Forms;
 using P_Thesaurus.AppBusiness.EnumsAndStructs;
+using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Threading;
+using static P_Thesaurus.Views.FolderNavigationView;
 
 namespace P_Thesaurus.Models
 {
@@ -27,6 +32,10 @@ namespace P_Thesaurus.Models
         private History<HistoryEntry> _history;
         private FolderScan _folderScan;
         private bool disposedValue = false; // Pour détecter les appels redondants
+        private List<ResearchElement> _foundItems;
+        private int _createdThreads;
+        private AddNodeToNodeViaInvokeDelegate _invokeNode;
+        private ResearchEndedDelegate _endResearch;
 
         #endregion
 
@@ -145,9 +154,11 @@ namespace P_Thesaurus.Models
         /// <param name="start">the current folder where you want to start</param>
         /// <param name="name">the object name (case ignored)</param>
         /// <returns>the object or null if not found</returns>
-        public List<ResearchElement> GetObjectRecursivly(Folder start, List<string> names, bool forceRescan)
+        public void GetObjectRecursivly(Folder start, List<string> names, AddNodeToNodeViaInvokeDelegate invoke, ResearchEndedDelegate end, bool forceRescan)
         {
-            List<ResearchElement> items = new List<ResearchElement>();
+            _foundItems = new List<ResearchElement>();
+            _invokeNode = invoke;
+            _endResearch = end;
 
             // put all names to lower
             for (int i = 0; i < names.Count; i++)
@@ -155,19 +166,20 @@ namespace P_Thesaurus.Models
                 names[i] = names[i].ToLowerInvariant();
             }
 
-            return GetObjectRecursivly(start, names, forceRescan, ref items);
+            GetObjectRecursivlyAsync(start, names, forceRescan);
         }
 
         /// <summary>
         /// Scan the folder recursivly for all the items with the entered name
         /// 
         /// </summary>
-        /// <param name="start"></param>
-        /// <param name="name"></param>
-        /// <param name="forceRescan"></param>
-        /// <param name="objects"></param>
-        private List<ResearchElement> GetObjectRecursivly(Folder start, List<string> names, bool forceRescan, ref List<ResearchElement> objects)
+        /// <param name="start">start folder</param>
+        /// <param name="name">name</param>
+        /// <param name="forceRescan">force scan</param>
+        private async void GetObjectRecursivlyAsync(Folder start, List<string> names, bool forceRescan)
         {
+            _createdThreads++;
+
             // check if we need to scan the folder
             if (start.Folders.Count == 0 || !start.Scanned || forceRescan)
             {
@@ -183,7 +195,8 @@ namespace P_Thesaurus.Models
                     if (item.ObjectData.FileName.Equals(term, StringComparison.InvariantCultureIgnoreCase) ||
                     item.ObjectData.FileName.ToLowerInvariant().Contains(term))
                     {
-                        objects.Add(new ResearchElement {
+                        _foundItems.Add(new ResearchElement
+                        {
                             Object = item,
                             Ratio = term.Length / item.ObjectData.FileName.Length
                         });
@@ -192,21 +205,30 @@ namespace P_Thesaurus.Models
             }
 
             // check if we are at the top of the folder system
-            if (start.Folders.Count == 0)
+            foreach (Folder item in start.Folders)
             {
-                return objects;
-            }
-            else
-            {
-                // scan recursivly
-                foreach (Folder item in start.Folders)
+                await Task.Run(() =>
                 {
-                    return GetObjectRecursivly(item, names, forceRescan, ref objects);
-                }
+                    GetObjectRecursivlyAsync(item, names, forceRescan);
+                });
             }
 
-            // this sould never happen, because of the if statment below
-            return objects;
+            CheckScanEnded();
+        }
+
+        /// <summary>
+        /// Folder scan ender
+        /// 
+        /// Call this when program has finished scanning a folder
+        /// </summary>
+        private void CheckScanEnded()
+        {
+            _createdThreads--;
+
+            if (_createdThreads <= 0)
+            {
+                _endResearch(_foundItems);
+            }
         }
 
         /// <summary>
@@ -216,7 +238,7 @@ namespace P_Thesaurus.Models
         /// <param name="node">node</param>
         public void StartScan(ref Folder folder, FolderScan.OnFolderScanEnd onScanEnded = null)
         {
-            _folderScan = new FolderScan(ref folder);
+            _folderScan = new FolderScan(ref folder, _invokeNode);
 
             if (onScanEnded != null)
             {
