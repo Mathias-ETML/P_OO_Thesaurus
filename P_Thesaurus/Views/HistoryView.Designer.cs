@@ -34,8 +34,8 @@ namespace P_Thesaurus.Views
             this.columnHeaderDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.PathLabel = new System.Windows.Forms.Label();
             this.btnBack = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.txtBoxPath = new System.Windows.Forms.TextBox();
+            this.btnOpenFolder = new System.Windows.Forms.Button();
             this.lblHistoryTitle = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -83,22 +83,22 @@ namespace P_Thesaurus.Views
             this.btnBack.UseVisualStyleBackColor = true;
             this.btnBack.Click += new System.EventHandler(this.BtnBackClick);
             // 
-            // textBox1
+            // txtBoxPath
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(68, 74);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(411, 21);
-            this.textBox1.TabIndex = 5;
+            this.txtBoxPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBoxPath.Location = new System.Drawing.Point(68, 74);
+            this.txtBoxPath.Name = "txtBoxPath";
+            this.txtBoxPath.Size = new System.Drawing.Size(411, 21);
+            this.txtBoxPath.TabIndex = 5;
             // 
-            // button2
+            // btnOpenFolder
             // 
-            this.button2.Location = new System.Drawing.Point(485, 74);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(41, 21);
-            this.button2.TabIndex = 6;
-            this.button2.Text = "GO";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnOpenFolder.Location = new System.Drawing.Point(485, 74);
+            this.btnOpenFolder.Name = "btnOpenFolder";
+            this.btnOpenFolder.Size = new System.Drawing.Size(41, 21);
+            this.btnOpenFolder.TabIndex = 6;
+            this.btnOpenFolder.Text = "GO";
+            this.btnOpenFolder.UseVisualStyleBackColor = true;
             // 
             // lblHistoryTitle
             // 
@@ -116,8 +116,8 @@ namespace P_Thesaurus.Views
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 484);
             this.Controls.Add(this.lblHistoryTitle);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.btnOpenFolder);
+            this.Controls.Add(this.txtBoxPath);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.PathLabel);
             this.Controls.Add(this.historyListView);
@@ -135,7 +135,7 @@ namespace P_Thesaurus.Views
         protected System.Windows.Forms.ListView historyListView;
         private System.Windows.Forms.Label lblHistoryTitle;
         public System.Windows.Forms.Label PathLabel;
-        protected System.Windows.Forms.Button button2;
-        protected System.Windows.Forms.TextBox textBox1;
+        protected System.Windows.Forms.Button btnOpenFolder;
+        protected System.Windows.Forms.TextBox txtBoxPath;
     }
 }

@@ -65,6 +65,11 @@ namespace P_Thesaurus.AppBusiness.EnumsAndStructs
         /// Ratio field
         /// </summary>
         public float Ratio;
+
+        /// <summary>
+        /// Type field
+        /// </summary>
+        public Type Type;
     }
 
     /// <summary>

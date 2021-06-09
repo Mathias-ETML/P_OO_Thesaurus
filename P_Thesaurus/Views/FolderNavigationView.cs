@@ -14,6 +14,7 @@ using P_Thesaurus.Models.WIN32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace P_Thesaurus.Views
@@ -91,12 +92,8 @@ namespace P_Thesaurus.Views
                 folderTreeView.Nodes.Add(_currentFolder);
             }
 
-            // function pointer
-            FolderScan.OnFolderScanEnd onScanEnd = new Models.WIN32.FolderScan.OnFolderScanEnd(ScanEnd);
-
             // scannig current folder
             ScanFolder(_currentFolder);
-
         }
 
         /// <summary>
@@ -264,10 +261,13 @@ namespace P_Thesaurus.Views
             _currentFolder = folder;
 
             // function pointer
-            FolderScan.OnFolderScanEnd onScanEnd = new Models.WIN32.FolderScan.OnFolderScanEnd(ScanEnd);
+            FolderScan.OnFolderScanEnd onScanEnd = new FolderScan.OnFolderScanEnd(ScanEnd);
+
+            // function pointer
+            AddNodeToNodeViaInvokeDelegate invoke = new AddNodeToNodeViaInvokeDelegate(AddNodeToNodeViaInvoke);
 
             // scannig current folder
-            Controller.StartScan(ref folder, onScanEnd);
+            Controller.StartScan(ref folder, onScanEnd, invoke);
 
             // showing user location
             folderTreeView.SelectedNode = _currentFolder;
@@ -384,7 +384,7 @@ namespace P_Thesaurus.Views
                 if (_researchMode)
                 {
                     // check if the object is a folder and the name match
-                    selectedFolder = (Folder)_foundItems.Find(item => item.Object.Name == current.SubItems[0].Text && item.GetType() == typeof(Folder)).Object;
+                    selectedFolder = (Folder)_foundItems.Find(item => item.Object.Name == current.SubItems[0].Text && item.Type == typeof(Folder)).Object;
                 }
                 else
                 {
@@ -403,7 +403,7 @@ namespace P_Thesaurus.Views
                 if (_researchMode)
                 {
                     // check if the object is a file and the name match
-                    selectedFile = (File)_foundItems.Find(item => item.Object.Name == current.SubItems[0].Text && item.GetType() == typeof(File)).Object;
+                    selectedFile = (File)_foundItems.Find(item => item.Object.Name == current.SubItems[0].Text && item.Type == typeof(File)).Object;
                 }
                 else
                 {
@@ -542,6 +542,8 @@ namespace P_Thesaurus.Views
                 if (_researchMode)
                 {
                     _researchMode = false;
+
+                    currentFolderListView.Items.Clear();
 
                     // find the selected item with the matching name of all of them
                     FolderObject flo = _foundItems.Find(item => item.Object.Name == current.SubItems[0].Text).Object;
@@ -736,6 +738,16 @@ namespace P_Thesaurus.Views
         {
             if (_researchMode)
             {
+                // we don't want to clear and sort and do all sort
+                // and do all sort of useless stuff
+                if (_foundItems != null)
+                {
+                    if (Enumerable.SequenceEqual(_foundItems, elements))
+                    {
+                        return;
+                    }
+                }
+
                 _foundItems = elements;
                 _foundItems.Sort(CompareObject);
 
@@ -786,6 +798,8 @@ namespace P_Thesaurus.Views
                 else
                 {
                     MessageBox.Show("Aucun résultat trouvé");
+
+                    Invoke(new Action(() => currentFolderListView.Items.Clear()));
                 }
             }
         }

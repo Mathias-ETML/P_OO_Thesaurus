@@ -34,7 +34,7 @@ namespace P_Thesaurus.Views
 
             PathLabel.Text = "Url";
 
-            button2.Click += new EventHandler(Button2Click);
+            btnOpenFolder.Click += new EventHandler(Button2Click);
         }
 
         public void Init()
@@ -46,7 +46,7 @@ namespace P_Thesaurus.Views
         #region Private Methods
         private void Button2Click(object sender, EventArgs e)
         {
-            Controller.TestUrl(textBox1.Text);
+            Controller.TestUrl(txtBoxPath.Text);
         }
 
         /// <summary>

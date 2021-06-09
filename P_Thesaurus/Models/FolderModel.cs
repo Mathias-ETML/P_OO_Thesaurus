@@ -114,6 +114,8 @@ namespace P_Thesaurus.Models
         /// <returns>Folder</returns>
         public Folder GetFolder(string path)
         {
+            // todo : recode this part, or debug it, a voir
+
             if (path == null || path.Length <= 0)
             {
                 throw new ArgumentNullException("path");
@@ -141,6 +143,7 @@ namespace P_Thesaurus.Models
                 buffer.ParentFolder = last;
 
                 last.Folders.Add(buffer);
+                last.Nodes.Add(buffer);
 
                 last = buffer;
             }
@@ -189,22 +192,37 @@ namespace P_Thesaurus.Models
             // search item
             foreach (FolderObject item in start.FolderObjects)
             {
-                // check for each term
-                foreach (string term in names)
+                if (item != null)
                 {
-                    if (item.ObjectData.FileName.Equals(term, StringComparison.InvariantCultureIgnoreCase) ||
-                    item.ObjectData.FileName.ToLowerInvariant().Contains(term))
+                    // check for each term
+                    foreach (string term in names)
                     {
-                        _foundItems.Add(new ResearchElement
+                        // check if item contains each search term
+                        if (item.ObjectData.FileName.Equals(term, StringComparison.InvariantCultureIgnoreCase) ||
+                        item.ObjectData.FileName.ToLowerInvariant().Contains(term))
                         {
-                            Object = item,
-                            Ratio = term.Length / item.ObjectData.FileName.Length
-                        });
+                            ResearchElement element = new ResearchElement()
+                            {
+                                Object = item,
+                                Ratio = term.Length / item.ObjectData.FileName.Length
+                            };
+
+                            if ((item as Folder) != null)
+                            {
+                                element.Type = typeof(Folder);
+                            }
+                            else
+                            {
+                                element.Type = typeof(P_Thesaurus.AppBusiness.WIN32.File);
+                            }
+
+                            _foundItems.Add(element);
+                        }
                     }
                 }
             }
 
-            // check if we are at the top of the folder system
+            // scan each folders async
             foreach (Folder item in start.Folders)
             {
                 await Task.Run(() =>
@@ -236,9 +254,9 @@ namespace P_Thesaurus.Models
         /// </summary>
         /// <param name="folder">folder</param>
         /// <param name="node">node</param>
-        public void StartScan(ref Folder folder, FolderScan.OnFolderScanEnd onScanEnded = null)
+        public void StartScan(ref Folder folder, FolderScan.OnFolderScanEnd onScanEnded = null, AddNodeToNodeViaInvokeDelegate invoke = null)
         {
-            _folderScan = new FolderScan(ref folder, _invokeNode);
+            _folderScan = new FolderScan(ref folder, invoke);
 
             if (onScanEnded != null)
             {

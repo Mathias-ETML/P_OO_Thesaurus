@@ -112,9 +112,9 @@ namespace P_Thesaurus.Controllers
         /// </summary>
         /// <param name="folder">folder</param>
         /// <param name="node">node</param>
-        public void StartScan(ref Folder folder, FolderScan.OnFolderScanEnd onScanEnded = null)
+        public void StartScan(ref Folder folder, FolderScan.OnFolderScanEnd onScanEnded = null, AddNodeToNodeViaInvokeDelegate invoke = null)
         {
-            _model.StartScan(ref folder, onScanEnded);
+            _model.StartScan(ref folder, onScanEnded, invoke);
         }
 
         /// <summary>

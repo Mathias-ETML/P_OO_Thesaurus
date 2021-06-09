@@ -161,7 +161,6 @@ namespace P_Thesaurus.Models.WIN32
                 }
                 else
                 {
-                    // compact a foreach loop in 1 line
                     // check if the file is allready in the node system of the folder
                     bool isDuplicate = false;
 
