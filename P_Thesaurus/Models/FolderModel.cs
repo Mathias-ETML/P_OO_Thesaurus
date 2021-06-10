@@ -254,9 +254,9 @@ namespace P_Thesaurus.Models
         /// </summary>
         /// <param name="folder">folder</param>
         /// <param name="node">node</param>
-        public void StartScan(ref Folder folder, FolderScan.OnFolderScanEnd onScanEnded = null, AddNodeToNodeViaInvokeDelegate invoke = null)
+        public void StartScan(ref Folder folder, FolderScan.OnFolderScanEnd onScanEnded = null)
         {
-            _folderScan = new FolderScan(ref folder, invoke);
+            _folderScan = new FolderScan(ref folder, _invokeNode);
 
             if (onScanEnded != null)
             {

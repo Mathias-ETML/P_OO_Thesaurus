@@ -37,7 +37,7 @@ namespace P_Thesaurus.Views
             // 
             this.historyListView.DoubleClick += new System.EventHandler(this.OnDriveSelectionHistory);
             // 
-            // button2
+            // btnOpenFolder
             // 
             this.btnOpenFolder.Click += new System.EventHandler(this.BtnLaunchFolder);
             // 
