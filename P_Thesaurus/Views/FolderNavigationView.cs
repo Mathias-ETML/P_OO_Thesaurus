@@ -61,6 +61,8 @@ namespace P_Thesaurus.Views
 
             this._path = path;
 
+            this._foundItems = new List<ResearchElement>();
+
             InitializeComponent();
 
             this.filterChckdLstBox.Visible = false;
@@ -740,12 +742,9 @@ namespace P_Thesaurus.Views
             {
                 // we don't want to clear and sort and do all sort
                 // and do all sort of useless stuff
-                if (_foundItems != null)
+                if (_foundItems.Count > elements.Count)
                 {
-                    if (Enumerable.SequenceEqual(_foundItems, elements))
-                    {
-                        return;
-                    }
+                    return;
                 }
 
                 _foundItems = elements;
