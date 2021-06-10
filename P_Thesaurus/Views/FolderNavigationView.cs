@@ -637,14 +637,18 @@ namespace P_Thesaurus.Views
             // check if the user entered a word to be research, so we don't show the filters
             if (txtBoxObjectName.Text.Length > 0)
             {
-                ResearchObjectRecursivly();
+                if (string.IsNullOrWhiteSpace(txtBoxObjectName.Text))
+                {
+                    MessageBox.Show("Veuilliez entrer un nom de fichier valide");
+                }
+                else
+                {
+                    ResearchObjectRecursivly();
 
-                txtBoxObjectName.Text = "";
-
-                return;
+                    txtBoxObjectName.Text = "";
+                }
             }
-
-            if (filterChckdLstBox.Visible)
+            else if (filterChckdLstBox.Visible)
             {
                 filterChckdLstBox.Visible = false;
             }
@@ -786,13 +790,23 @@ namespace P_Thesaurus.Views
                         {
                             Folder obj = (Folder)item.Object;
 
-                            Invoke(new Action(() => currentFolderListView.Items.Add(GetFormatedFolderItem(obj))));
+                            Invoke(new Action(() => {
+                                if (currentFolderListView != null)
+                                {
+                                    currentFolderListView.Items.Add(GetFormatedFolderItem(obj));
+                                }
+                            }));
                         }
                         else
                         {
                             File obj = (File)item.Object;
 
-                            Invoke(new Action(() => currentFolderListView.Items.Add(GetFormatedFileItem(obj))));
+                            Invoke(new Action(() => {
+                                if (currentFolderListView != null)
+                                {
+                                    currentFolderListView.Items.Add(GetFormatedFileItem(obj));
+                                }
+                            }));
                         }
                     }
                 }
