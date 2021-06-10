@@ -12,6 +12,7 @@ using P_Thesaurus.AppBusiness.WIN32;
 
 namespace P_Thesaurus.AppBusiness.EnumsAndStructs
 {
+    #region Enums
     /// <summary>
     /// Enum used to log some messages with a appropriate level.
     /// </summary>
@@ -35,6 +36,38 @@ namespace P_Thesaurus.AppBusiness.EnumsAndStructs
         Web
     }
 
+    /// <summary>
+    /// WebElementType enum
+    /// </summary>
+    public enum WebElementType
+    {
+        Link,
+        Image
+    }
+
+    /// <summary>
+    /// The enum used in the search to use modifiers like + or -.
+    /// </summary>
+    public enum SearchModifier
+    {
+        /// <summary>
+        /// represents the "+" in a search string
+        /// </summary>
+        And,
+
+        /// <summary>
+        /// represents the " " in a search string
+        /// </summary>
+        Or,
+
+        /// <summary>
+        /// represents the "-" in a search string
+        /// </summary>
+        Not
+    }
+    #endregion
+
+    #region Structs
     /// <summary>
     /// Struct used to pass the web infos from model to view
     /// </summary>
@@ -73,11 +106,19 @@ namespace P_Thesaurus.AppBusiness.EnumsAndStructs
     }
 
     /// <summary>
-    /// WebElementType enum
+    /// The searching elements used in Web (can be used in Folder too if time permits)
     /// </summary>
-    public enum WebElementType
+    public struct WebResearchElement
     {
-        Link,
-        Image
+        /// <summary>
+        /// The word Searched
+        /// </summary>
+        public string Word;
+
+        /// <summary>
+        /// The modifier of the word
+        /// </summary>
+        public SearchModifier Modifier; 
     }
+    #endregion
 }

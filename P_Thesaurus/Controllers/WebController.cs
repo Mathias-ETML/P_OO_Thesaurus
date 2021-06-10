@@ -76,7 +76,7 @@ namespace P_Thesaurus.Controllers
             {
                 List<WebElement> datas = _model.GetWebElements(url);
 
-                _webNavigationView.InitializeElements(datas);
+                _webNavigationView.InitializeElements(datas, url);
 
                 _model.WriteInHistory(url);
             }
@@ -117,13 +117,13 @@ namespace P_Thesaurus.Controllers
 
         public void TestUrl(WebElement link)
         {
-            if(link.type == WebElementType.Link)
+            if(link.Type == WebElementType.Link)
             {
-                SetDatas(link.link);
+                SetDatas(link.Link);
             }
             else
             {
-                Process.Start(link.link);
+                Process.Start(link.Link);
             }
         }
         #endregion
