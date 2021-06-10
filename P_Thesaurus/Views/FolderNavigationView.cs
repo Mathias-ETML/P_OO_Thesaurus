@@ -639,6 +639,8 @@ namespace P_Thesaurus.Views
             {
                 ResearchObjectRecursivly();
 
+                txtBoxObjectName.Text = "";
+
                 return;
             }
 
