@@ -135,16 +135,19 @@ namespace P_Thesaurus.Models
         public bool TestURL(string url)
         {
             url = CheckUrlStart(url);
+            StreamReader sr;
 
             try
             {
-                new WebClient().OpenRead(url);
+                sr = new StreamReader(new WebClient().OpenRead(url));
             }
             catch(Exception e)
             {
                 Log.GetInstance().AddLog(LogsLevels.INFO, $"The test of the url \"{url}\" failed. Exception : {e.Message}");
                 return false;
             }
+
+            sr.Close();
 
             return true;
         }

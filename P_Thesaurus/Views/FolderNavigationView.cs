@@ -20,7 +20,7 @@ using System.Windows.Forms;
 namespace P_Thesaurus.Views
 {
     /// <summary>
-    /// View that shows navigation in FTP or Windows Files
+    /// View that shows navigation in Windows Files
     /// </summary>
     public partial class FolderNavigationView : NavigationView
     {

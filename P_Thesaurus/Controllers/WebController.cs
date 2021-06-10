@@ -10,6 +10,7 @@ using P_Thesaurus.Models;
 using P_Thesaurus.Views;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace P_Thesaurus.Controllers
 {
@@ -47,7 +48,7 @@ namespace P_Thesaurus.Controllers
         /// <summary>
         /// View field
         /// </summary>
-        public override BaseView View { get => _historyView; set => _historyView = (WebHistoryView)value; }
+        public override BaseView View { get => _view; set => _view = value; }
 
         #endregion
 
@@ -64,6 +65,8 @@ namespace P_Thesaurus.Controllers
                 Controller = this
             };
 
+            _view = _historyView;
+
             this._historyView.Init();
         }
 
@@ -73,13 +76,13 @@ namespace P_Thesaurus.Controllers
             {
                 List<WebElement> datas = _model.GetWebElements(url);
 
-                _webNavigationView.InitializeElements(datas);
+                _webNavigationView.InitializeElements(datas, url);
 
                 _model.WriteInHistory(url);
             }
             else
             {
-                _historyView.ShowMessageBox("L'url sélectionnée n'est pas accessible. Beaucoup d'erreurs externes peuvent en être la cause (sites fermés, erreurs de serveur ou votre connexion internet)");
+                _view.ShowMessageBox("L'url sélectionnée n'est pas accessible. Beaucoup d'erreurs externes peuvent en être la cause (sites fermés, erreurs de serveur ou votre connexion internet)");
             }
         }
 
@@ -94,6 +97,8 @@ namespace P_Thesaurus.Controllers
                     Controller = this
                 };
 
+                _view = _webNavigationView;
+
                 //TODO : the onclosing event was here once 
 
                 // call all the function from this controller
@@ -107,6 +112,18 @@ namespace P_Thesaurus.Controllers
             {
                 _historyView.ShowMessageBox("L'url sélectionnée n'est pas accessible");
                 return false;
+            }
+        }
+
+        public void TestUrl(WebElement link)
+        {
+            if(link.Type == WebElementType.Link)
+            {
+                SetDatas(link.Link);
+            }
+            else
+            {
+                Process.Start(link.Link);
             }
         }
         #endregion

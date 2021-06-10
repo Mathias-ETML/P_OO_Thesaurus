@@ -54,7 +54,7 @@ namespace P_Thesaurus.Views
         }
 
 
-        #endregion
+        
         /// <summary>
         /// Button "Ftp" click
         /// </summary>
@@ -64,5 +64,6 @@ namespace P_Thesaurus.Views
         {
             ShowMessageBox("Fonction non implémenté");
         }
+        #endregion
     }
 }
