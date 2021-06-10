@@ -4,6 +4,7 @@ using System.Windows.Forms;
 
 using P_Thesaurus.AppBusiness.WIN32;
 using static P_Thesaurus.Models.WIN32.FileAPI;
+using static P_Thesaurus.Views.FolderNavigationView;
 
 namespace P_Thesaurus.Models.WIN32
 {
@@ -15,7 +16,7 @@ namespace P_Thesaurus.Models.WIN32
     /// Translating c++ into c#.
     /// 
     /// </summary>
-    public class FolderScan
+    public class FolderScan : IDisposable
     {
         // https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.backgroundworker?view=net-5.0
 
@@ -66,7 +67,7 @@ namespace P_Thesaurus.Models.WIN32
         /// <summary>
         /// parentFolder field
         /// </summary>
-        protected Folder _parentFolder;
+        protected Folder _folder;
 
         /// <summary>
         /// stoped field
@@ -74,13 +75,28 @@ namespace P_Thesaurus.Models.WIN32
         protected bool _stoped;
 
         /// <summary>
+        /// disposed value
+        /// </summary>
+        private bool _disposedValue = false; // Pour détecter les appels redondants
+
+        /// <summary>
+        /// node invoke field
+        /// </summary>
+        private AddNodeToNodeViaInvokeDelegate _nodeInvoke;
+
+        /// <summary>
         /// custom constructor
         /// </summary>
         /// <param name="parentFolder">parent folder</param>
-        public FolderScan(ref Folder parentFolder)
+        public FolderScan(ref Folder parentFolder, AddNodeToNodeViaInvokeDelegate invoke = null)
         {
+            if (invoke != null)
+            {
+                _nodeInvoke = invoke;
+            }
+
             this._path = parentFolder.ObjectPath + "\\*";
-            this._parentFolder = parentFolder;
+            this._folder = parentFolder;
         }
 
         /// <summary>
@@ -117,32 +133,67 @@ namespace P_Thesaurus.Models.WIN32
                 // check wich type of file we have
                 if (data.IsFile)
                 {
-                    // compact a foreach loop in 1 line
                     // check if the file is allready in the node system of the folder
-                    bool isDuplicate = _parentFolder.Files.Exists(item => item.Name == data.cFileName);
+                    bool isDuplicate = false;
+
+                    for (int i = 0; i < _folder.Files.Count; i++)
+                    {
+                        File item = _folder.Files[i];
+
+                        if (item != null)
+                        {
+                            if (item.ObjectData.FileName == data.cFileName)
+                            {
+                                isDuplicate = true;
+
+                                break;
+                            }
+                        }
+                    }
 
                     // if no, add it
                     if (!isDuplicate)
                     {
-                        File file = new File(_parentFolder, data);
+                        File file = new File(_folder, data);
 
-                        _parentFolder.Files.Add(file);
+                        _folder.Files.Add(file);
                     }
                 }
                 else
                 {
-                    // compact a foreach loop in 1 line
                     // check if the file is allready in the node system of the folder
-                    bool isDuplicate = _parentFolder.Files.Exists(item => item.Name == data.cFileName);
+                    bool isDuplicate = false;
+
+                    for (int i = 0; i < _folder.Folders.Count; i++)
+                    {
+                        Folder item = _folder.Folders[i];
+
+                        if (item != null)
+                        {
+                            if (item.ObjectData.FileName == data.cFileName)
+                            {
+                                isDuplicate = true;
+
+                                break;
+                            }
+                        }
+                    }
 
                     // if no, add it
                     if (!isDuplicate)
                     {
-                        Folder folder = new Folder(_parentFolder, data);
+                        Folder folder = new Folder(_folder, data);
 
-                        _parentFolder.Folders.Add(folder);
+                        _folder.Folders.Add(folder);
 
-                        _parentFolder.Nodes.Add(folder);
+                        if (_nodeInvoke != null)
+                        {
+                            _nodeInvoke(_folder, folder);
+                        }
+                        else
+                        {
+                            _folder.Nodes.Add(folder);
+                        }
                     }
                 }
             }
@@ -170,6 +221,8 @@ namespace P_Thesaurus.Models.WIN32
             else
             {
                 this.OnFolderScanEndRaiseEvent();
+
+                _folder.Scanned = true;
             }
         }
 
@@ -180,5 +233,33 @@ namespace P_Thesaurus.Models.WIN32
         {
             this._stoped = true;
         }
+
+        #region IDisposable Support
+        /// <summary>
+        /// Dispose function
+        /// </summary>
+        /// <param name="disposing">disposing</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposedValue)
+            {
+                if (disposing)
+                {
+
+                }
+
+                _disposedValue = true;
+            }
+        }
+
+        /// <summary>
+        /// Dispose function
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

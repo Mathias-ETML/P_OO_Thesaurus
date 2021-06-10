@@ -15,11 +15,14 @@ using System.Threading;
 using System.Windows.Forms;
 using P_Thesaurus.AppBusiness.HistoryReader;
 using P_Thesaurus.AppBusiness.WIN32;
+using P_Thesaurus.Models.WIN32;
+using P_Thesaurus.AppBusiness.EnumsAndStructs;
+using static P_Thesaurus.Views.FolderNavigationView;
 
 namespace P_Thesaurus.Controllers
 {
     /// <summary>
-    /// Controller that controls the folder reading and navigation options
+    /// Controller that controls the folder reading and navigation optionsx
     /// </summary>
     public class FolderController : FolderNavigationController
     {
@@ -76,15 +79,6 @@ namespace P_Thesaurus.Controllers
         }
 
         /// <summary>
-        /// GetHistory function
-        /// </summary>
-        /// <returns></returns>
-        public List<HistoryEntry> GetHistory()
-        {
-            return _model.GetHistory();
-        }
-
-        /// <summary>
         /// LaunchFolderNavigationView function
         /// </summary>
         /// <param name="path">path to start with</param>
@@ -92,17 +86,44 @@ namespace P_Thesaurus.Controllers
         {
             this._historyView.Hide();
 
+            // create and init controller
             _folderNavigationView = new FolderNavigationView(path)
             {
                 Controller = this
             };
 
             _folderNavigationView.FormClosed += OnFolderNavigationViewClosing;
-
-            // call all the function from this controller
             _folderNavigationView.Init();
-
             _folderNavigationView.Show(_historyView);
+        }
+
+        /// <summary>
+        /// Get folder function
+        /// </summary>
+        /// <param name="path">pat</param>
+        /// <returns>Folder</returns>
+        public Folder GetFolder(string path)
+        {
+            return _model.GetFolder(path);
+        }
+
+        /// <summary>
+        /// Start scan function
+        /// </summary>
+        /// <param name="folder">folder</param>
+        /// <param name="node">node</param>
+        public void StartScan(ref Folder folder, FolderScan.OnFolderScanEnd onScanEnded = null, AddNodeToNodeViaInvokeDelegate invoke = null)
+        {
+            _model.StartScan(ref folder, onScanEnded, invoke);
+        }
+
+        /// <summary>
+        /// Scan folder recursivly to get his root folder
+        /// </summary>
+        /// <param name="folder">folder</param>
+        public Folder GetRootFolderRecursivly(Folder folder)
+        {
+            return _model.GetRootFolderRecursivly(folder);
         }
 
         /// <summary>
@@ -114,42 +135,54 @@ namespace P_Thesaurus.Controllers
         {
             _historyView.Init();
 
-            //_historyView.RemoveOwnedForm(_folderNavigationView);
-
             _folderNavigationView.Dispose();
         }
+
+        /// <summary>
+        /// Get you the object that match the name recursivly
+        /// </summary>
+        /// <param name="start">the current folder where you want to start</param>
+        /// <param name="name">the object name (case ignored)</param>
+        /// <returns>the object or null if not found</returns>
+        public void GetObjectRecursivly(Folder start, List<string> names, AddNodeToNodeViaInvokeDelegate invoke, ResearchEndedDelegate end, bool forceRescan = false)
+        {
+            _model.GetObjectRecursivly(start, names, invoke, end, forceRescan);
+        }
+        
         #endregion
 
         #region Dispose Model
         /// <summary>
         /// Dispose function
         /// </summary>
-        /// <param name="disposing"></param>
+        /// <param name="disposing">disposing</param>
         protected new virtual void Dispose(bool disposing)
         {
             if (!_disposedValue)
             {
                 if (disposing)
                 {
-                    // TODO: supprimer l'état managé (objets managés)
+                    // memory managment
+                    if (_folderNavigationView != null)
+                    {
+                        _folderNavigationView.Dispose();
+                    }
+
+                    if (_historyView != null)
+                    {
+                        _historyView.Dispose();
+                    }
                 }
 
-                // TODO: libérer les ressources non managées (objets non managés) et substituer le finaliseur
-                // TODO: affecter aux grands champs une valeur null
                 _disposedValue = true;
             }
         }
 
-        // // TODO: substituer le finaliseur uniquement si 'Dispose(bool disposing)' a du code pour libérer les ressources non managées
-        // ~ControllerFactory()
-        // {
-        //     // Ne changez pas ce code. Placez le code de nettoyage dans la méthode 'Dispose(bool disposing)'
-        //     Dispose(disposing: false);
-        // }
-
+        /// <summary>
+        /// Dispose function
+        /// </summary>
         public new void Dispose()
         {
-            // Ne changez pas ce code. Placez le code de nettoyage dans la méthode 'Dispose(bool disposing)'
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }

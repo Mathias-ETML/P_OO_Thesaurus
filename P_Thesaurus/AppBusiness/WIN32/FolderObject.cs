@@ -71,6 +71,7 @@ namespace P_Thesaurus.AppBusiness.WIN32
 
             _data = new Data
             {
+                // last part of path is always the file name
                 FileName = paths[paths.Length - 1],
                 Path = path,
                 Size = info.nFileSizeHigh,

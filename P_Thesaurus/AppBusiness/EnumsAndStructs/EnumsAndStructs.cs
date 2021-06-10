@@ -7,6 +7,9 @@
  * plusieurs classes du programme.
  */
 
+using System;
+using P_Thesaurus.AppBusiness.WIN32;
+
 namespace P_Thesaurus.AppBusiness.EnumsAndStructs
 {
     /// <summary>
@@ -37,10 +40,41 @@ namespace P_Thesaurus.AppBusiness.EnumsAndStructs
     /// </summary>
     public struct WebElement
     {
-        public string link;
-        public WebElementType type;
+        /// <summary>
+        /// Link field
+        /// </summary>
+        public string Link;
+
+        /// <summary>
+        /// Type field
+        /// </summary>
+        public WebElementType Type;
     }
 
+    /// <summary>
+    /// Struct used to filter research elemenmt
+    /// </summary>
+    public struct ResearchElement
+    {
+        /// <summary>
+        /// Object field
+        /// </summary>
+        public FolderObject Object;
+
+        /// <summary>
+        /// Ratio field
+        /// </summary>
+        public float Ratio;
+
+        /// <summary>
+        /// Type field
+        /// </summary>
+        public Type Type;
+    }
+
+    /// <summary>
+    /// WebElementType enum
+    /// </summary>
     public enum WebElementType
     {
         Link,

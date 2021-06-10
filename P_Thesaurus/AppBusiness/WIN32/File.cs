@@ -44,6 +44,18 @@ namespace P_Thesaurus.AppBusiness.WIN32
         public Type FileType { get => _type; }
 
         /// <summary>
+        /// Folder field
+        /// </summary>
+        public Folder Folder { get => _parentFolder; }
+
+        /// <summary>
+        /// Full path field
+        /// 
+        /// override inerithed one
+        /// </summary>
+        public new string FullPath { get => _data.Path; }
+
+        /// <summary>
         /// Custom constructor
         /// </summary>
         /// <param name="parentfolder">Compressed</param>

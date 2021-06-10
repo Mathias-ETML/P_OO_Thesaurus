@@ -7,7 +7,9 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
+using P_Thesaurus.AppBusiness.HistoryReader;
 using P_Thesaurus.AppBusiness.WIN32;
 using P_Thesaurus.Models;
 using P_Thesaurus.Models.WIN32;
@@ -38,23 +40,12 @@ namespace P_Thesaurus.Controllers
         }
 
         /// <summary>
-        /// Get folder function
+        /// GetHistory function
         /// </summary>
-        /// <param name="path">pat</param>
-        /// <returns>Folder</returns>
-        public Folder GetFolder(string path)
+        /// <returns></returns>
+        public List<HistoryEntry> GetHistory()
         {
-            return _model.GetFolder(path);
-        }
-
-        /// <summary>
-        /// Start scan function
-        /// </summary>
-        /// <param name="folder">folder</param>
-        /// <param name="node">node</param>
-        public void StartScan(ref Folder folder, FolderScan.OnFolderScanEnd onScanEnded = null)
-        {
-            _model.StartScan(ref folder, onScanEnded);
+            return _model.GetHistory();
         }
 
         /// <summary>
@@ -65,43 +56,31 @@ namespace P_Thesaurus.Controllers
         {
             _model.WriteInHistory(path);
         }
-
-        /// <summary>
-        /// Scan folder recursivly to get his root folder
-        /// </summary>
-        /// <param name="folder">folder</param>
-        public Folder GetRootFolderRecursivly(Folder folder)
-        {
-            return _model.GetRootFolderRecursivly(folder);
-        }
         #endregion
 
         #region Dispose Model
+        /// <summary>
+        /// Dispose function
+        /// </summary>
+        /// <param name="disposing">dispose</param>
         protected new virtual void Dispose(bool disposing)
         {
             if (!_disposedValue)
             {
                 if (disposing)
                 {
-                    // TODO: supprimer l'état managé (objets managés)
+                    _model.Dispose();
                 }
 
-                // TODO: libérer les ressources non managées (objets non managés) et substituer le finaliseur
-                // TODO: affecter aux grands champs une valeur null
                 _disposedValue = true;
             }
         }
 
-        // // TODO: substituer le finaliseur uniquement si 'Dispose(bool disposing)' a du code pour libérer les ressources non managées
-        // ~ControllerFactory()
-        // {
-        //     // Ne changez pas ce code. Placez le code de nettoyage dans la méthode 'Dispose(bool disposing)'
-        //     Dispose(disposing: false);
-        // }
-
+        /// <summary>
+        /// Dispose function
+        /// </summary>
         public new void Dispose()
         {
-            // Ne changez pas ce code. Placez le code de nettoyage dans la méthode 'Dispose(bool disposing)'
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }

@@ -37,6 +37,10 @@ namespace P_Thesaurus.Views
             // 
             this.historyListView.DoubleClick += new System.EventHandler(this.OnDriveSelectionHistory);
             // 
+            // button2
+            // 
+            this.btnOpenFolder.Click += new System.EventHandler(this.BtnLaunchFolder);
+            // 
             // driveTreeView
             // 
             this.driveTreeView.Location = new System.Drawing.Point(68, 139);
@@ -58,11 +62,17 @@ namespace P_Thesaurus.Views
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 484);
+            this.ClientSize = new System.Drawing.Size(552, 469);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.driveTreeView);
+            this.MaximumSize = new System.Drawing.Size(568, 508);
+            this.MinimumSize = new System.Drawing.Size(568, 508);
             this.Name = "FolderHistoryView";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FolderHistoryView";
+            this.Controls.SetChildIndex(this.PathLabel, 0);
+            this.Controls.SetChildIndex(this.txtBoxPath, 0);
+            this.Controls.SetChildIndex(this.btnOpenFolder, 0);
             this.Controls.SetChildIndex(this.historyListView, 0);
             this.Controls.SetChildIndex(this.driveTreeView, 0);
             this.Controls.SetChildIndex(this.label2, 0);

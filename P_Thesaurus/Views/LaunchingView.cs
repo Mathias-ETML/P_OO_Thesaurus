@@ -53,8 +53,16 @@ namespace P_Thesaurus.Views
             Controller.OnCloseNotifying(AppBusiness.EnumsAndStructs.ControllerType.Web);
         }
 
+
         #endregion
-
-
+        /// <summary>
+        /// Button "Ftp" click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnFtpClick(object sender, System.EventArgs e)
+        {
+            ShowMessageBox("Fonction non implémenté");
+        }
     }
 }

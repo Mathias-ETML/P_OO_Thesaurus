@@ -78,7 +78,6 @@ namespace P_Thesaurus.Views
             this.btnWeb.TabIndex = 3;
             this.btnWeb.Text = "Web";
             this.btnWeb.UseVisualStyleBackColor = true;
-            this.btnWeb.Click += new System.EventHandler(this.BtnWebClick);
             // 
             // btnFtp
             // 
@@ -89,6 +88,7 @@ namespace P_Thesaurus.Views
             this.btnFtp.TabIndex = 4;
             this.btnFtp.Text = "FTP";
             this.btnFtp.UseVisualStyleBackColor = true;
+            this.btnFtp.Click += new System.EventHandler(this.BtnFtpClick);
             // 
             // LaunchingView
             // 
@@ -101,8 +101,11 @@ namespace P_Thesaurus.Views
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnFolder);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.MaximumSize = new System.Drawing.Size(816, 489);
+            this.MinimumSize = new System.Drawing.Size(816, 489);
             this.Name = "LaunchingView";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LaunchingView";
             this.ResumeLayout(false);
             this.PerformLayout();

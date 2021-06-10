@@ -37,7 +37,6 @@ namespace P_Thesaurus.Views
         {
             InitializeComponent();
 
-
         }
 
         /// <summary>
@@ -45,6 +44,8 @@ namespace P_Thesaurus.Views
         /// </summary>
         public void Init()
         {
+            historyListView.Items.Clear();
+
             List<DriveInfo> drives = Controller.GetAllDrives();
 
             // loop trough each drives
@@ -77,6 +78,8 @@ namespace P_Thesaurus.Views
 
             List<HistoryEntry> history = Controller.GetHistory();
 
+            history.Reverse();
+
             // check if user have history
             if (history.Count == 0)
             {
@@ -96,8 +99,6 @@ namespace P_Thesaurus.Views
             }
 
             driveTreeView.NodeMouseDoubleClick += OnDriveSelectionRoots;
-            //TODO : trouver le bon event
-            //historyListView. += OnDriveSelectionHistory;
         }
 
         /// <summary>
@@ -136,6 +137,23 @@ namespace P_Thesaurus.Views
             {
                 // we are passing the path trough the node name, wich is a simple way if giving wich drive or folder the user wants
                 Controller.LaunchFolderNavigationView(selected);
+
+                // stupid bug where the event is doubled
+                driveTreeView.NodeMouseDoubleClick -= OnDriveSelectionRoots;
+                driveTreeView.NodeMouseDoubleClick -= OnDriveSelectionRoots;
+            }
+        }
+
+        /// <summary>
+        /// Occure when the user click on the button to launch the folder
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnLaunchFolder(object sender, EventArgs e)
+        {
+            if (Directory.Exists(txtBoxPath.Text))
+            {
+                Controller.LaunchFolderNavigationView(txtBoxPath.Text);
 
                 // stupid bug where the event is doubled
                 driveTreeView.NodeMouseDoubleClick -= OnDriveSelectionRoots;

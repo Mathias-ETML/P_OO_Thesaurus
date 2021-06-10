@@ -72,12 +72,10 @@ namespace P_Thesaurus.Models
 
                 if ((hrefSplitted[i].StartsWith("https://") || hrefSplitted[i].StartsWith("http://")) && !hrefSplitted[i].Contains(".css"))
                 {
-                    toReturn.Add(new WebElement() { link = hrefSplitted[i], type = WebElementType.Link });
+                    toReturn.Add(new WebElement() { Link = hrefSplitted[i], Type = WebElementType.Link });
 
                     Debug.WriteLine(hrefSplitted[i]);
                 }
-
-
             }
 
             //get all srcs in the page
@@ -99,20 +97,21 @@ namespace P_Thesaurus.Models
                         srcSplitted[i] = sourceUrl + srcSplitted[i];
                     }
 
-                    toReturn.Add(new WebElement() { link = srcSplitted[i], type = WebElementType.Image });
+                    toReturn.Add(new WebElement() { Link = srcSplitted[i], Type = WebElementType.Image });
 
                     Debug.WriteLine(srcSplitted[i]);
                 }
-
-
-
             }
 
             return toReturn;
-
         }
 
-        private static string CheckUrlStart(string url)
+        /// <summary>
+        /// Put https and www before the start of the url
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        private string CheckUrlStart(string url)
         {
             //Deal with the "https://" prefix
             if (!(url.StartsWith("https://") || url.StartsWith("http://")))
@@ -158,17 +157,18 @@ namespace P_Thesaurus.Models
         /// Helped by Santiago Sugrañes
         /// </summary>
         /// <param name="url">the web page Url</param>
-        /// <returns></returns>
+        /// <returns>the web page in string</returns>
         private string GetSourceCode(string url)
         {
             WebClient webClient = new WebClient();
 
             StreamReader sr;
 
+            // try to get the page
             try
             {
-                Stream blbl = webClient.OpenRead(url);
-                sr = new StreamReader( blbl );
+                Stream webStream = webClient.OpenRead(url);
+                sr = new StreamReader( webStream );
             }
             catch (Exception e)
             {
@@ -176,12 +176,12 @@ namespace P_Thesaurus.Models
                 return null;
             }
 
+            // get the page
             string result = sr.ReadToEnd();
             sr.Close();
             webClient.Dispose();
 
             return result;
-
         }
 
         /// <summary>

@@ -5,7 +5,6 @@ namespace P_Thesaurus.Models.WIN32
 {
     /// <summary>
     /// SYSTEM_TIME Struct
-    /// Made by me:)
     /// 
     /// https://docs.microsoft.com/en-us/windows/win32/api/minwinbase/ns-minwinbase-systemtime
     /// </summary>

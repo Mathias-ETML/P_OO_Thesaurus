@@ -33,11 +33,15 @@ namespace P_Thesaurus.Views
             this.currentFolderListView = new System.Windows.Forms.ListView();
             this.panInformation = new System.Windows.Forms.Panel();
             this.panHistoryPath = new System.Windows.Forms.Panel();
+            this.txtBoxObjectName = new System.Windows.Forms.TextBox();
+            this.lblRecherche = new System.Windows.Forms.Label();
+            this.filterChckdLstBox = new System.Windows.Forms.CheckedListBox();
+            this.btnFiltre = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // folderTreeView
             // 
-            this.folderTreeView.Location = new System.Drawing.Point(71, 77);
+            this.folderTreeView.Location = new System.Drawing.Point(68, 164);
             this.folderTreeView.Name = "folderTreeView";
             this.folderTreeView.Size = new System.Drawing.Size(217, 353);
             this.folderTreeView.TabIndex = 0;
@@ -49,7 +53,7 @@ namespace P_Thesaurus.Views
             this.currentFolderListView.GridLines = true;
             this.currentFolderListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.currentFolderListView.HideSelection = false;
-            this.currentFolderListView.Location = new System.Drawing.Point(338, 180);
+            this.currentFolderListView.Location = new System.Drawing.Point(335, 267);
             this.currentFolderListView.Name = "currentFolderListView";
             this.currentFolderListView.Size = new System.Drawing.Size(400, 250);
             this.currentFolderListView.TabIndex = 1;
@@ -61,7 +65,7 @@ namespace P_Thesaurus.Views
             // panInformation
             // 
             this.panInformation.BackColor = System.Drawing.Color.White;
-            this.panInformation.Location = new System.Drawing.Point(338, 77);
+            this.panInformation.Location = new System.Drawing.Point(335, 164);
             this.panInformation.Name = "panInformation";
             this.panInformation.Size = new System.Drawing.Size(400, 84);
             this.panInformation.TabIndex = 2;
@@ -69,25 +73,79 @@ namespace P_Thesaurus.Views
             // panHistoryPath
             // 
             this.panHistoryPath.BackColor = System.Drawing.Color.White;
-            this.panHistoryPath.Location = new System.Drawing.Point(71, 12);
+            this.panHistoryPath.Location = new System.Drawing.Point(68, 99);
             this.panHistoryPath.Name = "panHistoryPath";
-            this.panHistoryPath.Size = new System.Drawing.Size(667, 45);
+            this.panHistoryPath.Size = new System.Drawing.Size(667, 49);
             this.panHistoryPath.TabIndex = 3;
+            // 
+            // txtBoxObjectName
+            // 
+            this.txtBoxObjectName.Location = new System.Drawing.Point(68, 64);
+            this.txtBoxObjectName.Name = "txtBoxObjectName";
+            this.txtBoxObjectName.Size = new System.Drawing.Size(545, 20);
+            this.txtBoxObjectName.TabIndex = 4;
+            this.txtBoxObjectName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtBoxResearchKeyPress);
+            // 
+            // lblRecherche
+            // 
+            this.lblRecherche.AutoSize = true;
+            this.lblRecherche.Location = new System.Drawing.Point(65, 38);
+            this.lblRecherche.Name = "lblRecherche";
+            this.lblRecherche.Size = new System.Drawing.Size(60, 13);
+            this.lblRecherche.TabIndex = 5;
+            this.lblRecherche.Text = "Recherche";
+            // 
+            // filterChckdLstBox
+            // 
+            this.filterChckdLstBox.CheckOnClick = true;
+            this.filterChckdLstBox.FormattingEnabled = true;
+            this.filterChckdLstBox.Items.AddRange(new object[] {
+            "None",
+            "Text",
+            "Office",
+            "Image",
+            "Music",
+            "Video",
+            "Compressed",
+            "Executable",
+            "Code",
+            "Shortcut",
+            "System",
+            "Other"});
+            this.filterChckdLstBox.Location = new System.Drawing.Point(621, 84);
+            this.filterChckdLstBox.Name = "filterChckdLstBox";
+            this.filterChckdLstBox.Size = new System.Drawing.Size(114, 184);
+            this.filterChckdLstBox.TabIndex = 6;
+            this.filterChckdLstBox.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.FilterChckdLstBox_ItemCheck);
+            // 
+            // btnFiltre
+            // 
+            this.btnFiltre.Location = new System.Drawing.Point(620, 63);
+            this.btnFiltre.Name = "btnFiltre";
+            this.btnFiltre.Size = new System.Drawing.Size(116, 22);
+            this.btnFiltre.TabIndex = 7;
+            this.btnFiltre.Text = "Fitrer";
+            this.btnFiltre.UseVisualStyleBackColor = true;
+            this.btnFiltre.Click += new System.EventHandler(this.BtnFiltre_Click);
             // 
             // FolderNavigationView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 529);
+            this.Controls.Add(this.btnFiltre);
+            this.Controls.Add(this.filterChckdLstBox);
+            this.Controls.Add(this.lblRecherche);
+            this.Controls.Add(this.txtBoxObjectName);
             this.Controls.Add(this.panHistoryPath);
             this.Controls.Add(this.panInformation);
             this.Controls.Add(this.currentFolderListView);
             this.Controls.Add(this.folderTreeView);
+            this.MaximumSize = new System.Drawing.Size(816, 568);
+            this.MinimumSize = new System.Drawing.Size(816, 568);
             this.Name = "FolderNavigationView";
-            this.Controls.SetChildIndex(this.folderTreeView, 0);
-            this.Controls.SetChildIndex(this.currentFolderListView, 0);
-            this.Controls.SetChildIndex(this.panInformation, 0);
-            this.Controls.SetChildIndex(this.panHistoryPath, 0);
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -97,5 +155,9 @@ namespace P_Thesaurus.Views
         private System.Windows.Forms.ListView currentFolderListView;
         private System.Windows.Forms.Panel panInformation;
         private System.Windows.Forms.Panel panHistoryPath;
+        private System.Windows.Forms.TextBox txtBoxObjectName;
+        private System.Windows.Forms.Label lblRecherche;
+        private System.Windows.Forms.CheckedListBox filterChckdLstBox;
+        private System.Windows.Forms.Button btnFiltre;
     }
 }
