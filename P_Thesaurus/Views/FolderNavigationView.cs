@@ -32,6 +32,7 @@ namespace P_Thesaurus.Views
         private List<File.Type> _filters;
         private bool _researchMode = false;
         private List<ResearchElement> _foundItems;
+        private string _lastResearchTerm = "";
 
         /// <summary>
         /// the view's controller
@@ -689,10 +690,19 @@ namespace P_Thesaurus.Views
         /// </summary>
         private void ResearchObjectRecursivly()
         {
+            if (_lastResearchTerm == txtBoxObjectName.Text)
+            {
+                return;
+            }
+
             _researchMode = true;
+
+            _lastResearchTerm = txtBoxObjectName.Text;
 
             currentFolderListView.Items.Clear();
             currentFolderListView.Items.Add(new ListViewItem("Recherche en cours"));
+
+            _foundItems = new List<ResearchElement>();
 
             // split for the + and trim the spaces, caus doesn't work
             List<string> terms = new List<string>(txtBoxObjectName.Text.Split(new string[1] { "+" }, StringSplitOptions.RemoveEmptyEntries));
@@ -779,7 +789,12 @@ namespace P_Thesaurus.Views
                 // check if we have found something
                 if (_foundItems.Count > 0)
                 {
-                    Invoke(new Action(() => currentFolderListView.Items.Clear()));
+                    Invoke(new Action(() => {
+                        if (currentFolderListView != null)
+                        {
+                            currentFolderListView.Items.Clear();
+                        }
+                    }));
 
                     for (int i = 0; i < _foundItems.Count; i++)
                     {
