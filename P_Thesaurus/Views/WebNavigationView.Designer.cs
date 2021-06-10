@@ -48,10 +48,16 @@ namespace P_Thesaurus.Views
             this._listView.TabIndex = 2;
             this._listView.UseCompatibleStateImageBehavior = false;
             this._listView.VirtualListSize = 4;
+            this._listView.SelectedIndexChanged += new System.EventHandler(this._listView_SelectedIndexChanged);
             // 
             // URL
             // 
-            this.URL.Width = 400;
+            this.URL.Text = "URL";
+            this.URL.Width = 470;
+            // 
+            // Type
+            // 
+            this.Type.Text = "Type";
             // 
             // WebNavigationView
             // 
@@ -61,6 +67,7 @@ namespace P_Thesaurus.Views
             this.Controls.Add(this._listView);
             this.Name = "WebNavigationView";
             this.Text = "-";
+            this.Controls.SetChildIndex(this._listView, 0);
             this.ResumeLayout(false);
 
         }
