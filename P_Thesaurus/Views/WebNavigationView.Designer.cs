@@ -152,9 +152,10 @@ namespace P_Thesaurus.Views
             this.Controls.Add(this.txbSearch);
             this.Controls.Add(this.lblCurrentUrl);
             this.Controls.Add(this._listView);
-            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "WebNavigationView";
             this.Text = "Recherche Web";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WebNavigationViewFormClosing);
             this.Controls.SetChildIndex(this._listView, 0);
             this.Controls.SetChildIndex(this.lblCurrentUrl, 0);
             this.Controls.SetChildIndex(this.txbSearch, 0);

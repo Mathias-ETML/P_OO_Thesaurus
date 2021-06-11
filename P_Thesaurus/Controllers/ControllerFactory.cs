@@ -39,10 +39,6 @@ namespace P_Thesaurus.Controllers
             {
                 case ControllerType.Launching:
                     return new LaunchController();
-
-                case ControllerType.Ftp:
-                    return new FtpController();
-
                 case ControllerType.Folder:
                     return new FolderController();
 

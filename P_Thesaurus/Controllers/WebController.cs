@@ -160,6 +160,14 @@ namespace P_Thesaurus.Controllers
         {
             _model.WriteInHistory(path);
         }
+
+        /// <summary>
+        /// Sets the View prop to HistoryView when the navigation view is closing
+        /// </summary>
+        public void NotifyNavigationClosing()
+        {
+            View = _historyView;
+        }
         #endregion
 
         #region Private Methods

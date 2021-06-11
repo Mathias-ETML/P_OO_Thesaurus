@@ -192,6 +192,16 @@ namespace P_Thesaurus.Views
                 Controller.TestUrl(txbUrl.Text);
             }
         }
+
+        /// <summary>
+        /// Sends the closing to the Controller because he needs to know it
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void WebNavigationViewFormClosing(object sender, FormClosingEventArgs e)
+        {
+            Controller.NotifyNavigationClosing();
+        }
         #endregion
 
         #region Private Business Methods
@@ -263,8 +273,7 @@ namespace P_Thesaurus.Views
 
             return orValue;
         }
-        #endregion
 
-        
+        #endregion
     }
 }
