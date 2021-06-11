@@ -640,7 +640,7 @@ namespace P_Thesaurus.Views
             {
                 if (string.IsNullOrWhiteSpace(txtBoxObjectName.Text))
                 {
-                    MessageBox.Show("Veuilliez entrer un nom de fichier valide");
+                    base.ShowMessageBox("Veuilliez entrer un nom de fichier valide");
                 }
                 else
                 {
@@ -690,6 +690,13 @@ namespace P_Thesaurus.Views
         /// </summary>
         private void ResearchObjectRecursivly()
         {
+            if (_researchMode)
+            {
+                base.ShowMessageBox("Recherche en cours...");
+
+                return;
+            }
+
             if (_lastResearchTerm == txtBoxObjectName.Text)
             {
                 return;
@@ -827,7 +834,7 @@ namespace P_Thesaurus.Views
                 }
                 else
                 {
-                    MessageBox.Show("Aucun résultat trouvé");
+                    base.ShowMessageBox("Aucun résultat trouvé");
 
                     Invoke(new Action(() => currentFolderListView.Items.Clear()));
                 }
