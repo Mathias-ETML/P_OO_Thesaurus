@@ -52,7 +52,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppBusiness\HistoryReader\FtpHistoryEntry.cs" />
     <Compile Include="AppBusiness\HistoryReader\History.cs" />
     <Compile Include="AppBusiness\HistoryReader\HistoryEntry.cs" />
     <Compile Include="AppBusiness\EnumsAndStructs\EnumsAndStructs.cs" />
@@ -68,12 +67,10 @@
     <Compile Include="Controllers\ControllerFactory.cs" />
     <Compile Include="Controllers\FolderController.cs" />
     <Compile Include="Controllers\FolderNavigationController.cs" />
-    <Compile Include="Controllers\FtpController.cs" />
     <Compile Include="Controllers\LaunchController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\WebController.cs" />
     <Compile Include="Models\JSON\JsonReaderBase.cs" />
-    <Compile Include="Models\FtpModel.cs" />
     <Compile Include="Models\FolderModel.cs" />
     <Compile Include="Models\WebModel.cs" />
     <Compile Include="Models\WIN32\FileAPI.cs" />
@@ -102,12 +99,6 @@
     </Compile>
     <Compile Include="Views\FolderNavigationView.designer.cs">
       <DependentUpon>FolderNavigationView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FtpHistoryView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\FtpHistoryView.Designer.cs">
-      <DependentUpon>FtpHistoryView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\HistoryView.cs">
       <SubType>Form</SubType>
