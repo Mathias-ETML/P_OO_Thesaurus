@@ -29,6 +29,7 @@ namespace P_Thesaurus.Views
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this._listView = new System.Windows.Forms.ListView();
             this.URL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -37,6 +38,10 @@ namespace P_Thesaurus.Views
             this.filterChckdLstBox = new System.Windows.Forms.CheckedListBox();
             this.txbSearch = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.txbUrl = new System.Windows.Forms.TextBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.copierToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // _listView
@@ -70,9 +75,9 @@ namespace P_Thesaurus.Views
             this.lblCurrentUrl.AutoSize = true;
             this.lblCurrentUrl.Location = new System.Drawing.Point(156, 88);
             this.lblCurrentUrl.Name = "lblCurrentUrl";
-            this.lblCurrentUrl.Size = new System.Drawing.Size(97, 17);
+            this.lblCurrentUrl.Size = new System.Drawing.Size(44, 17);
             this.lblCurrentUrl.TabIndex = 7;
-            this.lblCurrentUrl.Text = "URL actuelle :";
+            this.lblCurrentUrl.Text = "URL :";
             // 
             // btnFiltre
             // 
@@ -89,14 +94,13 @@ namespace P_Thesaurus.Views
             // 
             this.filterChckdLstBox.CheckOnClick = true;
             this.filterChckdLstBox.FormattingEnabled = true;
-            this.filterChckdLstBox.Items.AddRange(new object[] {
-            "Liens",
-            "Images"});
             this.filterChckdLstBox.Location = new System.Drawing.Point(791, 67);
             this.filterChckdLstBox.Margin = new System.Windows.Forms.Padding(4);
             this.filterChckdLstBox.Name = "filterChckdLstBox";
-            this.filterChckdLstBox.Size = new System.Drawing.Size(116, 38);
+            this.filterChckdLstBox.Size = new System.Drawing.Size(119, 55);
             this.filterChckdLstBox.TabIndex = 9;
+            this.filterChckdLstBox.Visible = false;
+            this.filterChckdLstBox.SelectedIndexChanged += new System.EventHandler(this.FilterChckdLstBoxItemCheck);
             // 
             // txbSearch
             // 
@@ -116,11 +120,35 @@ namespace P_Thesaurus.Views
             this.label1.TabIndex = 11;
             this.label1.Text = "Recherche";
             // 
+            // txbUrl
+            // 
+            this.txbUrl.Location = new System.Drawing.Point(207, 85);
+            this.txbUrl.Margin = new System.Windows.Forms.Padding(4);
+            this.txbUrl.Name = "txbUrl";
+            this.txbUrl.Size = new System.Drawing.Size(576, 22);
+            this.txbUrl.TabIndex = 12;
+            this.txbUrl.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxbUrlKeyDown);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copierToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(123, 28);
+            // 
+            // copierToolStripMenuItem
+            // 
+            this.copierToolStripMenuItem.Name = "copierToolStripMenuItem";
+            this.copierToolStripMenuItem.Size = new System.Drawing.Size(122, 24);
+            this.copierToolStripMenuItem.Text = "Copier";
+            // 
             // WebNavigationView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.Controls.Add(this.txbUrl);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnFiltre);
             this.Controls.Add(this.filterChckdLstBox);
@@ -136,6 +164,8 @@ namespace P_Thesaurus.Views
             this.Controls.SetChildIndex(this.filterChckdLstBox, 0);
             this.Controls.SetChildIndex(this.btnFiltre, 0);
             this.Controls.SetChildIndex(this.label1, 0);
+            this.Controls.SetChildIndex(this.txbUrl, 0);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -151,5 +181,8 @@ namespace P_Thesaurus.Views
         private System.Windows.Forms.CheckedListBox filterChckdLstBox;
         private System.Windows.Forms.TextBox txbSearch;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txbUrl;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem copierToolStripMenuItem;
     }
 }

@@ -90,27 +90,27 @@ namespace P_Thesaurus.Controllers
         {
             if(_model.TestURL(url))
             {
-                this._historyView.Hide();
-
-                _webNavigationView = new WebNavigationView()
+                if(View is WebHistoryView)
                 {
-                    Controller = this
-                };
+                    this._historyView.Hide();
 
-                _view = _webNavigationView;
+                    _webNavigationView = new WebNavigationView()
+                    {
+                        Controller = this
+                    };
 
-                //TODO : the onclosing event was here once 
+                    _view = _webNavigationView;
 
-                // call all the function from this controller
+                    _webNavigationView.Show(_historyView);
+                }
+
                 SetDatas(url);
-
-                _webNavigationView.Show(_historyView);
 
                 return true;
             }
             else
             {
-                _historyView.ShowMessageBox("L'url sélectionnée n'est pas accessible");
+                View.ShowMessageBox("L'url sélectionnée n'est pas accessible");
                 return false;
             }
         }
@@ -126,6 +126,9 @@ namespace P_Thesaurus.Controllers
                 Process.Start(link.Link);
             }
         }
+        #endregion
+
+        #region Private Methods
         #endregion
 
         #region Dispose Model

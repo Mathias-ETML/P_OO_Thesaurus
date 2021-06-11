@@ -34,19 +34,22 @@ namespace P_Thesaurus.Views
             // 
             // btnBack
             // 
-            this.btnBack.Location = new System.Drawing.Point(12, 12);
+            this.btnBack.Location = new System.Drawing.Point(16, 15);
+            this.btnBack.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(41, 29);
+            this.btnBack.Size = new System.Drawing.Size(55, 36);
             this.btnBack.TabIndex = 6;
             this.btnBack.Text = "<----";
             this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.BtnBackClick);
             // 
             // NavigationView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1067, 554);
             this.Controls.Add(this.btnBack);
+            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.Name = "NavigationView";
             this.Text = "NavigationView";
             this.ResumeLayout(false);

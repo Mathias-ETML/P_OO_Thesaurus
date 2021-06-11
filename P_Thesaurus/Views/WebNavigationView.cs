@@ -31,7 +31,8 @@ namespace P_Thesaurus.Views
         private List<WebElementType> _filters;
 
         /// <summary>
-        /// The searched Words curently written in the Search Bar
+        /// The searched Words curently written in the Search Bar.
+        /// Used in the Search Predicate
         /// </summary>
         private List<WebResearchElement> _searched;
 
@@ -55,8 +56,11 @@ namespace P_Thesaurus.Views
             _listView.MultiSelect = false;
             _listView.View = View.Details;
 
+            filterChckdLstBox.Items.AddRange(Enum.GetNames(typeof(WebElementType)));
+
             //Variables initialization
             _filters = new List<WebElementType>();
+            _searched = new List<WebResearchElement>();
             _elements = new List<WebElement>();
         }
 
@@ -66,7 +70,7 @@ namespace P_Thesaurus.Views
         /// <param name="datas">the links to display</param>
         public void InitializeElements(List<WebElement> datas, string url)
         {
-            lblCurrentUrl.Text = "URL actuelle : " + url;
+            txbUrl.Text = url;
 
             _elements = datas;
 
@@ -82,12 +86,15 @@ namespace P_Thesaurus.Views
         /// <param name="e"></param>
         private void _listView_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            //Get the WebElement From the ListViewItem, then send it to Ctrlr
-            Controller.TestUrl(new WebElement() 
-            { 
-                Link = _listView.SelectedItems[0].SubItems[0].Text,
-                Type = (WebElementType)Enum.Parse(typeof(WebElementType), _listView.SelectedItems[0].SubItems[1].Text)
-            });
+            if(_listView.SelectedItems.Count > 0)
+            {
+                //Get the WebElement From the ListViewItem, then send it to Ctrlr
+                Controller.TestUrl(new WebElement()
+                {
+                    Link = _listView.SelectedItems[0].SubItems[0].Text,
+                    Type = (WebElementType)Enum.Parse(typeof(WebElementType), _listView.SelectedItems[0].SubItems[1].Text)
+                });
+            }
         }
 
         /// <summary>
@@ -139,21 +146,32 @@ namespace P_Thesaurus.Views
             {
                 string[] searchSpaceSplitted = txbSearch.Text.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
+                //the default modifier is "Or", for the spaces and the first word
                 SearchModifier next = SearchModifier.Or;
-                    
-                //adds first the first word because he probably don't have modifier
-                _searched.Add(new WebResearchElement { Word = searchSpaceSplitted[0], Modifier = SearchModifier.Or });
 
                 //extracts the search elements from list
                 foreach(string word in searchSpaceSplitted)
                 {
                     if(word == "+")
                     {
-
+                        next = SearchModifier.And;
                     }
                     else if(word.StartsWith("+"))
                     {
                         _searched.Add(new WebResearchElement { Word = word.Substring(1), Modifier = SearchModifier.And });
+                    }
+                    else if(word == "-")
+                    {
+                        next = SearchModifier.Not;
+                    }
+                    else if(word.StartsWith("-"))
+                    {
+                        _searched.Add(new WebResearchElement { Word = word.Substring(1), Modifier = SearchModifier.Not });
+                    }
+                    else
+                    {
+                        _searched.Add(new WebResearchElement { Word = word, Modifier = next });
+                        next = SearchModifier.Or;
                     }
                     
                 }
@@ -164,28 +182,79 @@ namespace P_Thesaurus.Views
         #endregion
 
         #region Private Business Methods
-        private void AddElement(WebElement element)
-        {
-            _listView.Items.Add(new ListViewItem(new string[] { element.Link, element.Type.ToString() }));
-        }
-
         private void ActualizeListView()
         {
             _listView.Items.Clear();
 
-            foreach (WebElement element in _elements)
+            List<WebElement> searchedElements = _elements.FindAll(Search);
+
+            foreach (WebElement element in searchedElements)
             {
-                /*if (_filters.Contains(element.Type) && element.Link.)
+                if (_filters.Count > 0 && ! _filters.Contains(element.Type))
                 {
-                    AddElement(element);
-                }*/
+                    continue;
+                }
+                _listView.Items.Add(new ListViewItem(new string[] { element.Link, element.Type.ToString() }));
             }
         }
 
-        /*private bool Search(WebElement element)
+        /// <summary>
+        /// Predicate that 
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
+        private bool Search(WebElement element)
         {
+            //if there is no search
+            if(_searched.Count == 0)
+            {
+                return true;
+            }
 
-        }*/
+            bool orValue = false;
+
+            //Checks the compatibility to all the parameters in the list
+            foreach(WebResearchElement searchElement in _searched)
+            {
+                switch(searchElement.Modifier)
+                {
+                    case SearchModifier.Or:
+                        {
+                            if(element.Link.Contains(searchElement.Word))
+                            {
+                                orValue = true;
+                            }
+                            break;
+                        }
+                    case SearchModifier.And:
+                        {
+                            if ( ! element.Link.Contains(searchElement.Word))
+                            {
+                                return false;
+                            }
+                            break;
+                        }
+                    case SearchModifier.Not:
+                        {
+                            if (element.Link.Contains(searchElement.Word))
+                            {
+                                return false;
+                            }
+                            break;
+                        }
+                }
+            }
+
+            return orValue;
+        }
         #endregion
+
+        private void TxbUrlKeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                Controller.TestUrl(txbUrl.Text);
+            }
+        }
     }
 }

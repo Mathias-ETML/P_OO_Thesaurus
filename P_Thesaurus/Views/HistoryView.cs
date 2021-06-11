@@ -34,6 +34,7 @@ namespace P_Thesaurus.Views
 
         #endregion
 
+        #region Private Form Methods
         /// <summary>
         /// BtnBack click that close the current form to go back
         /// </summary>
@@ -43,5 +44,19 @@ namespace P_Thesaurus.Views
         {
             this.Dispose();
         }
+
+        /// <summary>
+        /// When the enter key is pressed when typing, send the click to the open button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TxtBoxPathKeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                btnOpenFolder.PerformClick();
+            }
+        }
+        #endregion
     }
 }
