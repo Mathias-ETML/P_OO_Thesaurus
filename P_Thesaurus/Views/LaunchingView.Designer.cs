@@ -33,15 +33,14 @@ namespace P_Thesaurus.Views
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnWeb = new System.Windows.Forms.Button();
-            this.btnFtp = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnFolder
             // 
             this.btnFolder.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFolder.Location = new System.Drawing.Point(140, 286);
+            this.btnFolder.Location = new System.Drawing.Point(125, 315);
             this.btnFolder.Name = "btnFolder";
-            this.btnFolder.Size = new System.Drawing.Size(134, 53);
+            this.btnFolder.Size = new System.Drawing.Size(191, 52);
             this.btnFolder.TabIndex = 0;
             this.btnFolder.Text = "Dossier";
             this.btnFolder.UseVisualStyleBackColor = true;
@@ -72,24 +71,13 @@ namespace P_Thesaurus.Views
             // btnWeb
             // 
             this.btnWeb.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnWeb.Location = new System.Drawing.Point(366, 286);
+            this.btnWeb.Location = new System.Drawing.Point(522, 315);
             this.btnWeb.Name = "btnWeb";
-            this.btnWeb.Size = new System.Drawing.Size(134, 53);
+            this.btnWeb.Size = new System.Drawing.Size(191, 52);
             this.btnWeb.TabIndex = 3;
             this.btnWeb.Text = "Web";
             this.btnWeb.UseVisualStyleBackColor = true;
             this.btnWeb.Click += new System.EventHandler(this.BtnWebClick);
-            // 
-            // btnFtp
-            // 
-            this.btnFtp.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFtp.Location = new System.Drawing.Point(591, 286);
-            this.btnFtp.Name = "btnFtp";
-            this.btnFtp.Size = new System.Drawing.Size(134, 53);
-            this.btnFtp.TabIndex = 4;
-            this.btnFtp.Text = "FTP";
-            this.btnFtp.UseVisualStyleBackColor = true;
-            this.btnFtp.Click += new System.EventHandler(this.BtnFtpClick);
             // 
             // LaunchingView
             // 
@@ -97,12 +85,11 @@ namespace P_Thesaurus.Views
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(800, 448);
-            this.Controls.Add(this.btnFtp);
             this.Controls.Add(this.btnWeb);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnFolder);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximumSize = new System.Drawing.Size(816, 487);
             this.MinimumSize = new System.Drawing.Size(816, 487);
             this.Name = "LaunchingView";
@@ -118,6 +105,5 @@ namespace P_Thesaurus.Views
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnWeb;
-        private System.Windows.Forms.Button btnFtp;
     }
 }

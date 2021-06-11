@@ -11,7 +11,6 @@ using P_Thesaurus.AppBusiness.HistoryReader;
 using P_Thesaurus.AppBusiness.Logs;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Net;
 
@@ -73,8 +72,6 @@ namespace P_Thesaurus.Models
                 if ((hrefSplitted[i].StartsWith("https://") || hrefSplitted[i].StartsWith("http://")) && !hrefSplitted[i].Contains(".css"))
                 {
                     toReturn.Add(new WebElement() { Link = hrefSplitted[i], Type = WebElementType.Link });
-
-                    Debug.WriteLine(hrefSplitted[i]);
                 }
             }
 
@@ -98,8 +95,6 @@ namespace P_Thesaurus.Models
                     }
 
                     toReturn.Add(new WebElement() { Link = srcSplitted[i], Type = WebElementType.Image });
-
-                    Debug.WriteLine(srcSplitted[i]);
                 }
             }
 
