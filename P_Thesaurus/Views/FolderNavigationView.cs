@@ -32,6 +32,7 @@ namespace P_Thesaurus.Views
         private List<File.Type> _filters;
         private bool _researchMode = false;
         private List<ResearchElement> _foundItems;
+        private string _lastResearchTerm = "";
 
         /// <summary>
         /// the view's controller
@@ -60,6 +61,8 @@ namespace P_Thesaurus.Views
             this.FormClosing += OnClosing;
 
             this._path = path;
+
+            this._foundItems = new List<ResearchElement>();
 
             InitializeComponent();
 
@@ -635,12 +638,18 @@ namespace P_Thesaurus.Views
             // check if the user entered a word to be research, so we don't show the filters
             if (txtBoxObjectName.Text.Length > 0)
             {
-                ResearchObjectRecursivly();
+                if (string.IsNullOrWhiteSpace(txtBoxObjectName.Text))
+                {
+                    MessageBox.Show("Veuilliez entrer un nom de fichier valide");
+                }
+                else
+                {
+                    ResearchObjectRecursivly();
 
-                return;
+                    txtBoxObjectName.Text = "";
+                }
             }
-
-            if (filterChckdLstBox.Visible)
+            else if (filterChckdLstBox.Visible)
             {
                 filterChckdLstBox.Visible = false;
             }
@@ -681,10 +690,19 @@ namespace P_Thesaurus.Views
         /// </summary>
         private void ResearchObjectRecursivly()
         {
+            if (_lastResearchTerm == txtBoxObjectName.Text)
+            {
+                return;
+            }
+
             _researchMode = true;
+
+            _lastResearchTerm = txtBoxObjectName.Text;
 
             currentFolderListView.Items.Clear();
             currentFolderListView.Items.Add(new ListViewItem("Recherche en cours"));
+
+            _foundItems = new List<ResearchElement>();
 
             // split for the + and trim the spaces, caus doesn't work
             List<string> terms = new List<string>(txtBoxObjectName.Text.Split(new string[1] { "+" }, StringSplitOptions.RemoveEmptyEntries));
@@ -740,12 +758,9 @@ namespace P_Thesaurus.Views
             {
                 // we don't want to clear and sort and do all sort
                 // and do all sort of useless stuff
-                if (_foundItems != null)
+                if (_foundItems.Count > elements.Count)
                 {
-                    if (Enumerable.SequenceEqual(_foundItems, elements))
-                    {
-                        return;
-                    }
+                    return;
                 }
 
                 _foundItems = elements;
@@ -774,7 +789,12 @@ namespace P_Thesaurus.Views
                 // check if we have found something
                 if (_foundItems.Count > 0)
                 {
-                    Invoke(new Action(() => currentFolderListView.Items.Clear()));
+                    Invoke(new Action(() => {
+                        if (currentFolderListView != null)
+                        {
+                            currentFolderListView.Items.Clear();
+                        }
+                    }));
 
                     for (int i = 0; i < _foundItems.Count; i++)
                     {
@@ -785,13 +805,23 @@ namespace P_Thesaurus.Views
                         {
                             Folder obj = (Folder)item.Object;
 
-                            Invoke(new Action(() => currentFolderListView.Items.Add(GetFormatedFolderItem(obj))));
+                            Invoke(new Action(() => {
+                                if (currentFolderListView != null)
+                                {
+                                    currentFolderListView.Items.Add(GetFormatedFolderItem(obj));
+                                }
+                            }));
                         }
                         else
                         {
                             File obj = (File)item.Object;
 
-                            Invoke(new Action(() => currentFolderListView.Items.Add(GetFormatedFileItem(obj))));
+                            Invoke(new Action(() => {
+                                if (currentFolderListView != null)
+                                {
+                                    currentFolderListView.Items.Add(GetFormatedFileItem(obj));
+                                }
+                            }));
                         }
                     }
                 }
