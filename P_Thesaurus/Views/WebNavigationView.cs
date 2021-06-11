@@ -195,6 +195,9 @@ namespace P_Thesaurus.Views
         #endregion
 
         #region Private Business Methods
+        /// <summary>
+        /// Actualize the list view items with the current elements
+        /// </summary>
         private void ActualizeListView()
         {
             _listView.Items.Clear();

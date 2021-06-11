@@ -45,6 +45,7 @@ namespace P_Thesaurus_Tests
             // get the child controller
             IController ctrl = (IController)typeof(MainController).GetField("_childController", bindFlags).GetValue(mc);
 
+            // Assert
             // check if the view in the first child controller is the launching view
             Assert.AreEqual(ctrl.View.GetType(), typeof(LaunchingView));
         }
@@ -55,12 +56,17 @@ namespace P_Thesaurus_Tests
         [TestMethod]
         public void TestScan()
         {
+            //Arrange
             FolderController fc = new FolderController();
+
+            // Act
 
             Folder root = fc.GetFolder("c");
 
             // scan
             fc.StartScan(ref root);
+
+            // Assert
 
             // check if the C drive root got a windows folder, wich is always true
             Assert.IsTrue(root.Folders.Find(item => item.Name == "Windows") != null);
