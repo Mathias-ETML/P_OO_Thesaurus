@@ -44,6 +44,8 @@ namespace P_Thesaurus.Views
         /// </summary>
         public void Init()
         {
+            //InitializeComponent();
+
             historyListView.Items.Clear();
 
             List<DriveInfo> drives = Controller.GetAllDrives();
@@ -101,7 +103,6 @@ namespace P_Thesaurus.Views
 
                 // stupid bug where the event is doubled
                 driveTreeView.NodeMouseDoubleClick -= OnDriveSelectionRoots;
-                driveTreeView.NodeMouseDoubleClick -= OnDriveSelectionRoots;
             }
         }
 
@@ -122,7 +123,6 @@ namespace P_Thesaurus.Views
 
                 // stupid bug where the event is doubled
                 driveTreeView.NodeMouseDoubleClick -= OnDriveSelectionRoots;
-                driveTreeView.NodeMouseDoubleClick -= OnDriveSelectionRoots;
             }
         }
 
@@ -138,7 +138,6 @@ namespace P_Thesaurus.Views
                 Controller.LaunchFolderNavigationView(txtBoxPath.Text);
 
                 // stupid bug where the event is doubled
-                driveTreeView.NodeMouseDoubleClick -= OnDriveSelectionRoots;
                 driveTreeView.NodeMouseDoubleClick -= OnDriveSelectionRoots;
             }
         }
