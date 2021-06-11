@@ -58,7 +58,7 @@ namespace P_Thesaurus.Views
             this._listView.TabIndex = 2;
             this._listView.UseCompatibleStateImageBehavior = false;
             this._listView.VirtualListSize = 4;
-            this._listView.SelectedIndexChanged += new System.EventHandler(this._listView_SelectedIndexChanged);
+            this._listView.SelectedIndexChanged += new System.EventHandler(this.ListView_SelectedIndexChanged);
             // 
             // URL
             // 

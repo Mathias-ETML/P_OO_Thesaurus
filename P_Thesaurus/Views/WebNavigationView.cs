@@ -84,7 +84,7 @@ namespace P_Thesaurus.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _listView_SelectedIndexChanged(object sender, System.EventArgs e)
+        private void ListView_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             if(_listView.SelectedItems.Count > 0)
             {
