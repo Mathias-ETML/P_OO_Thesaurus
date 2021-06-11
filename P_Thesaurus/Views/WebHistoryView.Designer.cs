@@ -33,14 +33,14 @@ namespace P_Thesaurus.Views
             // 
             // historyListView
             // 
-            this.historyListView.Location = new System.Drawing.Point(91, 171);
-            this.historyListView.Margin = new System.Windows.Forms.Padding(5);
-            this.historyListView.Size = new System.Drawing.Size(609, 384);
+            this.historyListView.Location = new System.Drawing.Point(68, 139);
+            this.historyListView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.historyListView.Size = new System.Drawing.Size(458, 313);
             this.historyListView.SelectedIndexChanged += new System.EventHandler(this.OnDriveSelectionHistory);
             // 
             // txtBoxPath
             // 
-            this.txtBoxPath.Margin = new System.Windows.Forms.Padding(5);
+            this.txtBoxPath.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             // 
             // columnHeaderPath
             // 
@@ -52,11 +52,12 @@ namespace P_Thesaurus.Views
             // 
             // WebHistoryView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(781, 613);
-            this.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
+            this.ClientSize = new System.Drawing.Size(586, 498);
+            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.Name = "WebHistoryView";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Historique Web";
             this.ResumeLayout(false);
             this.PerformLayout();
