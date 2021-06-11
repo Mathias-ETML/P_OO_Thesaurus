@@ -144,6 +144,15 @@ namespace P_Thesaurus.Views
             this.MinimumSize = new System.Drawing.Size(816, 568);
             this.Name = "FolderNavigationView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Recherche Dossier";
+            this.Controls.SetChildIndex(this.folderTreeView, 0);
+            this.Controls.SetChildIndex(this.currentFolderListView, 0);
+            this.Controls.SetChildIndex(this.panInformation, 0);
+            this.Controls.SetChildIndex(this.panHistoryPath, 0);
+            this.Controls.SetChildIndex(this.txtBoxObjectName, 0);
+            this.Controls.SetChildIndex(this.lblRecherche, 0);
+            this.Controls.SetChildIndex(this.filterChckdLstBox, 0);
+            this.Controls.SetChildIndex(this.btnFiltre, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -69,7 +69,7 @@ namespace P_Thesaurus.Views
             this.MinimumSize = new System.Drawing.Size(568, 508);
             this.Name = "FolderHistoryView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FolderHistoryView";
+            this.Text = "Historique Dossier";
             this.Controls.SetChildIndex(this.PathLabel, 0);
             this.Controls.SetChildIndex(this.txtBoxPath, 0);
             this.Controls.SetChildIndex(this.btnOpenFolder, 0);

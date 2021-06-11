@@ -36,6 +36,7 @@ namespace P_Thesaurus.Models
         private int _createdThreads;
         private AddNodeToNodeViaInvokeDelegate _invokeNode;
         private ResearchEndedDelegate _endResearch;
+        private bool _stopScan = false;
 
         #endregion
 
@@ -114,8 +115,6 @@ namespace P_Thesaurus.Models
         /// <returns>Folder</returns>
         public Folder GetFolder(string path)
         {
-            // todo : recode this part, or debug it, a voir
-
             if (path == null || path.Length <= 0)
             {
                 throw new ArgumentNullException("path");
@@ -159,6 +158,7 @@ namespace P_Thesaurus.Models
         /// <returns>the object or null if not found</returns>
         public void GetObjectRecursivly(Folder start, List<string> names, AddNodeToNodeViaInvokeDelegate invoke, ResearchEndedDelegate end, bool forceRescan)
         {
+            _stopScan = false;
             _foundItems = new List<ResearchElement>();
             _invokeNode = invoke;
             _endResearch = end;
@@ -181,6 +181,11 @@ namespace P_Thesaurus.Models
         /// <param name="forceRescan">force scan</param>
         private async void GetObjectRecursivlyAsync(Folder start, List<string> names, bool forceRescan)
         {
+            if (_stopScan)
+            {
+                return;
+            }
+
             _createdThreads++;
 
             // check if we need to scan the folder
@@ -232,6 +237,15 @@ namespace P_Thesaurus.Models
             }
 
             CheckScanEnded();
+        }
+
+        /// <summary>
+        /// Stop scan function
+        /// </summary>
+        public void StopScan()
+        {
+            _stopScan = true;
+            _folderScan.Stop();
         }
 
         /// <summary>

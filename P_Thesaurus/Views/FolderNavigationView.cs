@@ -348,6 +348,7 @@ namespace P_Thesaurus.Views
         /// <param name="e"></param>
         public void OnClosing(object sender, EventArgs e)
         {
+            Controller.StopScan();
             Controller.WriteInHistory(_currentFolder.ObjectPath);
         }
 
@@ -466,8 +467,12 @@ namespace P_Thesaurus.Views
         /// <param name="obj">folder object</param>
         private void ShowInformationSelectedListViewFolder(Folder obj)
         {
-            CreateListViewToShowInformation(new string[] {"Nom", "Fichiers", "Dossiers" }, 
-                new string[] {obj.Name, obj.Files.Count.ToString(), obj.Folders.Count.ToString() });
+            if (obj != null)
+            {
+                CreateListViewToShowInformation(new string[] { "Nom", "Fichiers", "Dossiers" },
+                    new string[] { obj.Name, obj.Files.Count.ToString(), obj.Folders.Count.ToString() });
+            }
+
         }
 
         /// <summary>
@@ -476,8 +481,11 @@ namespace P_Thesaurus.Views
         /// <param name="obj">folder object</param>
         private void ShowInformationSelectedListViewFile(File obj)
         {
-            CreateListViewToShowInformation(new string[] { "Nom", "Type", "Taille en MB" }, 
-                new string[] { obj.Name, obj.FileType.ToString(), (obj.ObjectData.Size / BITS_IN_MEGA_BYTE).ToString() });
+            if (obj != null)
+            {
+                CreateListViewToShowInformation(new string[] { "Nom", "Type", "Taille en MB" },
+                    new string[] { obj.Name, obj.FileType.ToString(), (obj.ObjectData.Size / BITS_IN_MEGA_BYTE).ToString() });
+            }
         }
 
         /// <summary>
@@ -744,9 +752,21 @@ namespace P_Thesaurus.Views
         /// </summary>
         private void AddNodeToNodeViaInvoke(TreeNode parent, TreeNode child)
         {
+            if (parent == null)
+            {
+                return;
+            }
+
             if (InvokeRequired)
             {
-                Invoke(new Action(() => parent.Nodes.Add(child)));
+                Invoke(new Action(() => {
+                    if (this.IsDisposed || this.Disposing)
+                    {
+                        return;
+                    }
+
+                    parent.Nodes.Add(child);
+                }));
             }
             else
             {
@@ -813,7 +833,7 @@ namespace P_Thesaurus.Views
                             Folder obj = (Folder)item.Object;
 
                             Invoke(new Action(() => {
-                                if (currentFolderListView != null)
+                                if (this != null)
                                 {
                                     currentFolderListView.Items.Add(GetFormatedFolderItem(obj));
                                 }
@@ -824,7 +844,7 @@ namespace P_Thesaurus.Views
                             File obj = (File)item.Object;
 
                             Invoke(new Action(() => {
-                                if (currentFolderListView != null)
+                                if (this != null)
                                 {
                                     currentFolderListView.Items.Add(GetFormatedFileItem(obj));
                                 }

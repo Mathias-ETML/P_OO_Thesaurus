@@ -94,7 +94,6 @@ namespace P_Thesaurus.Views
             this.MinimumSize = new System.Drawing.Size(816, 487);
             this.Name = "LaunchingView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "LaunchingView";
             this.ResumeLayout(false);
             this.PerformLayout();
 
