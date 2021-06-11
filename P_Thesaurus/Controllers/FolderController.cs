@@ -139,6 +139,14 @@ namespace P_Thesaurus.Controllers
         }
 
         /// <summary>
+        /// Stop scan function
+        /// </summary>
+        public void StopScan()
+        {
+            _model.StopScan();
+        }
+
+        /// <summary>
         /// Get you the object that match the name recursivly
         /// </summary>
         /// <param name="start">the current folder where you want to start</param>

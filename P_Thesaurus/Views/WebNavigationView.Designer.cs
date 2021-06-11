@@ -52,10 +52,9 @@ namespace P_Thesaurus.Views
             this._listView.GridLines = true;
             this._listView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this._listView.HideSelection = false;
-            this._listView.Location = new System.Drawing.Point(159, 113);
-            this._listView.Margin = new System.Windows.Forms.Padding(4);
+            this._listView.Location = new System.Drawing.Point(119, 92);
             this._listView.Name = "_listView";
-            this._listView.Size = new System.Drawing.Size(751, 425);
+            this._listView.Size = new System.Drawing.Size(564, 346);
             this._listView.TabIndex = 2;
             this._listView.UseCompatibleStateImageBehavior = false;
             this._listView.VirtualListSize = 4;
@@ -73,18 +72,18 @@ namespace P_Thesaurus.Views
             // lblCurrentUrl
             // 
             this.lblCurrentUrl.AutoSize = true;
-            this.lblCurrentUrl.Location = new System.Drawing.Point(156, 88);
+            this.lblCurrentUrl.Location = new System.Drawing.Point(117, 72);
+            this.lblCurrentUrl.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblCurrentUrl.Name = "lblCurrentUrl";
-            this.lblCurrentUrl.Size = new System.Drawing.Size(44, 17);
+            this.lblCurrentUrl.Size = new System.Drawing.Size(35, 13);
             this.lblCurrentUrl.TabIndex = 7;
             this.lblCurrentUrl.Text = "URL :";
             // 
             // btnFiltre
             // 
-            this.btnFiltre.Location = new System.Drawing.Point(790, 42);
-            this.btnFiltre.Margin = new System.Windows.Forms.Padding(4);
+            this.btnFiltre.Location = new System.Drawing.Point(592, 34);
             this.btnFiltre.Name = "btnFiltre";
-            this.btnFiltre.Size = new System.Drawing.Size(120, 27);
+            this.btnFiltre.Size = new System.Drawing.Size(90, 22);
             this.btnFiltre.TabIndex = 10;
             this.btnFiltre.Text = "Fitrer";
             this.btnFiltre.UseVisualStyleBackColor = true;
@@ -94,38 +93,36 @@ namespace P_Thesaurus.Views
             // 
             this.filterChckdLstBox.CheckOnClick = true;
             this.filterChckdLstBox.FormattingEnabled = true;
-            this.filterChckdLstBox.Location = new System.Drawing.Point(791, 67);
-            this.filterChckdLstBox.Margin = new System.Windows.Forms.Padding(4);
+            this.filterChckdLstBox.Location = new System.Drawing.Point(593, 54);
             this.filterChckdLstBox.Name = "filterChckdLstBox";
-            this.filterChckdLstBox.Size = new System.Drawing.Size(119, 55);
+            this.filterChckdLstBox.Size = new System.Drawing.Size(90, 34);
             this.filterChckdLstBox.TabIndex = 9;
             this.filterChckdLstBox.Visible = false;
             this.filterChckdLstBox.SelectedIndexChanged += new System.EventHandler(this.FilterChckdLstBoxItemCheck);
             // 
             // txbSearch
             // 
-            this.txbSearch.Location = new System.Drawing.Point(159, 44);
-            this.txbSearch.Margin = new System.Windows.Forms.Padding(4);
+            this.txbSearch.Location = new System.Drawing.Point(119, 36);
             this.txbSearch.Name = "txbSearch";
-            this.txbSearch.Size = new System.Drawing.Size(623, 22);
+            this.txbSearch.Size = new System.Drawing.Size(468, 20);
             this.txbSearch.TabIndex = 8;
             this.txbSearch.TextChanged += new System.EventHandler(this.TxbSearchTextChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(156, 25);
+            this.label1.Location = new System.Drawing.Point(117, 20);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(77, 17);
+            this.label1.Size = new System.Drawing.Size(60, 13);
             this.label1.TabIndex = 11;
             this.label1.Text = "Recherche";
             // 
             // txbUrl
             // 
-            this.txbUrl.Location = new System.Drawing.Point(207, 85);
-            this.txbUrl.Margin = new System.Windows.Forms.Padding(4);
+            this.txbUrl.Location = new System.Drawing.Point(155, 69);
             this.txbUrl.Name = "txbUrl";
-            this.txbUrl.Size = new System.Drawing.Size(576, 22);
+            this.txbUrl.Size = new System.Drawing.Size(433, 20);
             this.txbUrl.TabIndex = 12;
             this.txbUrl.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxbUrlKeyDown);
             // 
@@ -135,19 +132,19 @@ namespace P_Thesaurus.Views
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.copierToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(123, 28);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(110, 26);
             // 
             // copierToolStripMenuItem
             // 
             this.copierToolStripMenuItem.Name = "copierToolStripMenuItem";
-            this.copierToolStripMenuItem.Size = new System.Drawing.Size(122, 24);
+            this.copierToolStripMenuItem.Size = new System.Drawing.Size(109, 22);
             this.copierToolStripMenuItem.Text = "Copier";
             // 
             // WebNavigationView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.txbUrl);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnFiltre);
@@ -155,9 +152,9 @@ namespace P_Thesaurus.Views
             this.Controls.Add(this.txbSearch);
             this.Controls.Add(this.lblCurrentUrl);
             this.Controls.Add(this._listView);
-            this.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
+            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.Name = "WebNavigationView";
-            this.Text = "-";
+            this.Text = "Recherche Web";
             this.Controls.SetChildIndex(this._listView, 0);
             this.Controls.SetChildIndex(this.lblCurrentUrl, 0);
             this.Controls.SetChildIndex(this.txbSearch, 0);

@@ -18,6 +18,9 @@ namespace P_Thesaurus.Views
         public BaseView()
         {
             InitializeComponent();
+
+            this.ShowIcon = false;
+            this.Text = "P_Thésaurus";
         }
 
         /// <summary>
