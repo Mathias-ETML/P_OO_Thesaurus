@@ -48,7 +48,7 @@ namespace P_Thesaurus.Views
             this.historyListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.historyListView.HideSelection = false;
             this.historyListView.Location = new System.Drawing.Point(329, 171);
-            this.historyListView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.historyListView.Margin = new System.Windows.Forms.Padding(4);
             this.historyListView.Name = "historyListView";
             this.historyListView.Size = new System.Drawing.Size(371, 384);
             this.historyListView.TabIndex = 2;
@@ -78,7 +78,7 @@ namespace P_Thesaurus.Views
             // btnBack
             // 
             this.btnBack.Location = new System.Drawing.Point(17, 16);
-            this.btnBack.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnBack.Margin = new System.Windows.Forms.Padding(4);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(55, 36);
             this.btnBack.TabIndex = 4;
@@ -90,7 +90,7 @@ namespace P_Thesaurus.Views
             // 
             this.txtBoxPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtBoxPath.Location = new System.Drawing.Point(91, 91);
-            this.txtBoxPath.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxPath.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxPath.Name = "txtBoxPath";
             this.txtBoxPath.Size = new System.Drawing.Size(547, 24);
             this.txtBoxPath.TabIndex = 5;
@@ -99,7 +99,7 @@ namespace P_Thesaurus.Views
             // btnOpenFolder
             // 
             this.btnOpenFolder.Location = new System.Drawing.Point(647, 91);
-            this.btnOpenFolder.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnOpenFolder.Margin = new System.Windows.Forms.Padding(4);
             this.btnOpenFolder.Name = "btnOpenFolder";
             this.btnOpenFolder.Size = new System.Drawing.Size(55, 26);
             this.btnOpenFolder.TabIndex = 6;
@@ -128,7 +128,7 @@ namespace P_Thesaurus.Views
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.PathLabel);
             this.Controls.Add(this.historyListView);
-            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "HistoryView";
             this.Text = "HistoryView";
             this.ResumeLayout(false);
@@ -137,13 +137,13 @@ namespace P_Thesaurus.Views
         }
 
         #endregion
-        private System.Windows.Forms.ColumnHeader columnHeaderPath;
-        private System.Windows.Forms.ColumnHeader columnHeaderDate;
         private System.Windows.Forms.Button btnBack;
         protected System.Windows.Forms.ListView historyListView;
         private System.Windows.Forms.Label lblHistoryTitle;
         public System.Windows.Forms.Label PathLabel;
         protected System.Windows.Forms.Button btnOpenFolder;
         protected System.Windows.Forms.TextBox txtBoxPath;
+        protected System.Windows.Forms.ColumnHeader columnHeaderPath;
+        protected System.Windows.Forms.ColumnHeader columnHeaderDate;
     }
 }

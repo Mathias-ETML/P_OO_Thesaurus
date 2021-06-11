@@ -5,6 +5,7 @@
  * Projet P_OO-Smart-Thésaurus
  * Form d'héritage représentant toutes les vues gérant la navigation dans les éléments indexés
  */
+using System;
 using System.Windows.Forms;
 
 namespace P_Thesaurus.Views

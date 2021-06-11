@@ -179,6 +179,19 @@ namespace P_Thesaurus.Views
 
             ActualizeListView();
         }
+
+        /// <summary>
+        /// Just send the url entered in the url textbox when enter is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TxbUrlKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                Controller.TestUrl(txbUrl.Text);
+            }
+        }
         #endregion
 
         #region Private Business Methods
@@ -249,12 +262,6 @@ namespace P_Thesaurus.Views
         }
         #endregion
 
-        private void TxbUrlKeyDown(object sender, KeyEventArgs e)
-        {
-            if(e.KeyCode == Keys.Enter)
-            {
-                Controller.TestUrl(txbUrl.Text);
-            }
-        }
+        
     }
 }

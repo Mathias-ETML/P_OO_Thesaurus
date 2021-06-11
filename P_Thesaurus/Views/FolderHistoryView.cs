@@ -76,30 +76,12 @@ namespace P_Thesaurus.Views
                 }
             }
 
-            List<HistoryEntry> history = Controller.GetHistory();
-
-            history.Reverse();
-
-            // check if user have history
-            if (history.Count == 0)
-            {
-                ListViewItem line = new ListViewItem(new string[] { "Aucun historique disponible", "" });
-
-                historyListView.Items.Add(line);
-            }
-            else
-            {
-                // we check foreach item in from the json reader if it has been added, wich is likly to happen
-                foreach (HistoryEntry item in history)
-                {
-                    ListViewItem line = new ListViewItem(new string[] { item.Content, item.DateTime.ToString("g") });
-
-                    historyListView.Items.Add(line);
-                }
-            }
+            SetHistory(Controller.GetHistory());
 
             driveTreeView.NodeMouseDoubleClick += OnDriveSelectionRoots;
         }
+
+        
 
         /// <summary>
         /// OnDriveSelection function

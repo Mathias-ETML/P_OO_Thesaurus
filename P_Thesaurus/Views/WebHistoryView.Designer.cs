@@ -33,14 +33,29 @@ namespace P_Thesaurus.Views
             // 
             // historyListView
             // 
-            this.historyListView.Location = new System.Drawing.Point(68, 139);
-            this.historyListView.Size = new System.Drawing.Size(458, 313);
+            this.historyListView.Location = new System.Drawing.Point(91, 171);
+            this.historyListView.Margin = new System.Windows.Forms.Padding(5);
+            this.historyListView.Size = new System.Drawing.Size(609, 384);
+            this.historyListView.SelectedIndexChanged += new System.EventHandler(this.OnDriveSelectionHistory);
+            // 
+            // txtBoxPath
+            // 
+            this.txtBoxPath.Margin = new System.Windows.Forms.Padding(5);
+            // 
+            // columnHeaderPath
+            // 
+            this.columnHeaderPath.Width = 340;
+            // 
+            // columnHeaderDate
+            // 
+            this.columnHeaderDate.Width = 240;
             // 
             // WebHistoryView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(586, 498);
+            this.ClientSize = new System.Drawing.Size(781, 613);
+            this.Margin = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.Name = "WebHistoryView";
             this.Text = "Historique Web";
             this.ResumeLayout(false);

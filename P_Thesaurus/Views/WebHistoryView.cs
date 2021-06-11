@@ -39,11 +39,16 @@ namespace P_Thesaurus.Views
 
         public void Init()
         {
-
+            SetHistory(Controller.GetHistory());
         }
         #endregion
 
         #region Private Methods
+        /// <summary>
+        /// send the link to the controller when the "OK" button is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button2Click(object sender, EventArgs e)
         {
             Controller.TestUrl(txtBoxPath.Text);
@@ -51,19 +56,20 @@ namespace P_Thesaurus.Views
 
         /// <summary>
         /// Occure when the user click on a object of the history
-        /// 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public void OnDriveSelectionHistory(object sender, EventArgs e)
         {
-            string selected = historyListView.SelectedItems[0].Text;
-
-            if (selected != null)
+            if(historyListView.SelectedItems.Count > 0)
             {
-                // we are passing the path trough the node name, wich is a simple way if giving wich drive or folder the user wants
-                Controller.TestUrl(selected);
+                string selected = historyListView.SelectedItems[0].Text;
 
+                if (selected != null)
+                {
+                    // we are passing the path trough the node name, wich is a simple way if giving wich drive or folder the user wants
+                    Controller.TestUrl(selected);
+                }
             }
         }
 

@@ -6,6 +6,7 @@
  * Controller gérant les opérations de la connexion et du transfert des données d'un site Web.
  */
 using P_Thesaurus.AppBusiness.EnumsAndStructs;
+using P_Thesaurus.AppBusiness.HistoryReader;
 using P_Thesaurus.Models;
 using P_Thesaurus.Views;
 using System;
@@ -70,6 +71,10 @@ namespace P_Thesaurus.Controllers
             this._historyView.Init();
         }
 
+        /// <summary>
+        /// Sets the datas to the navigation View
+        /// </summary>
+        /// <param name="url">the url to index</param>
         public void SetDatas(string url)
         {
             if(_model.TestURL(url))
@@ -86,6 +91,11 @@ namespace P_Thesaurus.Controllers
             }
         }
 
+        /// <summary>
+        /// Tests a web URL and if validated, launches the index. 
+        /// </summary>
+        /// <param name="url">the url to index</param>
+        /// <returns>true if it succeed, else false</returns>
         public bool TestUrl(string url)
         {
             if(_model.TestURL(url))
@@ -115,6 +125,12 @@ namespace P_Thesaurus.Controllers
             }
         }
 
+        /// <summary>
+        /// /// <summary>
+        /// Tests a web URL and if validated, launches the index. 
+        /// Makes the difference between images and basics links : indexes the basics links and open the images
+        /// </summary>
+        /// <param name="link">A WebElement containing URL and Type</param>
         public void TestUrl(WebElement link)
         {
             if(link.Type == WebElementType.Link)
@@ -125,6 +141,24 @@ namespace P_Thesaurus.Controllers
             {
                 Process.Start(link.Link);
             }
+        }
+
+        /// <summary>
+        /// GetHistory function
+        /// </summary>
+        /// <returns></returns>
+        public List<HistoryEntry> GetHistory()
+        {
+            return _model.GetHistory();
+        }
+
+        /// <summary>
+        /// Write in history function
+        /// </summary>
+        /// <param name="path">full path</param>
+        public void WriteInHistory(string path)
+        {
+            _model.WriteInHistory(path);
         }
         #endregion
 
