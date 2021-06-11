@@ -47,10 +47,9 @@ namespace P_Thesaurus.Views
             this.historyListView.GridLines = true;
             this.historyListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.historyListView.HideSelection = false;
-            this.historyListView.Location = new System.Drawing.Point(329, 171);
-            this.historyListView.Margin = new System.Windows.Forms.Padding(4);
+            this.historyListView.Location = new System.Drawing.Point(247, 139);
             this.historyListView.Name = "historyListView";
-            this.historyListView.Size = new System.Drawing.Size(371, 384);
+            this.historyListView.Size = new System.Drawing.Size(279, 313);
             this.historyListView.TabIndex = 2;
             this.historyListView.UseCompatibleStateImageBehavior = false;
             this.historyListView.VirtualListSize = 4;
@@ -68,19 +67,17 @@ namespace P_Thesaurus.Views
             // 
             this.PathLabel.AutoSize = true;
             this.PathLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PathLabel.Location = new System.Drawing.Point(87, 65);
-            this.PathLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.PathLabel.Location = new System.Drawing.Point(65, 53);
             this.PathLabel.Name = "PathLabel";
-            this.PathLabel.Size = new System.Drawing.Size(210, 24);
+            this.PathLabel.Size = new System.Drawing.Size(163, 18);
             this.PathLabel.TabIndex = 3;
             this.PathLabel.Text = "url / chemin (à replacer)";
             // 
             // btnBack
             // 
-            this.btnBack.Location = new System.Drawing.Point(17, 16);
-            this.btnBack.Margin = new System.Windows.Forms.Padding(4);
+            this.btnBack.Location = new System.Drawing.Point(13, 13);
             this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(55, 36);
+            this.btnBack.Size = new System.Drawing.Size(41, 29);
             this.btnBack.TabIndex = 4;
             this.btnBack.Text = "<----";
             this.btnBack.UseVisualStyleBackColor = true;
@@ -89,19 +86,17 @@ namespace P_Thesaurus.Views
             // txtBoxPath
             // 
             this.txtBoxPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBoxPath.Location = new System.Drawing.Point(91, 91);
-            this.txtBoxPath.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxPath.Location = new System.Drawing.Point(68, 74);
             this.txtBoxPath.Name = "txtBoxPath";
-            this.txtBoxPath.Size = new System.Drawing.Size(547, 24);
+            this.txtBoxPath.Size = new System.Drawing.Size(411, 21);
             this.txtBoxPath.TabIndex = 5;
             this.txtBoxPath.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtBoxPathKeyDown);
             // 
             // btnOpenFolder
             // 
-            this.btnOpenFolder.Location = new System.Drawing.Point(647, 91);
-            this.btnOpenFolder.Margin = new System.Windows.Forms.Padding(4);
+            this.btnOpenFolder.Location = new System.Drawing.Point(485, 74);
             this.btnOpenFolder.Name = "btnOpenFolder";
-            this.btnOpenFolder.Size = new System.Drawing.Size(55, 26);
+            this.btnOpenFolder.Size = new System.Drawing.Size(41, 21);
             this.btnOpenFolder.TabIndex = 6;
             this.btnOpenFolder.Text = "GO";
             this.btnOpenFolder.UseVisualStyleBackColor = true;
@@ -110,26 +105,26 @@ namespace P_Thesaurus.Views
             // 
             this.lblHistoryTitle.AutoSize = true;
             this.lblHistoryTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHistoryTitle.Location = new System.Drawing.Point(325, 145);
-            this.lblHistoryTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblHistoryTitle.Location = new System.Drawing.Point(244, 118);
             this.lblHistoryTitle.Name = "lblHistoryTitle";
-            this.lblHistoryTitle.Size = new System.Drawing.Size(95, 24);
+            this.lblHistoryTitle.Size = new System.Drawing.Size(75, 18);
             this.lblHistoryTitle.TabIndex = 7;
             this.lblHistoryTitle.Text = "Historique";
             // 
             // HistoryView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(779, 596);
+            this.ClientSize = new System.Drawing.Size(584, 484);
             this.Controls.Add(this.lblHistoryTitle);
             this.Controls.Add(this.btnOpenFolder);
             this.Controls.Add(this.txtBoxPath);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.PathLabel);
             this.Controls.Add(this.historyListView);
-            this.Margin = new System.Windows.Forms.Padding(5);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "HistoryView";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "HistoryView";
             this.ResumeLayout(false);
             this.PerformLayout();

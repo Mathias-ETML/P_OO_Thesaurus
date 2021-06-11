@@ -43,6 +43,7 @@ namespace P_Thesaurus.Views
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Name = "BaseView";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "P_Thésaurus";
             this.ResumeLayout(false);
 

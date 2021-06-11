@@ -154,6 +154,7 @@ namespace P_Thesaurus.Views
             this.Controls.Add(this._listView);
             this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "WebNavigationView";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Recherche Web";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WebNavigationViewFormClosing);
             this.Controls.SetChildIndex(this._listView, 0);

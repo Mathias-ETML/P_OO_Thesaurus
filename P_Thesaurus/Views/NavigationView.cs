@@ -24,7 +24,7 @@ namespace P_Thesaurus.Views
         /// <param name="e"></param>
         private void BtnBackClick(object sender, System.EventArgs e)
         {
-            this.Close();
+            this.Dispose();
         }
     }
 }

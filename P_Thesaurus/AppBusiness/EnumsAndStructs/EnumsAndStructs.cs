@@ -31,7 +31,6 @@ namespace P_Thesaurus.AppBusiness.EnumsAndStructs
     public enum ControllerType
     {
         Launching,
-        Ftp,
         Folder,
         Web
     }
